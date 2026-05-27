@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* ── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* Colours */
+  --color-background:    #1a1a1a;
+  --color-surface:       #242424;
+  --color-surface-raised:#2e2e2e;
+  --color-border:        #383838;
+  --color-border-subtle: #2a2a2a;
+
+  --color-text-primary:  #f5f2ee;
+  --color-text-secondary:#a09e9a;
+  --color-text-tertiary: #6b6966;
+
+  --color-accent:        #d48c3a;
+  --color-accent-hover:  #e09d4a;
+  --color-accent-muted:  #d48c3a22;
+  --color-border-accent: color-mix(in srgb, var(--color-accent) 40%, transparent);
+
+  /* Shadows */
+  --shadow-card: 0 0 0 0.5px var(--color-border), 0 2px 12px rgba(0,0,0,0.30);
+
+  --color-success:       #7a9e7e;
+  --color-warning:       #c4903a;
+  --color-danger:        #a85252;
+
+  --color-canvas-bg:     #faf8f4;
+  --color-canvas-text:   #1a1a1a;
+
+  /* Layout */
+  --sidebar-width:   220px;
+  --topbar-height:   56px;
+  --canvas-width:    680px;
+
+  /* Screenplay canvas */
+  --canvas-padding:        48px 64px;
+  --canvas-line-height:    1.7;
+  --canvas-font-size:      12pt;
+  --canvas-element-spacing:12px;
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-border-subtle); }
+
+/* ── Screenplay canvas typography ─────────────────────────────────────────── */
+.screenplay-canvas {
+  background:  var(--color-canvas-bg);
+  color:       var(--color-canvas-text);
+  font-family: 'Courier Prime', monospace;
+  font-size:   var(--canvas-font-size);
+  line-height: var(--canvas-line-height);
+  padding:     var(--canvas-padding);
+  width:       var(--canvas-width);
+}
+
+/* ── Active list item accent border ───────────────────────────────────────── */
+.list-item-active {
+  border-left: 1.5px solid var(--color-accent);
+}
+
+/* ── Entrance animations ──────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Selection ─────────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-accent-muted);
+  color: var(--color-text-primary);
+}
