@@ -5,9 +5,10 @@ import type { Project } from '@/types/project'
 interface Props {
   project: Project
   onEdit: () => void
+  onOpen: () => void
 }
 
-export default function ProjectCard({ project, onEdit }: Props) {
+export default function ProjectCard({ project, onEdit, onOpen }: Props) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -17,7 +18,7 @@ export default function ProjectCard({ project, onEdit }: Props) {
       style={{ position: 'relative', width: 220, height: 165 }}
     >
       <button
-        onClick={() => console.log('open project', project.title)}
+        onClick={onOpen}
         className="flex flex-col overflow-hidden text-left"
         style={{
           width: '100%',
