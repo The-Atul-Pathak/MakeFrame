@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
+import { AuthProvider } from '@/contexts/AuthProvider'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Root element #root not found in index.html')
@@ -12,7 +13,9 @@ createRoot(rootElement).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,
