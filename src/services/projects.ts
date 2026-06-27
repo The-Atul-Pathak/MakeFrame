@@ -102,6 +102,17 @@ export async function updateProject(id: string, input: SaveProjectInput): Promis
   return toProject(data)
 }
 
+export async function fetchProjectById(id: string): Promise<Project> {
+  await ensureProjectSession()
+  const { data, error } = await supabase
+    .from('projects')
+    .select('id,title,format,genres,logline,thumbnail_url,draft_number,created_at,updated_at')
+    .eq('id', id)
+    .single()
+  if (error) throw error
+  return toProject(data)
+}
+
 export async function saveProject(input: SaveProjectInput): Promise<Project> {
   const user = await ensureProjectSession()
   const projectId = crypto.randomUUID()
@@ -120,7 +131,6 @@ export async function saveProject(input: SaveProjectInput): Promise<Project> {
   if (insertError) throw insertError
 
   // Upload thumbnail after project exists (storage RLS checks ownership)
-  let thumbnailUrl: string | null = null
   if (input.thumbnailFile) {
     const ext = input.thumbnailFile.name.split('.').pop() ?? 'jpg'
     const path = `${projectId}/thumbnail.${ext}`
@@ -131,9 +141,10 @@ export async function saveProject(input: SaveProjectInput): Promise<Project> {
 
     if (!uploadError) {
       const { data: urlData } = supabase.storage.from('thumbnails').getPublicUrl(path)
-      thumbnailUrl = urlData.publicUrl
-
-      await supabase.from('projects').update({ thumbnail_url: thumbnailUrl }).eq('id', projectId)
+      await supabase
+        .from('projects')
+        .update({ thumbnail_url: urlData.publicUrl })
+        .eq('id', projectId)
     }
   }
 

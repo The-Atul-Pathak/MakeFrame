@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { IconDeviceTv } from '@tabler/icons-react'
 import ProjectCard from '@/components/shared/ProjectCard'
 import AddProjectCard from '@/components/shared/AddProjectCard'
@@ -40,7 +41,10 @@ function DashboardHeader() {
 }
 
 export default function Dashboard() {
-  const quote = useMemo(() => QUOTES[Math.floor(Math.random() * QUOTES.length)], [])
+  const navigate = useNavigate()
+  // Pick a quote once per mount. A lazy useState initializer runs exactly once,
+  // so it stays stable across re-renders (unlike Math.random() called in render).
+  const [quote] = useState(() => QUOTES[Math.floor(Math.random() * QUOTES.length)])
   const [projects, setProjects] = useState<Project[]>([])
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingProject, setEditingProject] = useState<Project | null>(null)
@@ -108,6 +112,7 @@ export default function Dashboard() {
                   key={p.id}
                   project={p}
                   onEdit={() => setEditingProject(p)}
+                  onOpen={() => navigate(`/project/${p.id}`)}
                 />
               ))}
               <AddProjectCard onClick={() => setShowCreateModal(true)} />
