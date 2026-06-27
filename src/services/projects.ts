@@ -28,19 +28,22 @@ function toProject(row: ProjectRow): Project {
   }
 }
 
-export async function ensureProjectSession() {
-  const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
-  if (sessionError) throw sessionError
-  if (sessionData.session) return sessionData.session.user
-
-  const { data, error } = await supabase.auth.signInAnonymously()
+/**
+ * Confirms a real (non-anonymous) signed-in user before talking to Supabase.
+ * `ProtectedRoute` is the primary gate — this is defense-in-depth so a stale
+ * client-side session produces a clear error instead of an opaque RLS denial.
+ * Uses `getUser()` rather than `getSession()` because it round-trips to the
+ * Auth server and verifies the JWT instead of trusting the local copy.
+ */
+async function requireUser() {
+  const { data, error } = await supabase.auth.getUser()
   if (error) throw error
-  if (!data.user) throw new Error('Supabase did not return a signed-in user.')
+  if (!data.user) throw new Error('You must be signed in to do that.')
   return data.user
 }
 
 export async function fetchProjects(): Promise<Project[]> {
-  await ensureProjectSession()
+  await requireUser()
 
   const { data, error } = await supabase
     .from('projects')
@@ -61,7 +64,7 @@ export interface SaveProjectInput {
 }
 
 export async function updateProject(id: string, input: SaveProjectInput): Promise<Project> {
-  await ensureProjectSession()
+  await requireUser()
 
   const { error: updateError } = await supabase
     .from('projects')
@@ -103,7 +106,7 @@ export async function updateProject(id: string, input: SaveProjectInput): Promis
 }
 
 export async function fetchProjectById(id: string): Promise<Project> {
-  await ensureProjectSession()
+  await requireUser()
   const { data, error } = await supabase
     .from('projects')
     .select('id,title,format,genres,logline,thumbnail_url,draft_number,created_at,updated_at')
@@ -114,7 +117,7 @@ export async function fetchProjectById(id: string): Promise<Project> {
 }
 
 export async function saveProject(input: SaveProjectInput): Promise<Project> {
-  const user = await ensureProjectSession()
+  const user = await requireUser()
   const projectId = crypto.randomUUID()
 
   const { error: insertError } = await supabase
