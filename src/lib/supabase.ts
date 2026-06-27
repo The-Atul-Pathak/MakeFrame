@@ -1,10 +1,40 @@
 import { createClient } from '@supabase/supabase-js'
 
-const LOCAL_SUPABASE_URL = 'http://127.0.0.1:54321'
-const LOCAL_SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+/**
+ * Supabase client.
+ *
+ * Configuration comes exclusively from environment variables so that the same
+ * build can target local, staging, and production without code changes. We fail
+ * fast on a missing/placeholder configuration rather than silently falling back
+ * to a hardcoded localhost instance — a misconfigured production deploy should
+ * crash loudly at startup, not quietly talk to the wrong database.
+ *
+ * For local development, copy `.env.example` to `.env` and fill in the values
+ * from `supabase status` (or your hosted project's API settings).
+ */
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+function assertConfigured(value: string | undefined, name: string): string {
+  if (!value || value.trim() === '') {
+    throw new Error(
+      `Missing required environment variable ${name}. ` +
+        `Copy .env.example to .env and provide a value (see README.md → Setup).`,
+    )
+  }
+  return value
+}
 
 export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL ?? LOCAL_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY ?? LOCAL_SUPABASE_ANON_KEY
+  assertConfigured(supabaseUrl, 'VITE_SUPABASE_URL'),
+  assertConfigured(supabaseAnonKey, 'VITE_SUPABASE_ANON_KEY'),
+  {
+    auth: {
+      // Persist the session in localStorage and transparently refresh tokens so
+      // users stay signed in across reloads and tabs.
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  },
 )
