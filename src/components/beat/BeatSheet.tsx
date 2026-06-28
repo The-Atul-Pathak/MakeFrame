@@ -6,6 +6,22 @@ import {
   IconWand,
   IconLayoutList,
 } from '@tabler/icons-react'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  useSortable,
+  verticalListSortingStrategy,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import type { Project } from '@/types/project'
 import type { Beat, BeatFramework } from '@/types/beatsheet'
 import type { BeatRemapping } from '@/types/framework'
@@ -18,6 +34,70 @@ import BeatCard from '@/components/beatsheet/BeatCard'
 import ActTimeline from '@/components/beatsheet/ActTimeline'
 import ValidationPanel from '@/components/beatsheet/ValidationPanel'
 import FrameworkSwitchModal from '@/components/beat/FrameworkSwitchModal'
+
+type ReorderBeat = (beatId: string, beforeId: string | null, afterId: string | null) => void
+
+// Drag-and-drop reordering within a single list (a framework slot, or the
+// unassigned section). Reordering across lists is handled separately by the
+// existing slot-reassign dropdown, so this only ever touches relative order
+// among the beats it's given.
+function SortableBeatList({
+  beats,
+  layout = 'list',
+  onReorder,
+  renderItem,
+}: {
+  beats: Beat[]
+  layout?: 'list' | 'grid'
+  onReorder: ReorderBeat
+  renderItem: (beat: Beat, dragHandleProps: React.HTMLAttributes<HTMLButtonElement>) => React.ReactNode
+}) {
+  const ids = beats.map(b => b.id)
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }))
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    const oldIndex = ids.indexOf(String(active.id))
+    const newIndex = ids.indexOf(String(over.id))
+    if (oldIndex === -1 || newIndex === -1) return
+    const reordered = arrayMove(ids, oldIndex, newIndex)
+    const pos = reordered.indexOf(String(active.id))
+    onReorder(String(active.id), reordered[pos - 1] ?? null, reordered[pos + 1] ?? null)
+  }
+
+  return (
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={ids} strategy={layout === 'grid' ? rectSortingStrategy : verticalListSortingStrategy}>
+        {beats.map(beat => (
+          <SortableBeatItem key={beat.id} id={beat.id}>
+            {dragHandleProps => renderItem(beat, dragHandleProps)}
+          </SortableBeatItem>
+        ))}
+      </SortableContext>
+    </DndContext>
+  )
+}
+
+function SortableBeatItem({
+  id,
+  children,
+}: {
+  id: string
+  children: (dragHandleProps: React.HTMLAttributes<HTMLButtonElement>) => React.ReactNode
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  }
+  return (
+    <div ref={setNodeRef} style={style}>
+      {children({ ...attributes, ...listeners } as React.HTMLAttributes<HTMLButtonElement>)}
+    </div>
+  )
+}
 
 // ── Framework selector ────────────────────────────────────────────────────────
 
@@ -228,20 +308,24 @@ function SlotSelect({
 
 function BeatSlotWrapper({
   beat,
+  projectId,
   framework,
   totalPages,
   hint,
   onChange,
   onDelete,
   onAssign,
+  dragHandleProps,
 }: {
   beat: Beat
+  projectId: string
   framework: BeatFramework
   totalPages: number
   hint: string
   onChange: (patch: Partial<Beat>) => void
   onDelete: () => void
   onAssign: (frameworkBeatId: string) => void
+  dragHandleProps?: React.HTMLAttributes<HTMLButtonElement>
 }) {
   const [hovered, setHovered] = useState(false)
 
@@ -276,28 +360,32 @@ function BeatSlotWrapper({
 
       <BeatCard
         beat={beat}
+        projectId={projectId}
         totalPages={totalPages}
         framework={framework}
         hint={hint}
         onChange={onChange}
         onDelete={onDelete}
+        dragHandleProps={dragHandleProps}
       />
 
-      {/* Slot reassign bar — shown on hover */}
+      {/* Slot reassign bar — shown on hover, just below the card so it never
+          covers the card's own footer (e.g. the delete button) */}
       {hovered && (
         <div
           style={{
             position: 'absolute',
-            bottom: -1,
+            top: '100%',
             left: 0,
             right: 0,
             display: 'flex',
             alignItems: 'center',
             gap: 6,
             padding: '4px 10px',
+            marginTop: 4,
             background: 'var(--color-surface-raised)',
-            borderTop: '0.5px solid var(--color-border-subtle)',
-            borderRadius: '0 0 10px 10px',
+            border: '0.5px solid var(--color-border-subtle)',
+            borderRadius: 8,
             zIndex: 3,
           }}
         >
@@ -318,6 +406,7 @@ function BeatSlotWrapper({
 // ── Timeline view (Save the Cat, Hero's Journey) ──────────────────────────────
 
 function TimelineView({
+  projectId,
   framework,
   beats,
   totalPages,
@@ -325,7 +414,9 @@ function TimelineView({
   onDeleteBeat,
   onAddBeat,
   onAssignBeat,
+  onReorderBeat,
 }: {
+  projectId: string
   framework: BeatFramework
   beats: Beat[]
   totalPages: number
@@ -333,6 +424,7 @@ function TimelineView({
   onDeleteBeat: (id: string) => void
   onAddBeat: (frameworkBeatId: string) => void
   onAssignBeat: (beatId: string, frameworkBeatId: string) => void
+  onReorderBeat: ReorderBeat
 }) {
   const def = FRAMEWORK_DEFS[framework]
   if (!def) return null
@@ -456,51 +548,57 @@ function TimelineView({
 
                     {/* Right: beats in this slot */}
                     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                      {slotBeats.map(beat => {
-                        const pageOutOfRange =
-                          slot.targetPageStart !== undefined &&
-                          (beat.pageStart < (slot.targetPageStart - 5) ||
-                           beat.pageStart > ((slot.targetPageEnd ?? slot.targetPageStart) + 5))
-                        return (
-                          <div key={beat.id} style={{ position: 'relative' }}>
-                            {pageOutOfRange && (
-                              <div
-                                style={{
-                                  position: 'absolute',
-                                  top: -8,
-                                  right: 10,
-                                  zIndex: 2,
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 4,
-                                  padding: '2px 7px',
-                                  background: 'var(--color-surface-raised)',
-                                  border: '0.5px solid var(--color-warning)',
-                                  borderRadius: 3,
-                                }}
-                              >
-                                <IconAlertTriangle size={8} style={{ color: 'var(--color-warning)' }} />
-                                <span
-                                  className="font-mono"
-                                  style={{ fontSize: '0.5rem', color: 'var(--color-warning)', letterSpacing: '0.04em' }}
+                      <SortableBeatList
+                        beats={slotBeats}
+                        onReorder={onReorderBeat}
+                        renderItem={(beat, dragHandleProps) => {
+                          const pageOutOfRange =
+                            slot.targetPageStart !== undefined &&
+                            (beat.pageStart < (slot.targetPageStart - 5) ||
+                             beat.pageStart > ((slot.targetPageEnd ?? slot.targetPageStart) + 5))
+                          return (
+                            <div style={{ position: 'relative' }}>
+                              {pageOutOfRange && (
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: -8,
+                                    right: 10,
+                                    zIndex: 2,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 4,
+                                    padding: '2px 7px',
+                                    background: 'var(--color-surface-raised)',
+                                    border: '0.5px solid var(--color-warning)',
+                                    borderRadius: 3,
+                                  }}
                                 >
-                                  p.{beat.pageStart} (target p.{slot.targetPageStart}
-                                  {slot.targetPageEnd !== slot.targetPageStart ? `–${slot.targetPageEnd}` : ''})
-                                </span>
-                              </div>
-                            )}
-                            <BeatSlotWrapper
-                              beat={beat}
-                              framework={framework}
-                              totalPages={totalPages}
-                              hint={hintMap[beat.name] ?? slot.description}
-                              onChange={patch => onUpdateBeat(beat.id, patch)}
-                              onDelete={() => onDeleteBeat(beat.id)}
-                              onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
-                            />
-                          </div>
-                        )
-                      })}
+                                  <IconAlertTriangle size={8} style={{ color: 'var(--color-warning)' }} />
+                                  <span
+                                    className="font-mono"
+                                    style={{ fontSize: '0.5rem', color: 'var(--color-warning)', letterSpacing: '0.04em' }}
+                                  >
+                                    p.{beat.pageStart} (target p.{slot.targetPageStart}
+                                    {slot.targetPageEnd !== slot.targetPageStart ? `–${slot.targetPageEnd}` : ''})
+                                  </span>
+                                </div>
+                              )}
+                              <BeatSlotWrapper
+                                beat={beat}
+                                projectId={projectId}
+                                framework={framework}
+                                totalPages={totalPages}
+                                hint={hintMap[beat.name] ?? slot.description}
+                                onChange={patch => onUpdateBeat(beat.id, patch)}
+                                onDelete={() => onDeleteBeat(beat.id)}
+                                onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
+                                dragHandleProps={dragHandleProps}
+                              />
+                            </div>
+                          )
+                        }}
+                      />
 
                       {/* Add beat to this slot */}
                       <button
@@ -547,6 +645,7 @@ function TimelineView({
 // ── Columns view (3-Act) ──────────────────────────────────────────────────────
 
 function ColumnsView({
+  projectId,
   framework,
   beats,
   totalPages,
@@ -554,7 +653,9 @@ function ColumnsView({
   onDeleteBeat,
   onAddBeat,
   onAssignBeat,
+  onReorderBeat,
 }: {
+  projectId: string
   framework: BeatFramework
   beats: Beat[]
   totalPages: number
@@ -562,6 +663,7 @@ function ColumnsView({
   onDeleteBeat: (id: string) => void
   onAddBeat: (frameworkBeatId: string) => void
   onAssignBeat: (beatId: string, frameworkBeatId: string) => void
+  onReorderBeat: ReorderBeat
 }) {
   const def = FRAMEWORK_DEFS[framework]
   if (!def) return null
@@ -628,18 +730,23 @@ function ColumnsView({
 
             {/* Beats */}
             <div style={{ padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {slotBeats.map(beat => (
-                <BeatSlotWrapper
-                  key={beat.id}
-                  beat={beat}
-                  framework={framework}
-                  totalPages={totalPages}
-                  hint={hintMap[beat.name] ?? slot.description}
-                  onChange={patch => onUpdateBeat(beat.id, patch)}
-                  onDelete={() => onDeleteBeat(beat.id)}
-                  onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
-                />
-              ))}
+              <SortableBeatList
+                beats={slotBeats}
+                onReorder={onReorderBeat}
+                renderItem={(beat, dragHandleProps) => (
+                  <BeatSlotWrapper
+                    beat={beat}
+                    projectId={projectId}
+                    framework={framework}
+                    totalPages={totalPages}
+                    hint={hintMap[beat.name] ?? slot.description}
+                    onChange={patch => onUpdateBeat(beat.id, patch)}
+                    onDelete={() => onDeleteBeat(beat.id)}
+                    onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
+                    dragHandleProps={dragHandleProps}
+                  />
+                )}
+              />
 
               {/* Add beat */}
               <button
@@ -714,6 +821,7 @@ function ComingSoonView({ frameworkName }: { frameworkName: string }) {
 // ── Unassigned beats ──────────────────────────────────────────────────────────
 
 function UnassignedSection({
+  projectId,
   beats,
   framework,
   totalPages,
@@ -721,7 +829,9 @@ function UnassignedSection({
   onDeleteBeat,
   onAssignBeat,
   onAutoAssignAll,
+  onReorderBeat,
 }: {
+  projectId: string
   beats: Beat[]
   framework: BeatFramework
   totalPages: number
@@ -729,6 +839,7 @@ function UnassignedSection({
   onDeleteBeat: (id: string) => void
   onAssignBeat: (beatId: string, frameworkBeatId: string) => void
   onAutoAssignAll: () => void
+  onReorderBeat: ReorderBeat
 }) {
   if (beats.length === 0) return null
   return (
@@ -788,18 +899,24 @@ function UnassignedSection({
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: 16 }}>
-        {beats.map(beat => (
-          <BeatSlotWrapper
-            key={beat.id}
-            beat={beat}
-            framework={framework}
-            totalPages={totalPages}
-            hint=""
-            onChange={patch => onUpdateBeat(beat.id, patch)}
-            onDelete={() => onDeleteBeat(beat.id)}
-            onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
-          />
-        ))}
+        <SortableBeatList
+          beats={beats}
+          layout="grid"
+          onReorder={onReorderBeat}
+          renderItem={(beat, dragHandleProps) => (
+            <BeatSlotWrapper
+              beat={beat}
+              projectId={projectId}
+              framework={framework}
+              totalPages={totalPages}
+              hint=""
+              onChange={patch => onUpdateBeat(beat.id, patch)}
+              onDelete={() => onDeleteBeat(beat.id)}
+              onAssign={fwBeatId => onAssignBeat(beat.id, fwBeatId)}
+              dragHandleProps={dragHandleProps}
+            />
+          )}
+        />
       </div>
     </div>
   )
@@ -824,6 +941,7 @@ export default function BeatSheet({ project }: Props) {
     addBeat,
     deleteBeat,
     assignBeatToSlot,
+    reorderBeat,
   } = useBeatSheetStore()
 
   const sheet = beatSheets[project.id] ?? null
@@ -1057,6 +1175,7 @@ export default function BeatSheet({ project }: Props) {
           {/* Framework view */}
           {visualShape === 'timeline' && (
             <TimelineView
+              projectId={project.id}
               framework={fw}
               beats={sortedBeats.filter(b => b.frameworkBeatId)}
               totalPages={sheet.totalPages}
@@ -1064,11 +1183,13 @@ export default function BeatSheet({ project }: Props) {
               onDeleteBeat={id => deleteBeat(project.id, id)}
               onAddBeat={handleAddToSlot}
               onAssignBeat={(beatId, fwBeatId) => assignBeatToSlot(project.id, beatId, fwBeatId)}
+              onReorderBeat={(beatId, beforeId, afterId) => reorderBeat(project.id, beatId, beforeId, afterId)}
             />
           )}
 
           {visualShape === 'columns' && (
             <ColumnsView
+              projectId={project.id}
               framework={fw}
               beats={sortedBeats.filter(b => b.frameworkBeatId)}
               totalPages={sheet.totalPages}
@@ -1076,6 +1197,7 @@ export default function BeatSheet({ project }: Props) {
               onDeleteBeat={id => deleteBeat(project.id, id)}
               onAddBeat={handleAddToSlot}
               onAssignBeat={(beatId, fwBeatId) => assignBeatToSlot(project.id, beatId, fwBeatId)}
+              onReorderBeat={(beatId, beforeId, afterId) => reorderBeat(project.id, beatId, beforeId, afterId)}
             />
           )}
 
@@ -1085,6 +1207,7 @@ export default function BeatSheet({ project }: Props) {
 
           {/* Unassigned beats */}
           <UnassignedSection
+            projectId={project.id}
             beats={unassigned}
             framework={fw}
             totalPages={sheet.totalPages}
@@ -1092,6 +1215,7 @@ export default function BeatSheet({ project }: Props) {
             onDeleteBeat={id => deleteBeat(project.id, id)}
             onAssignBeat={(beatId, fwBeatId) => assignBeatToSlot(project.id, beatId, fwBeatId)}
             onAutoAssignAll={handleAutoAssignAll}
+            onReorderBeat={(beatId, beforeId, afterId) => reorderBeat(project.id, beatId, beforeId, afterId)}
           />
         </div>
 
