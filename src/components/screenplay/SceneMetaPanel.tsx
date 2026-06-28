@@ -1,4 +1,5 @@
 import type { Scene, IntExt, TimeOfDay, ActNumber } from '@/types'
+import CharacterSelect from '@/components/shared/CharacterSelect'
 
 const INT_EXT_OPTIONS: IntExt[] = ['INT', 'EXT', 'INT/EXT']
 const TIME_OPTIONS: TimeOfDay[] = ['DAY', 'NIGHT', 'DAWN', 'DUSK', 'CONTINUOUS', 'LATER', 'MOMENTS LATER']
@@ -295,12 +296,14 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
         </div>
 
         {/* Characters */}
-        <TagInput
-          label="CHARACTERS"
-          values={scene.characters}
-          onChange={chars => onChange({ characters: chars })}
-          placeholder="Add character…"
-        />
+        <div>
+          <FieldLabel label="CHARACTERS" />
+          <CharacterSelect
+            projectId={scene.projectId}
+            values={scene.characters}
+            onChange={chars => onChange({ characters: chars })}
+          />
+        </div>
 
         {/* Props */}
         <TagInput

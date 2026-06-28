@@ -1,17 +1,20 @@
 import { useState, useRef, useEffect } from 'react'
-import { IconTrash, IconLock, IconCheck, IconChevronDown, IconChevronUp, IconPlus, IconX } from '@tabler/icons-react'
+import { IconTrash, IconLock, IconCheck, IconChevronDown, IconChevronUp, IconGripVertical } from '@tabler/icons-react'
 import type { Beat, BeatStatus } from '@/types/beatsheet'
 import { EMOTIONAL_TONES, TONE_COLOR_VAR } from '@/types/beatsheet'
 import { FRAMEWORKS } from '@/utils/beatSheetFrameworks'
 import type { BeatFramework } from '@/types/beatsheet'
+import CharacterSelect from '@/components/shared/CharacterSelect'
 
 interface Props {
   beat: Beat
+  projectId: string
   totalPages: number
   framework: BeatFramework
   hint: string
   onChange: (patch: Partial<Beat>) => void
   onDelete: () => void
+  dragHandleProps?: React.HTMLAttributes<HTMLButtonElement>
 }
 
 const STATUS_COLOR: Record<BeatStatus, string> = {
@@ -78,9 +81,8 @@ function AutoTextarea({
   )
 }
 
-export default function BeatCard({ beat, totalPages, framework, hint, onChange, onDelete }: Props) {
+export default function BeatCard({ beat, projectId, totalPages, framework, hint, onChange, onDelete, dragHandleProps }: Props) {
   const [notesOpen, setNotesOpen] = useState(false)
-  const [charInput, setCharInput]  = useState('')
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [hovered, setHovered]     = useState(false)
 
@@ -88,17 +90,6 @@ export default function BeatCard({ beat, totalPages, framework, hint, onChange, 
 
   const handleStatusCycle = () => {
     onChange({ status: STATUS_NEXT[beat.status] })
-  }
-
-  const addCharacter = () => {
-    const trimmed = charInput.trim()
-    if (!trimmed || beat.characters.includes(trimmed)) return
-    onChange({ characters: [...beat.characters, trimmed] })
-    setCharInput('')
-  }
-
-  const removeCharacter = (c: string) => {
-    onChange({ characters: beat.characters.filter(x => x !== c) })
   }
 
   return (
@@ -125,6 +116,26 @@ export default function BeatCard({ beat, totalPages, framework, hint, onChange, 
           borderBottom: '0.5px solid var(--color-border-subtle)',
         }}
       >
+        {/* Drag handle */}
+        {dragHandleProps && (
+          <button
+            {...dragHandleProps}
+            title="Drag to reorder"
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'grab',
+              color: 'var(--color-text-tertiary)',
+              lineHeight: 0,
+              padding: 0,
+              flexShrink: 0,
+              touchAction: 'none',
+            }}
+          >
+            <IconGripVertical size={13} />
+          </button>
+        )}
+
         {/* Beat number */}
         <span
           className="font-mono"
@@ -305,56 +316,11 @@ export default function BeatCard({ beat, totalPages, framework, hint, onChange, 
 
       {/* Characters */}
       <div style={{ padding: '0 14px 8px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: beat.characters.length > 0 ? 6 : 0 }}>
-          {beat.characters.map(c => (
-            <span
-              key={c}
-              className="font-mono"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-                fontSize: '0.6rem',
-                letterSpacing: '0.04em',
-                color: 'var(--color-text-secondary)',
-                background: 'var(--color-surface-raised)',
-                padding: '2px 6px',
-                borderRadius: 3,
-              }}
-            >
-              {c}
-              <button
-                onClick={() => removeCharacter(c)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', lineHeight: 0, padding: 0 }}
-              >
-                <IconX size={8} />
-              </button>
-            </span>
-          ))}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <input
-            value={charInput}
-            onChange={e => setCharInput(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addCharacter() } }}
-            placeholder="Add character…"
-            style={{
-              flex: 1,
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              color: 'var(--color-text-secondary)',
-              fontFamily: '"DM Mono", monospace',
-              fontSize: '0.65rem',
-            }}
-          />
-          <button
-            onClick={addCharacter}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', lineHeight: 0, padding: 2 }}
-          >
-            <IconPlus size={11} />
-          </button>
-        </div>
+        <CharacterSelect
+          projectId={projectId}
+          values={beat.characters}
+          onChange={characters => onChange({ characters })}
+        />
       </div>
 
       {/* Notes (collapsible) */}

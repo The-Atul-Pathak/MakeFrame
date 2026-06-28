@@ -356,6 +356,7 @@ export default function ShotList({ project }: Props) {
         <ShotModal
           shot={null}
           scenes={projectScenes}
+          projectId={project.id}
           onSave={handleAddShot}
           onClose={() => setAddingShot(false)}
           mode="add"
@@ -367,6 +368,7 @@ export default function ShotList({ project }: Props) {
         <ShotModal
           shot={editingShot}
           scenes={projectScenes}
+          projectId={project.id}
           onSave={handleEditShot}
           onClose={() => setEditingShot(null)}
           mode="edit"

@@ -16,11 +16,16 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
   const [tool, setTool] = useState<Tool>('pencil')
   const [drawing, setDrawing] = useState(false)
   const lastPoint = useRef<{ x: number; y: number } | null>(null)
+  // Tracks the dataUrl already painted onto the canvas so a redraw triggered by our
+  // own onChange round-trip doesn't flicker, while a different instance (e.g. the
+  // grid thumbnail) still picks up changes made elsewhere (e.g. the panel modal).
+  const lastDrawnRef = useRef<string | null>(null)
 
-  // Load existing dataUrl into canvas
+  // Load dataUrl into canvas whenever it changes (panel switched, or updated elsewhere)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    if (dataUrl === lastDrawnRef.current) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
@@ -29,10 +34,15 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
 
     if (dataUrl) {
       const img = new Image()
-      img.onload = () => ctx.drawImage(img, 0, 0)
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0)
+        lastDrawnRef.current = dataUrl
+      }
       img.src = dataUrl
+    } else {
+      lastDrawnRef.current = null
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dataUrl, width, height])
 
   const getPos = (e: React.MouseEvent | React.TouchEvent) => {
     const canvas = canvasRef.current
@@ -97,7 +107,11 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
     setDrawing(false)
     lastPoint.current = null
     const canvas = canvasRef.current
-    if (canvas) onChange(canvas.toDataURL())
+    if (canvas) {
+      const next = canvas.toDataURL()
+      lastDrawnRef.current = next
+      onChange(next)
+    }
   }
 
   const clearCanvas = () => {
@@ -107,7 +121,9 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
     if (!ctx) return
     ctx.fillStyle = '#f5f3ef'
     ctx.fillRect(0, 0, width, height)
-    onChange(canvas.toDataURL())
+    const next = canvas.toDataURL()
+    lastDrawnRef.current = next
+    onChange(next)
   }
 
   return (

@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { IconX } from '@tabler/icons-react'
 import type { Shot, Scene } from '@/types'
+import CharacterSelect from '@/components/shared/CharacterSelect'
 
 interface Props {
   shot: Shot | null
   scenes: Scene[]
+  projectId: string
   onSave: (patch: Partial<Shot>) => void
   onClose: () => void
   mode: 'edit' | 'add'
@@ -51,57 +53,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-function TagInput({ values, onChange, placeholder }: { values: string[]; onChange: (v: string[]) => void; placeholder: string }) {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault()
-      const val = (e.currentTarget as HTMLInputElement).value.trim()
-      if (val && !values.includes(val)) {
-        onChange([...values, val])
-        ;(e.currentTarget as HTMLInputElement).value = ''
-      }
-    } else if (e.key === 'Backspace' && (e.currentTarget as HTMLInputElement).value === '' && values.length > 0) {
-      onChange(values.slice(0, -1))
-    }
-  }
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 4,
-        padding: '5px 6px',
-        background: 'var(--color-surface-raised)',
-        border: '0.5px solid var(--color-border-subtle)',
-        borderRadius: 5,
-        minHeight: 34,
-        alignItems: 'center',
-      }}
-    >
-      {values.map(v => (
-        <span
-          key={v}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 3,
-            padding: '1px 6px',
-            background: 'var(--color-surface)',
-            border: '0.5px solid var(--color-border)',
-            borderRadius: 3,
-            fontSize: '0.65rem',
-            color: 'var(--color-text-secondary)',
-            fontFamily: '"DM Mono", monospace',
-          }}
-        >
-          {v}
-          <button onClick={() => onChange(values.filter(x => x !== v))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', padding: 0, lineHeight: 0, fontSize: '0.7rem' }}>×</button>
-        </span>
-      ))}
-      <input placeholder={placeholder} onKeyDown={handleKeyDown} style={{ background: 'transparent', border: 'none', outline: 'none', fontSize: '0.72rem', color: 'var(--color-text-primary)', flex: 1, minWidth: 60, fontFamily: 'Outfit, sans-serif' }} />
-    </div>
-  )
-}
-
-export default function ShotModal({ shot, scenes, onSave, onClose, mode }: Props) {
+export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mode }: Props) {
   const [draft, setDraft] = useState<Partial<Shot>>(shot ?? {
     shotType: 'MS',
     movement: 'Static',
@@ -270,7 +222,7 @@ export default function ShotModal({ shot, scenes, onSave, onClose, mode }: Props
           {/* Cast — full width */}
           <div style={{ gridColumn: '1 / -1' }}>
             <Field label="CAST">
-              <TagInput values={draft.cast ?? []} onChange={cast => patch('cast', cast)} placeholder="Add character…" />
+              <CharacterSelect projectId={projectId} values={draft.cast ?? []} onChange={cast => patch('cast', cast)} />
             </Field>
           </div>
 

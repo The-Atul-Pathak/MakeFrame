@@ -1,12 +1,3 @@
-// ── Project ──────────────────────────────────────────────────────────────────
-
-export interface Project {
-  id: string
-  title: string
-  createdAt: string
-  updatedAt: string
-}
-
 // ── Screenplay ───────────────────────────────────────────────────────────────
 
 export type ScreenplayElementType =

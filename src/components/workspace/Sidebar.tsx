@@ -26,11 +26,11 @@ interface Props {
 }
 
 const NAV_ITEMS: NavItem[] = [
+  { id: 'characters', label: 'Characters',  icon: <IconUser size={15} />,       description: 'Character bibles'   },
   { id: 'beatsheet',  label: 'Beat Sheet',  icon: <IconLayoutList size={15} />, description: 'Story structure' },
   { id: 'screenplay', label: 'Screenplay',  icon: <IconFileText size={15} />,   description: 'Write your script'  },
   { id: 'storyboard', label: 'Storyboard',  icon: <IconMovie size={15} />,      description: 'Shot-by-shot panels' },
   { id: 'shotlist',   label: 'Shot List',   icon: <IconList size={15} />,       description: 'Production list'    },
-  { id: 'characters', label: 'Characters',  icon: <IconUser size={15} />,       description: 'Character bibles'   },
 ]
 
 export default function Sidebar({ project, activeModule, onModuleChange, onBack }: Props) {
