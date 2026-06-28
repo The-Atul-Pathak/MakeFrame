@@ -1,34 +1,74 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SectionLabel from './SectionLabel'
+import { fetchRecentSceneActivity } from '@/services/scenes'
+import { fetchRecentPanelActivity } from '@/services/panels'
+import { relativeTime } from '@/utils/relativeTime'
 
 interface RecentItem {
+  id: string
   type: 'scene' | 'panel'
-  label: string
+  projectId: string
   projectTitle: string
-  relativeTime: string
+  label: string
+  updatedAt: string
 }
 
-const RECENT_ITEMS: RecentItem[] = [
-  { type: 'scene', label: 'INT. WAREHOUSE — NIGHT',  projectTitle: 'The Long Way Home', relativeTime: '2 days ago' },
-  { type: 'scene', label: 'EXT. ROOFTOP — DAY',      projectTitle: 'Neon Requiem',       relativeTime: '4 days ago' },
-  { type: 'scene', label: 'INT. KITCHEN — DAWN',     projectTitle: 'The Long Way Home', relativeTime: '1 week ago' },
-  { type: 'panel', label: 'Panel 03 — WS',           projectTitle: 'Neon Requiem',       relativeTime: '1 week ago' },
-]
+const FEED_LIMIT = 4
 
 export default function RecentlyEdited() {
+  const navigate = useNavigate()
+  const [items, setItems] = useState<RecentItem[] | null>(null)
+
+  useEffect(() => {
+    Promise.all([fetchRecentSceneActivity(FEED_LIMIT), fetchRecentPanelActivity(FEED_LIMIT)])
+      .then(([scenes, panels]) => {
+        const merged: RecentItem[] = [
+          ...scenes.map((s) => ({ id: s.id, type: 'scene' as const, projectId: s.projectId, projectTitle: s.projectTitle, label: s.label, updatedAt: s.updatedAt })),
+          ...panels.map((p) => ({ id: p.id, type: 'panel' as const, projectId: p.projectId, projectTitle: p.projectTitle, label: p.label, updatedAt: p.updatedAt })),
+        ]
+        merged.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+        setItems(merged.slice(0, FEED_LIMIT))
+      })
+      .catch(() => setItems([]))
+  }, [])
+
   return (
     <div>
       <SectionLabel>Recently edited</SectionLabel>
       <div style={{ marginTop: 20 }}>
-        {RECENT_ITEMS.map((item, i) => (
-          <RecentRow key={i} item={item} isLast={i === RECENT_ITEMS.length - 1} />
+        {items === null && (
+          <p className="font-ui" style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
+            Loading…
+          </p>
+        )}
+        {items?.length === 0 && (
+          <p className="font-ui" style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
+            No activity yet. Open a project to get started.
+          </p>
+        )}
+        {items?.map((item, i) => (
+          <RecentRow
+            key={item.id}
+            item={item}
+            isLast={i === items.length - 1}
+            onClick={() => navigate(`/project/${item.projectId}`)}
+          />
         ))}
       </div>
     </div>
   )
 }
 
-function RecentRow({ item, isLast }: { item: RecentItem; isLast: boolean }) {
+function RecentRow({
+  item,
+  isLast,
+  onClick,
+}: {
+  item: RecentItem
+  isLast: boolean
+  onClick: () => void
+}) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -41,7 +81,7 @@ function RecentRow({ item, isLast }: { item: RecentItem; isLast: boolean }) {
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => console.log('open recent', item.label)}
+      onClick={onClick}
     >
       <span
         className="font-mono"
@@ -60,7 +100,7 @@ function RecentRow({ item, isLast }: { item: RecentItem; isLast: boolean }) {
           {item.projectTitle}
         </span>
         <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
-          {item.relativeTime}
+          {relativeTime(item.updatedAt)}
         </span>
       </div>
     </button>
