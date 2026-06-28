@@ -65,11 +65,13 @@ account, which isn't something that can be decided or provisioned automatically.
    - `VITE_SUPABASE_ANON_KEY`
    - (optional, Phase E) `VITE_SENTRY_DSN`, `VITE_APP_ENV`
 4. SPA routing: Cloudflare Pages needs a fallback so client-side routes
-   (`/login`, `/project/:id`, etc.) don't 404 on direct load or refresh. Add
-   `public/_redirects` containing:
-   ```
-   /*    /index.html   200
-   ```
+   (`/login`, `/project/:id`, etc.) don't 404 on direct load or refresh. Handled by
+   `public/_redirects` (already in the repo).
+5. Security headers (CSP, HSTS, X-Frame-Options, etc.) are set via `public/_headers`
+   (already in the repo) — Cloudflare Pages applies these automatically on deploy, no
+   dashboard configuration needed. The CSP's `connect-src`/`img-src` allow
+   `https://*.supabase.co`; if you self-host Supabase instead, update those directives
+   to match your Supabase URL's domain.
 
 ## CI/CD
 

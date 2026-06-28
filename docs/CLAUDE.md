@@ -10,7 +10,7 @@ Vite + React 18 + TypeScript + Tailwind CSS + Zustand + Supabase Auth/Postgres/S
 
 ## Project structure
 src/components/{screenplay|storyboard|shotlist|shared}/
-src/store/ → Zustand slices (projectSlice, sceneSlice, panelSlice, shotSlice)
+src/store/ → Zustand slices (sceneSlice, panelSlice, shotSlice, characterSlice, beatSheetSlice, syncStatusSlice)
 src/types/ → all TypeScript interfaces
 src/utils/ → formatters, calculators
 
