@@ -1,7 +1,7 @@
-export { useProjectStore } from './projectSlice'
 export { useSceneStore } from './sceneSlice'
 export { usePanelStore } from './panelSlice'
 export { useShotStore } from './shotSlice'
 export { useUIStore } from './uiSlice'
 export { useBeatSheetStore } from './beatSheetSlice'
 export { useCharacterStore } from './characterSlice'
+export { useSyncStatusStore } from './syncStatusSlice'

@@ -36,7 +36,7 @@ export default function Storyboard({ project }: Props) {
 
   const handleAddPanel = () => {
     if (!activeScene) return
-    const panel = createPanel(activeScene.id)
+    const panel = createPanel(project.id, activeScene.id)
     setExpandedPanelId(panel.id)
   }
 
@@ -188,7 +188,7 @@ export default function Storyboard({ project }: Props) {
                 key={panel.id}
                 panel={panel}
                 index={i}
-                onUpdate={patch => updatePanel(panel.id, patch)}
+                onUpdate={patch => updatePanel(project.id, panel.id, patch)}
                 onDelete={() => deletePanel(panel.id)}
                 onExpand={() => setExpandedPanelId(panel.id)}
               />
@@ -234,7 +234,7 @@ export default function Storyboard({ project }: Props) {
           scene={activeScene}
           panelIndex={expandedIdx}
           totalPanels={sortedPanels.length}
-          onUpdate={patch => updatePanel(expandedPanel.id, patch)}
+          onUpdate={patch => updatePanel(project.id, expandedPanel.id, patch)}
           onClose={() => setExpandedPanelId(null)}
           onPrev={() => {
             if (expandedIdx > 0) setExpandedPanelId(sortedPanels[expandedIdx - 1].id)

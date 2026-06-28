@@ -1,14 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense, lazy } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { IconDeviceTv, IconX } from '@tabler/icons-react'
 import type { Project } from '@/types/project'
 import { fetchProjectById } from '@/services/projects'
 import Sidebar, { type WorkspaceModule } from '@/components/workspace/Sidebar'
-import BeatSheet from '@/pages/BeatSheet'
-import Screenplay from '@/pages/Screenplay'
-import Storyboard from '@/pages/Storyboard'
-import ShotList from '@/pages/ShotList'
-import Characters from '@/pages/Characters'
+import RouteLoadingFallback from '@/components/shared/RouteLoadingFallback'
+import { useCharacterStore } from '@/store/characterSlice'
+import { useSceneStore } from '@/store/sceneSlice'
+import { useShotStore } from '@/store/shotSlice'
+import { usePanelStore } from '@/store/panelSlice'
+import { useBeatSheetStore } from '@/store/beatSheetSlice'
+import { useSyncStatusStore } from '@/store/syncStatusSlice'
+
+const BeatSheet = lazy(() => import('@/pages/BeatSheet'))
+const Screenplay = lazy(() => import('@/pages/Screenplay'))
+const Storyboard = lazy(() => import('@/pages/Storyboard'))
+const ShotList = lazy(() => import('@/pages/ShotList'))
+const Characters = lazy(() => import('@/pages/Characters'))
 
 // ── Leave-project confirmation modal ─────────────────────────────────────────
 
@@ -231,23 +239,27 @@ export default function ProjectWorkspace() {
 
   useEffect(() => {
     if (!projectId) { navigate('/'); return }
-    fetchProjectById(projectId)
-      .then(p => { setProject(p); setLoading(false) })
+    Promise.all([
+      fetchProjectById(projectId),
+      useCharacterStore.getState().loadForProject(projectId),
+      useSceneStore.getState().loadForProject(projectId),
+      useShotStore.getState().loadForProject(projectId),
+      usePanelStore.getState().loadForProject(projectId),
+      useBeatSheetStore.getState().loadForProject(projectId),
+    ])
+      .then(([p]) => { setProject(p); setLoading(false) })
       .catch(e => { setError(e.message); setLoading(false) })
   }, [projectId]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const syncError = useSyncStatusStore(s => s.error)
+  const clearSyncError = useSyncStatusStore(s => s.clearError)
 
   const handleLogoClick = () => setShowLeaveModal(true)
   const handleLeaveConfirm = () => navigate('/')
   const handleLeaveCancel  = () => setShowLeaveModal(false)
 
   if (loading) {
-    return (
-      <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span className="font-mono" style={{ fontSize: '0.7rem', color: 'var(--color-text-tertiary)' }}>
-          Loading project…
-        </span>
-      </div>
-    )
+    return <RouteLoadingFallback label="Loading project…" />
   }
 
   if (error || !project) {
@@ -274,6 +286,29 @@ export default function ProjectWorkspace() {
         onLogoClick={handleLogoClick}
       />
 
+      {syncError && (
+        <div
+          style={{
+            background: 'var(--color-danger)',
+            color: 'var(--color-background)',
+            padding: '8px 24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            fontSize: '0.8rem',
+            flexShrink: 0,
+          }}
+        >
+          <span style={{ flex: 1 }}>{syncError}</span>
+          <button
+            onClick={clearSyncError}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-background)', lineHeight: 0 }}
+          >
+            <IconX size={13} />
+          </button>
+        </div>
+      )}
+
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         <Sidebar
           project={project}
@@ -283,11 +318,13 @@ export default function ProjectWorkspace() {
         />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--color-background)' }}>
-          {activeModule === 'beatsheet'  && <BeatSheet  project={project} />}
-          {activeModule === 'screenplay' && <Screenplay project={project} />}
-          {activeModule === 'storyboard' && <Storyboard project={project} />}
-          {activeModule === 'shotlist'   && <ShotList   project={project} />}
-          {activeModule === 'characters' && <Characters project={project} />}
+          <Suspense fallback={<RouteLoadingFallback />}>
+            {activeModule === 'beatsheet'  && <BeatSheet  project={project} />}
+            {activeModule === 'screenplay' && <Screenplay project={project} />}
+            {activeModule === 'storyboard' && <Storyboard project={project} />}
+            {activeModule === 'shotlist'   && <ShotList   project={project} />}
+            {activeModule === 'characters' && <Characters project={project} />}
+          </Suspense>
         </main>
       </div>
 
