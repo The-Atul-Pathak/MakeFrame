@@ -5,6 +5,9 @@ import './index.css'
 import App from './App'
 import ErrorBoundary from '@/components/shared/ErrorBoundary'
 import { AuthProvider } from '@/contexts/AuthProvider'
+import { initSentry } from '@/lib/sentry'
+
+initSentry()
 
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Root element #root not found in index.html')

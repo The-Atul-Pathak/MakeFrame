@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { Sentry } from '@/lib/sentry'
 
 interface SyncStatusState {
   error: string | null
@@ -17,3 +18,10 @@ export const useSyncStatusStore = create<SyncStatusState>()((set) => ({
   setError: (message) => set({ error: message }),
   clearError: () => set({ error: null }),
 }))
+
+/** Shared `.catch()` handler for every store's fire-and-forget background write. */
+export function reportSyncError(err: unknown) {
+  const message = err instanceof Error ? err.message : 'Failed to save changes.'
+  useSyncStatusStore.getState().setError(message)
+  Sentry.captureException(err, { tags: { source: 'background-sync' } })
+}

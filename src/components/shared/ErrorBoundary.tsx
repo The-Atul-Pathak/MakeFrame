@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { Sentry } from '@/lib/sentry'
 
 interface Props {
   children: ReactNode
@@ -15,8 +16,7 @@ interface State {
  * fallback instead of unmounting the whole app to a blank screen.
  *
  * React only surfaces render/lifecycle errors here — event-handler and async
- * errors must still be handled where they occur. In Phase E this is where we
- * forward `error`/`info` to the error-reporting service (e.g. Sentry).
+ * errors must still be handled where they occur.
  */
 export class ErrorBoundary extends Component<Props, State> {
   state: State = { error: null }
@@ -26,8 +26,8 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    // Replace with structured error reporting in Phase E.
     console.error('Uncaught render error:', error, info.componentStack)
+    Sentry.captureException(error, { contexts: { react: { componentStack: info.componentStack } } })
   }
 
   reset = () => this.setState({ error: null })

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { Panel, ShotType, CameraMovement } from '@/types'
 import * as panelsService from '@/services/panels'
-import { useSyncStatusStore } from '@/store/syncStatusSlice'
+import { reportSyncError } from '@/store/syncStatusSlice'
 import { debouncedPatch, debouncedRun } from '@/utils/debouncedPersist'
 
 interface PanelState {
@@ -14,10 +14,6 @@ interface PanelState {
   flagNeedsReview: (panelId: string) => void
   clearNeedsReview: (panelId: string) => void
   getPanelsForScene: (sceneId: string) => Panel[]
-}
-
-function reportError(err: unknown) {
-  useSyncStatusStore.getState().setError(err instanceof Error ? err.message : 'Failed to save changes.')
 }
 
 const defaultPanel = (sceneId: string, number: number): Panel => ({
@@ -49,7 +45,7 @@ export const usePanelStore = create<PanelState>()((set, get) => ({
     const existing = get().panels.filter((p) => p.sceneId === sceneId)
     const panel: Panel = { ...defaultPanel(sceneId, existing.length + 1), ...overrides }
     set((s) => ({ panels: [...s.panels, panel] }))
-    panelsService.insertPanel(panel).catch(reportError)
+    panelsService.insertPanel(panel).catch(reportSyncError)
     return panel
   },
 
@@ -66,21 +62,21 @@ export const usePanelStore = create<PanelState>()((set, get) => ({
         debouncedRun(
           `panel-sketch:${id}`,
           () => panelsService.uploadSketch(projectId, id, sketchDataUrl).then(() => undefined),
-          reportError,
+          reportSyncError,
           1500,
         )
       }
       if (Object.keys(rest).length === 0) return
-      debouncedPatch(`panel:${id}`, rest, (merged) => panelsService.updatePanelRow(id, merged), reportError)
+      debouncedPatch(`panel:${id}`, rest, (merged) => panelsService.updatePanelRow(id, merged), reportSyncError)
       return
     }
 
-    debouncedPatch(`panel:${id}`, patch, (merged) => panelsService.updatePanelRow(id, merged), reportError)
+    debouncedPatch(`panel:${id}`, patch, (merged) => panelsService.updatePanelRow(id, merged), reportSyncError)
   },
 
   deletePanel: (id) => {
     set((s) => ({ panels: s.panels.filter((p) => p.id !== id) }))
-    panelsService.deletePanelRow(id).catch(reportError)
+    panelsService.deletePanelRow(id).catch(reportSyncError)
   },
 
   reorderPanels: (sceneId, panels) => {
@@ -88,7 +84,7 @@ export const usePanelStore = create<PanelState>()((set, get) => ({
       panels: [...s.panels.filter((p) => p.sceneId !== sceneId), ...panels],
     }))
     panels.forEach((panel, idx) => {
-      panelsService.updatePanelRow(panel.id, { number: idx + 1 }).catch(reportError)
+      panelsService.updatePanelRow(panel.id, { number: idx + 1 }).catch(reportSyncError)
     })
   },
 
@@ -98,7 +94,7 @@ export const usePanelStore = create<PanelState>()((set, get) => ({
         p.id === panelId ? { ...p, needsReview: true } : p
       ),
     }))
-    panelsService.updatePanelRow(panelId, { needsReview: true }).catch(reportError)
+    panelsService.updatePanelRow(panelId, { needsReview: true }).catch(reportSyncError)
   },
 
   clearNeedsReview: (panelId) => {
@@ -107,7 +103,7 @@ export const usePanelStore = create<PanelState>()((set, get) => ({
         p.id === panelId ? { ...p, needsReview: false } : p
       ),
     }))
-    panelsService.updatePanelRow(panelId, { needsReview: false }).catch(reportError)
+    panelsService.updatePanelRow(panelId, { needsReview: false }).catch(reportSyncError)
   },
 
   getPanelsForScene: (sceneId) =>

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { Shot, IntExt, ShotType, CameraMovement } from '@/types'
 import * as shotsService from '@/services/shots'
-import { useSyncStatusStore } from '@/store/syncStatusSlice'
+import { reportSyncError } from '@/store/syncStatusSlice'
 import { debouncedPatch } from '@/utils/debouncedPersist'
 
 interface ShotState {
@@ -16,10 +16,6 @@ interface ShotState {
   clearNeedsReview: (shotId: string) => void
   getShotsForProject: (projectId: string) => Shot[]
   getShotsForScene: (sceneId: string) => Shot[]
-}
-
-function reportError(err: unknown) {
-  useSyncStatusStore.getState().setError(err instanceof Error ? err.message : 'Failed to save changes.')
 }
 
 const defaultShot = (projectId: string, sceneId: string, number: number): Shot => ({
@@ -55,7 +51,7 @@ export const useShotStore = create<ShotState>()((set, get) => ({
     const existing = get().shots.filter((s) => s.projectId === projectId)
     const shot: Shot = { ...defaultShot(projectId, sceneId, existing.length + 1), ...overrides }
     set((s) => ({ shots: [...s.shots, shot] }))
-    shotsService.insertShot(shot).catch(reportError)
+    shotsService.insertShot(shot).catch(reportSyncError)
     return shot
   },
 
@@ -65,18 +61,18 @@ export const useShotStore = create<ShotState>()((set, get) => ({
         sh.id === id ? { ...sh, ...patch, updatedAt: new Date().toISOString() } : sh
       ),
     }))
-    debouncedPatch(`shot:${id}`, patch, (merged) => shotsService.updateShotRow(id, merged), reportError)
+    debouncedPatch(`shot:${id}`, patch, (merged) => shotsService.updateShotRow(id, merged), reportSyncError)
   },
 
   deleteShot: (id) => {
     set((s) => ({ shots: s.shots.filter((sh) => sh.id !== id) }))
-    shotsService.deleteShotRow(id).catch(reportError)
+    shotsService.deleteShotRow(id).catch(reportSyncError)
   },
 
   reorderShots: (shots) => {
     set({ shots })
     shots.forEach((shot, idx) => {
-      shotsService.updateShotRow(shot.id, { shotNumber: idx + 1 }).catch(reportError)
+      shotsService.updateShotRow(shot.id, { shotNumber: idx + 1 }).catch(reportSyncError)
     })
   },
 
@@ -86,7 +82,7 @@ export const useShotStore = create<ShotState>()((set, get) => ({
         sh.id === shotId ? { ...sh, needsReview: true } : sh
       ),
     }))
-    shotsService.updateShotRow(shotId, { needsReview: true }).catch(reportError)
+    shotsService.updateShotRow(shotId, { needsReview: true }).catch(reportSyncError)
   },
 
   clearNeedsReview: (shotId) => {
@@ -95,7 +91,7 @@ export const useShotStore = create<ShotState>()((set, get) => ({
         sh.id === shotId ? { ...sh, needsReview: false } : sh
       ),
     }))
-    shotsService.updateShotRow(shotId, { needsReview: false }).catch(reportError)
+    shotsService.updateShotRow(shotId, { needsReview: false }).catch(reportSyncError)
   },
 
   getShotsForProject: (projectId) =>

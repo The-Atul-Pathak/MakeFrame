@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { Scene, ScreenplayElement, IntExt, TimeOfDay, ActNumber } from '@/types'
 import * as scenesService from '@/services/scenes'
-import { useSyncStatusStore } from '@/store/syncStatusSlice'
+import { reportSyncError } from '@/store/syncStatusSlice'
 import { debouncedPatch, debouncedRun } from '@/utils/debouncedPersist'
 
 interface SceneState {
@@ -18,10 +18,6 @@ interface SceneState {
   flagNeedsReview: (sceneId: string) => void
   clearNeedsReview: (sceneId: string) => void
   getScenesForProject: (projectId: string) => Scene[]
-}
-
-function reportError(err: unknown) {
-  useSyncStatusStore.getState().setError(err instanceof Error ? err.message : 'Failed to save changes.')
 }
 
 const defaultScene = (projectId: string, number: number): Scene => ({
@@ -56,7 +52,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
     const existing = get().scenes.filter((s) => s.projectId === projectId)
     const scene: Scene = { ...defaultScene(projectId, existing.length + 1), ...overrides }
     set((s) => ({ scenes: [...s.scenes, scene] }))
-    scenesService.insertScene(scene).catch(reportError)
+    scenesService.insertScene(scene).catch(reportSyncError)
     return scene
   },
 
@@ -74,20 +70,20 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
         debouncedRun(
           `scene-elements:${id}`,
           () => scenesService.replaceElementsForScene(scene.projectId, id, elements),
-          reportError,
+          reportSyncError,
         )
       }
     }
 
     const { elements: _elements, ...columnPatch } = patch
     if (Object.keys(columnPatch).length > 0) {
-      debouncedPatch(`scene:${id}`, columnPatch, (merged) => scenesService.updateSceneRow(id, merged), reportError)
+      debouncedPatch(`scene:${id}`, columnPatch, (merged) => scenesService.updateSceneRow(id, merged), reportSyncError)
     }
   },
 
   deleteScene: (id) => {
     set((s) => ({ scenes: s.scenes.filter((sc) => sc.id !== id) }))
-    scenesService.deleteSceneRow(id).catch(reportError)
+    scenesService.deleteSceneRow(id).catch(reportSyncError)
   },
 
   addElement: (sceneId, element) => {
@@ -101,7 +97,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
       ),
     }))
     if (sceneBefore) {
-      scenesService.insertElement(sceneBefore.projectId, sceneId, element, order).catch(reportError)
+      scenesService.insertElement(sceneBefore.projectId, sceneId, element, order).catch(reportSyncError)
     }
   },
 
@@ -119,7 +115,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
           : sc
       ),
     }))
-    debouncedPatch(`element:${elementId}`, patch, (merged) => scenesService.updateElementRow(elementId, merged), reportError)
+    debouncedPatch(`element:${elementId}`, patch, (merged) => scenesService.updateElementRow(elementId, merged), reportSyncError)
   },
 
   deleteElement: (sceneId, elementId) => {
@@ -134,7 +130,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
           : sc
       ),
     }))
-    scenesService.deleteElementRow(elementId).catch(reportError)
+    scenesService.deleteElementRow(elementId).catch(reportSyncError)
   },
 
   reorderElements: (sceneId, elements) => {
@@ -147,7 +143,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
     }))
     const scene = get().scenes.find((sc) => sc.id === sceneId)
     if (scene) {
-      scenesService.replaceElementsForScene(scene.projectId, sceneId, elements).catch(reportError)
+      scenesService.replaceElementsForScene(scene.projectId, sceneId, elements).catch(reportSyncError)
     }
   },
 
@@ -157,7 +153,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
         sc.id === sceneId ? { ...sc, needsReview: true } : sc
       ),
     }))
-    scenesService.updateSceneRow(sceneId, { needsReview: true }).catch(reportError)
+    scenesService.updateSceneRow(sceneId, { needsReview: true }).catch(reportSyncError)
   },
 
   clearNeedsReview: (sceneId) => {
@@ -166,7 +162,7 @@ export const useSceneStore = create<SceneState>()((set, get) => ({
         sc.id === sceneId ? { ...sc, needsReview: false } : sc
       ),
     }))
-    scenesService.updateSceneRow(sceneId, { needsReview: false }).catch(reportError)
+    scenesService.updateSceneRow(sceneId, { needsReview: false }).catch(reportSyncError)
   },
 
   getScenesForProject: (projectId) =>

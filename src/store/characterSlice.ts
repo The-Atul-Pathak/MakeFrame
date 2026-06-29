@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { Character } from '@/types'
 import * as charactersService from '@/services/characters'
-import { useSyncStatusStore } from '@/store/syncStatusSlice'
+import { reportSyncError } from '@/store/syncStatusSlice'
 import { debouncedPatch } from '@/utils/debouncedPersist'
 
 interface CharacterState {
@@ -11,10 +11,6 @@ interface CharacterState {
   updateCharacter: (id: string, patch: Partial<Character>) => void
   deleteCharacter: (id: string) => void
   getCharactersForProject: (projectId: string) => Character[]
-}
-
-function reportError(err: unknown) {
-  useSyncStatusStore.getState().setError(err instanceof Error ? err.message : 'Failed to save changes.')
 }
 
 const defaultCharacter = (projectId: string): Character => ({
@@ -49,7 +45,7 @@ export const useCharacterStore = create<CharacterState>()((set, get) => ({
   createCharacter: (projectId) => {
     const character = defaultCharacter(projectId)
     set(s => ({ characters: [...s.characters, character] }))
-    charactersService.insertCharacter(character).catch(reportError)
+    charactersService.insertCharacter(character).catch(reportSyncError)
     return character
   },
 
@@ -59,12 +55,12 @@ export const useCharacterStore = create<CharacterState>()((set, get) => ({
         c.id === id ? { ...c, ...patch, updatedAt: new Date().toISOString() } : c
       ),
     }))
-    debouncedPatch(`character:${id}`, patch, (merged) => charactersService.updateCharacterRow(id, merged), reportError)
+    debouncedPatch(`character:${id}`, patch, (merged) => charactersService.updateCharacterRow(id, merged), reportSyncError)
   },
 
   deleteCharacter: (id) => {
     set(s => ({ characters: s.characters.filter(c => c.id !== id) }))
-    charactersService.deleteCharacterRow(id).catch(reportError)
+    charactersService.deleteCharacterRow(id).catch(reportSyncError)
   },
 
   getCharactersForProject: (projectId) =>

@@ -4,7 +4,7 @@ import type { BeatRemapping } from '@/types/framework'
 import { FRAMEWORKS } from '@/utils/beatSheetFrameworks'
 import { getConversionTargets } from '@/data/frameworkConversions'
 import * as beatSheetsService from '@/services/beatSheets'
-import { useSyncStatusStore } from '@/store/syncStatusSlice'
+import { reportSyncError } from '@/store/syncStatusSlice'
 import { debouncedPatch, debouncedRun } from '@/utils/debouncedPersist'
 
 interface BeatSheetState {
@@ -34,10 +34,6 @@ interface BeatSheetState {
   reorderBeat:      (projectId: string, beatId: string, beforeId: string | null, afterId: string | null) => void
 
   buildRemappings: (projectId: string, toFramework: BeatFramework) => BeatRemapping[]
-}
-
-function reportError(err: unknown) {
-  useSyncStatusStore.getState().setError(err instanceof Error ? err.message : 'Failed to save changes.')
 }
 
 function recomputePercentages(beats: Beat[], totalPages: number): Beat[] {
@@ -85,7 +81,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
       updatedAt: new Date().toISOString(),
     }
     set(s => ({ beatSheets: { ...s.beatSheets, [projectId]: sheet } }))
-    beatSheetsService.insertBeatSheet(sheet).catch(reportError)
+    beatSheetsService.insertBeatSheet(sheet).catch(reportSyncError)
     return sheet
   },
 
@@ -102,7 +98,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
         },
       },
     }))
-    beatSheetsService.updateBeatSheetRow(existing.id, { framework }).catch(reportError)
+    beatSheetsService.updateBeatSheetRow(existing.id, { framework }).catch(reportSyncError)
   },
 
   confirmFrameworkSwitch: (projectId, toFramework, remappings) => {
@@ -156,7 +152,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
           actKey: deriveActKeyForFrameworkBeat(toFramework, r.confirmedTargetId),
         })),
       )
-      .catch(reportError)
+      .catch(reportSyncError)
   },
 
   updateBeatSheet: (projectId, patch) => {
@@ -171,7 +167,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
     })
     const sheet = get().beatSheets[projectId]
     if (!sheet) return
-    debouncedPatch(`beatsheet:${sheet.id}`, patch, (merged) => beatSheetsService.updateBeatSheetRow(sheet.id, merged), reportError)
+    debouncedPatch(`beatsheet:${sheet.id}`, patch, (merged) => beatSheetsService.updateBeatSheetRow(sheet.id, merged), reportSyncError)
   },
 
   updateBeat: (projectId, beatId, patch) => {
@@ -189,7 +185,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
         },
       }
     })
-    debouncedPatch(`beat:${beatId}`, patch, (merged) => beatSheetsService.updateBeatRow(beatId, merged), reportError)
+    debouncedPatch(`beat:${beatId}`, patch, (merged) => beatSheetsService.updateBeatRow(beatId, merged), reportSyncError)
   },
 
   assignBeatToSlot: (projectId, beatId, frameworkBeatId) => {
@@ -208,7 +204,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
         },
       }
     })
-    beatSheetsService.updateBeatRow(beatId, { frameworkBeatId, needsReview: false }).catch(reportError)
+    beatSheetsService.updateBeatRow(beatId, { frameworkBeatId, needsReview: false }).catch(reportSyncError)
   },
 
   addBeat: (projectId, actKey?, frameworkBeatId?) => {
@@ -249,7 +245,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
         },
       }
     })
-    beatSheetsService.insertBeat(sheet.id, newBeat).catch(reportError)
+    beatSheetsService.insertBeat(sheet.id, newBeat).catch(reportSyncError)
     return newBeat
   },
 
@@ -268,7 +264,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
         },
       }
     })
-    beatSheetsService.deleteBeatRow(beatId).catch(reportError)
+    beatSheetsService.deleteBeatRow(beatId).catch(reportSyncError)
   },
 
   // Reorders a beat relative to its neighbours within whatever list it's being
@@ -308,7 +304,7 @@ export const useBeatSheetStore = create<BeatSheetState>()((set, get) => ({
     const sheetNow = get().beatSheets[projectId]
     if (!sheetNow) return
     const orderedIds = [...sheetNow.beats].sort((a, b) => a.order - b.order).map(b => ({ id: b.id, order: b.order }))
-    debouncedRun(`beatsheet-order:${beatSheetId}`, () => beatSheetsService.persistBeatOrder(orderedIds), reportError)
+    debouncedRun(`beatsheet-order:${beatSheetId}`, () => beatSheetsService.persistBeatOrder(orderedIds), reportSyncError)
   },
 
   buildRemappings: (projectId, toFramework) => {
