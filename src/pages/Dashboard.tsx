@@ -110,6 +110,8 @@ export default function Dashboard() {
   const [loadError, setLoadError] = useState<string | null>(null)
 
   const totalScenes = projects.reduce((a, p) => a + p.sceneCount, 0)
+  const totalPanels = projects.reduce((a, p) => a + p.panelCount, 0)
+  const totalShots = projects.reduce((a, p) => a + p.shotCount, 0)
 
   useEffect(() => {
     let mounted = true
@@ -146,7 +148,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-5" style={{ marginTop: 20 }}>
             <div className="flex-1" style={{ height: '0.5px', background: 'var(--color-border)' }} />
             <span className="font-mono text-text-tertiary shrink-0" style={{ fontSize: '0.65rem', letterSpacing: '0.08em' }}>
-              {projects.length} projects&nbsp;&nbsp;·&nbsp;&nbsp;{totalScenes} scenes&nbsp;&nbsp;·&nbsp;&nbsp;0 panels&nbsp;&nbsp;·&nbsp;&nbsp;0 shots
+              {projects.length} projects&nbsp;&nbsp;·&nbsp;&nbsp;{totalScenes} scenes&nbsp;&nbsp;·&nbsp;&nbsp;{totalPanels} panels&nbsp;&nbsp;·&nbsp;&nbsp;{totalShots} shots
             </span>
           </div>
         </div>

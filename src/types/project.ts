@@ -29,6 +29,8 @@ export interface Project {
   logline: string | null
   thumbnailUrl: string | null
   sceneCount: number
+  panelCount: number
+  shotCount: number
   draftNumber: number
   createdAt: string
   lastEditedAt: string
