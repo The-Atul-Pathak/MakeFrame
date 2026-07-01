@@ -1,0 +1,54 @@
+name: Database backup
+
+# Free-tier stopgap: the Supabase Free plan has NO automated backups. This workflow
+# takes a logical pg_dump of the production database and stores it as a GitHub Actions
+# artifact (retained 30 days). It is a no-op until you add the SUPABASE_DB_URL secret
+# (Settings → Secrets and variables → Actions). Get the value from the Supabase dashboard:
+# Connect → ORMs / "Connection string" (URI, session pooler), which includes your DB password.
+#
+# For real production use, prefer upgrading to Supabase Pro (daily backups + point-in-time
+# recovery) — see docs/BACKUP_DR.md.
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 3 * * 0' # Weekly, Sundays 03:00 UTC
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+    steps:
+      - name: Skip if not configured
+        id: guard
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "SUPABASE_DB_URL not set — add the secret to enable backups. Skipping (no-op)."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install PostgreSQL 17 client
+        if: steps.guard.outputs.configured == 'true'
+        run: |
+          sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/pgdg.gpg
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+
+      - name: Dump database
+        if: steps.guard.outputs.configured == 'true'
+        run: |
+          ts=$(date -u +%Y%m%d-%H%M%S)
+          pg_dump "$SUPABASE_DB_URL" --no-owner --no-privileges -Fc -f "makeframe-$ts.dump"
+          ls -lh "makeframe-$ts.dump"
+
+      - name: Upload backup artifact
+        if: steps.guard.outputs.configured == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: makeframe-db-backup
+          path: "*.dump"
+          retention-days: 30
