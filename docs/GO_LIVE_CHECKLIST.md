@@ -19,12 +19,11 @@ _Live: https://makeframe-prod.pages.dev_
 - [x] Analytics (Cloudflare Pages) + uptime monitoring (UptimeRobot) active
 - [x] DR runbook + weekly logical-backup workflow in place
 
-## 🟡 Remaining interactive tests (quick, need you)
+## ✅ Interactive tests (verified 2026-07-02)
 
-- [ ] **Google OAuth** — click "Continue with Google", complete consent, confirm it returns you
-      signed in. (Config is done; just needs a live run. Requires signing out first.)
-- [ ] **Password reset** — "Forgot password?" → check email → set new password → log in.
-- [ ] Core app flows you care about (screenplay → storyboard → shot list, exports, etc.).
+- [x] **Google OAuth** — sign-in via Google completes and returns the user signed in.
+- [x] **Password reset** — "Forgot password?" → email → set new password → log in.
+- [ ] Continue exercising core app flows (screenplay → storyboard → shot list, exports) as you build.
 
 ## 🔴 Gates before onboarding REAL users
 
