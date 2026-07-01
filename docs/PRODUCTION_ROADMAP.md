@@ -46,9 +46,9 @@ Budget decision: **start free, upgrade Supabase to Pro before onboarding real us
 
 | # | Phase | Status |
 | --- | --- | --- |
-| 1 | Verify known-good build & merge to `main` | ✅ verified / ⏳ merge pending |
-| 2 | Provision hosted Supabase (production database) | ⬜ |
-| 3 | Google OAuth credentials | ⬜ |
+| 1 | Verify known-good build & merge to `main` | ✅ |
+| 2 | Provision hosted Supabase (production database) | ✅ |
+| 3 | Google OAuth credentials | ✅ |
 | 4 | Production email (SMTP) for verification & reset | ⬜ |
 | 5 | Deploy frontend to Cloudflare Pages | ⬜ |
 | 6 | Custom domain, DNS & HTTPS | ⬜ |
@@ -69,6 +69,23 @@ Budget decision: **start free, upgrade Supabase to Pro before onboarding real us
 - CI pipeline: lint, typecheck, test, build on every push/PR.
 - Fail-fast env validation — a misconfigured production deploy crashes loudly instead
   of silently talking to the wrong database (`src/lib/supabase.ts`).
+
+## Production environment reference (non-secret)
+
+| Item | Value |
+| --- | --- |
+| Supabase project | `makeframe-prod` (org: MakeFrame, Free plan) |
+| Project ref | `tmejdmvlultcasxuejjl` |
+| Supabase URL (`VITE_SUPABASE_URL`) | `https://tmejdmvlultcasxuejjl.supabase.co` |
+| Region | South Asia (Mumbai) · `ap-south-1` |
+| Anon/publishable key (`VITE_SUPABASE_ANON_KEY`) | `sb_publishable_...` (safe to expose; RLS is the security boundary) |
+| Storage buckets | `sketches` (private), `exports` (private), `thumbnails` (public) |
+| Google Cloud project | `MakeFrame` (`makeframe-501119`), OAuth app published to production |
+| Google OAuth Client ID | `589075775679-9467p7a8gvjtdgttsgpart2dr30re32s.apps.googleusercontent.com` |
+| Google OAuth redirect URI | `https://tmejdmvlultcasxuejjl.supabase.co/auth/v1/callback` |
+
+Secrets NOT stored here (keep in your password manager): the database password,
+the Supabase `service_role`/secret key, and the Google OAuth client secret.
 
 ## Human-only actions (everything else is automated/driven for you)
 
