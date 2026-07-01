@@ -4,6 +4,17 @@ Everything we've discussed but haven't built yet. Add to this freely.
 
 ---
 
+## ✅ Shipped (moved out of backlog)
+All five core modules — Beat Sheet, Screenplay, Storyboard, Shot List, Character bible — are
+functionally complete for MVP and fully Supabase-persisted (see `docs/CLAUDE.md` and
+`README.md`). Also shipped: real email/password + Google OAuth (no more anonymous sessions),
+Supabase-backed dashboard stats/activity feed, drag-and-drop reordering (beat sheets), CI
+(lint/typecheck/test/build), Cloudflare Pages deploy config (`_redirects`, `_headers`), and
+Sentry error reporting. Remaining gaps for those modules are called out below (exports, visual
+character graphs).
+
+---
+
 ## 🎓 Learn Platform
 A guided learning mode that ships curated example content so new users aren't staring at blank slates.
 
@@ -40,66 +51,44 @@ Make beatId a first-class foreign key across every downstream module.
 
 ---
 
-## 🎬 Screenplay Module
-Full screenplay editor inside the workspace.
+## 🎬 Screenplay Module — shipped, gaps remain
+Full editor (element cycling, scene list sidebar, scene metadata panel, Supabase-backed
+scenes/elements, page count + runtime estimator) is built. Remaining:
 
-- Scene headings, action, character, parenthetical, dialogue, transition elements
-- Tab-key cycling between element types (keyboard spec in knowledge.md)
-- Courier Prime canvas at 680px, paper-white background
-- Page count + runtime estimator (1 page ≈ 1 minute)
-- FDX / Fountain export
-- Scene metadata panel (INT/EXT, location, time of day, characters, props, special requirements)
-- Pre-populated with scene placeholders from the Beat Sheet converter
-- Scene list sidebar with drag-to-reorder
+- FDX / Fountain export (not implemented)
+- Pre-populate scene placeholders from the Beat Sheet → Scene converter (blocked on that
+  Phase 2 feature below)
 
 ---
 
-## 🖼 Storyboard Module
-Visual panel editor for translating scenes into shots.
+## 🖼 Storyboard Module — shipped, gaps remain
+Panel grid, sketch canvas (draw/erase), shot type/movement/lens tags, action + dialogue note,
+duration estimate, and Supabase-persisted sketch uploads are built. Remaining:
 
-- 16:9 panel grid (3 columns default)
-- Sketch area per panel (canvas API, line-art drawing tools)
-- Shot type tag (EWS / WS / MS / MCU / CU / ECU / OTS / POV / INSERT / TWO)
-- Camera movement tag + lens (mm)
-- Action description (1–2 sentences) + dialogue/sound note
-- Duration estimate per panel
-- Each beat → at least 1 panel placeholder (Opening Image and Final Image mandatory)
-- Panel thumbnail generation / upload
+- Auto-generate a panel placeholder per beat (Opening Image / Final Image mandatory) — not
+  wired up yet
 - Panel sequence export as PDF / image strip
 
 ---
 
-## 📋 Shot List Module
-Operational translation of storyboard for the crew.
+## 📋 Shot List Module — shipped, gaps remain
+Tabular view (12 columns), scene/location filters, sort by shot number, and Supabase
+persistence are built. Remaining:
 
-- Tabular view: shot#, scene#, panel ref, INT/EXT, location, shot type, movement, lens, description, cast, special equipment, setup time estimate, notes
-- Sorted by shoot order (not scene order)
 - Location grouping optimiser (group by location → by lighting setup → wide before coverage)
 - Golden hour shot flagging
 - Export as CSV / PDF call sheet
 
 ---
 
-## 👤 Character Module
-Character bible builder.
+## 👤 Character Module — shipped, gaps remain
+Profile fields (want/need/wound/ghost/voice/backstory etc.), scene-count stat, and Supabase
+persistence are built. Relationships and arc are currently free-text, not visualized:
 
-- Profile fields: name, age, occupation, physical description, backstory, want, need, wound, ghost, voice, arc, relationships
-- Character arc graph — emotional state at each beat (X = beat, Y = emotion)
-- Relationship map — network graph of character dynamics
-- Scene frequency counter (which scenes does each character appear in?)
+- Character arc graph — emotional state at each beat (X = beat, Y = emotion), visual not text
+- Relationship map — network graph of character dynamics, currently a text field per character
 - First appearance auto-detected from beat character assignments
 - Continuity warnings: character disappears for too many consecutive beats
-
----
-
-## 🗃 Backend / Supabase Integration for Beat Sheets
-Currently Beat Sheets are localStorage only — needs Supabase persistence.
-
-- `beat_sheets` table: `id, project_id, framework, total_pages, genre, created_at, updated_at`
-- `beats` table: `id, beat_sheet_id, order, name, description, page_start, page_end, act_key, percentage, emotional_tone, characters (text[]), location, notes, status`
-- RLS policies scoped by `project_id → owner_id`
-- `src/services/beatSheets.ts` service file (matching projects.ts pattern)
-- Zustand slice becomes a cache + optimistic write buffer, not the source of truth
 
 ---
 
@@ -130,7 +119,6 @@ Use Claude API to help writers when they're stuck.
 ## 🔧 Platform Polish & Infrastructure
 Things that need doing once core modules exist.
 
-- Auth upgrade: anon → real email/Google auth with account persistence
 - Project settings page (change title, format, genres, thumbnail, target pages)
 - Activity log per project (who changed what, when)
 - Keyboard shortcuts map modal (`?` key)

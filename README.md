@@ -70,17 +70,21 @@ server-only secret in a `VITE_` variable — Vite inlines them into the public b
 | `VITE_SUPABASE_URL` | ✅ | Supabase API URL (local or hosted) |
 | `VITE_SUPABASE_ANON_KEY` | ✅ | Supabase anon/public key (safe to expose; RLS protects data) |
 | `VITE_APP_ENV` | — | `development` \| `staging` \| `production` |
-| `VITE_SENTRY_DSN` | — | Error reporting DSN (Phase E) |
+| `VITE_SENTRY_DSN` | — | Error reporting DSN. Sentry is wired into `ErrorBoundary` and background sync failures (`src/lib/sentry.ts`) but no-ops until this is set |
 
 ## Project structure
 
 ```
 src/
-  components/   Feature-scoped UI (beatsheet/, screenplay/, storyboard/, shotlist/, shared/, …)
-  pages/        Route-level screens
+  components/   Feature-scoped UI (beat/, beatsheet/, screenplay/, storyboard/, shotlist/,
+                characters/, workspace/, shared/, …)
+  pages/        Route-level screens (Dashboard, BeatSheet, Screenplay, Storyboard, ShotList,
+                Characters, Login/Signup/ForgotPassword/ResetPassword, ProjectWorkspace)
+  contexts/     AuthContext / AuthProvider (Supabase email+password + Google OAuth)
   store/        Zustand slices (client cache / optimistic writes)
-  services/     Supabase data-access layer
-  lib/          Cross-cutting clients (supabase.ts)
+  services/     Supabase data-access layer (projects, scenes, panels, shots, characters, beatSheets)
+  data/         Static reference data (beat-sheet frameworks, framework conversions)
+  lib/          Cross-cutting clients (supabase.ts, sentry.ts)
   types/        Shared TypeScript types
   utils/        Pure helpers (validation, conversions, formatters)
   test/         Test setup

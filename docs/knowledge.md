@@ -72,7 +72,12 @@ Act II  (pages 26–85):   Confrontation. Rising stakes, midpoint reversal,
                           Ends at: plot point 2 / all-is-lost moment
 Act III (pages 86–110):  Resolution. Climax, consequences, new equilibrium.
 
-### Beat Sheet (Save the Cat — 15 beats)
+### Beat Sheet frameworks
+The app supports five interchangeable beat-sheet frameworks (`src/data/frameworks.ts`). A
+project's beat sheet is built against one framework at a time; switching frameworks remaps
+existing beats via `FrameworkSwitchModal`.
+
+#### Save the Cat (Blake Snyder — 15 beats, default/primary framework)
 1.  Opening image        — visual statement of the theme
 2.  Theme stated         — someone says what the film is about (subtly)
 3.  Setup                — introduce world, characters, what needs to change
@@ -88,6 +93,21 @@ Act III (pages 86–110):  Resolution. Climax, consequences, new equilibrium.
 13. Break into Three     — solution discovered, Act III begins
 14. Finale               — execute the solution, climax, world transformed
 15. Final Image          — mirror of opening image, shows change
+
+#### 3-Act Structure (Aristotle — 3 beats)
+Act I — Setup / Act II — Confrontation / Act III — Resolution. Minimal and flexible; no
+target pages, just the three act groups.
+
+#### Hero's Journey (Joseph Campbell — 12 beats)
+Ordinary World → Call to Adventure → Refusal of the Call → Meeting the Mentor →
+Crossing the Threshold → Tests, Allies, Enemies → Approach the Inmost Cave → The Ordeal →
+Reward → The Road Back → Resurrection → Return with the Elixir
+
+#### Dan Harmon's Story Circle (8 beats, circular)
+You → Need → Go → Search → Find → Take → Return → Change
+
+#### 7-Point Structure (Dan Wells — 7 beats, genre/mystery-friendly)
+Hook → Plot Turn 1 → Pinch Point 1 → Midpoint → Pinch Point 2 → Plot Turn 2 → Resolution
 
 ## ─── STORYBOARDING ────────────────────────────────────────────────────────────
 Storyboarding is the visual translation of the screenplay into sequential panels.

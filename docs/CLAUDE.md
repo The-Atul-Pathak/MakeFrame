@@ -9,10 +9,13 @@ Vite + React 18 + TypeScript + Tailwind CSS + Zustand + Supabase Auth/Postgres/S
 - For both: read both
 
 ## Project structure
-src/components/{screenplay|storyboard|shotlist|shared}/
-src/store/ → Zustand slices (sceneSlice, panelSlice, shotSlice, characterSlice, beatSheetSlice, syncStatusSlice)
+src/components/{beat|beatsheet|screenplay|storyboard|shotlist|characters|shared|workspace}/
+src/pages/ → route-level screens (Dashboard, BeatSheet, Screenplay, Storyboard, ShotList, Characters, auth)
+src/services/ → Supabase data-access layer, one file per domain (projects, scenes, panels, shots, characters, beatSheets)
+src/store/ → Zustand slices (sceneSlice, panelSlice, shotSlice, characterSlice, beatSheetSlice, syncStatusSlice, uiSlice)
+src/contexts/ → AuthContext / AuthProvider (real Supabase email+password and Google OAuth, not anonymous sessions)
 src/types/ → all TypeScript interfaces
-src/utils/ → formatters, calculators
+src/utils/ → formatters, calculators, validation
 
 ## Data flow (one-way, enforced)
 Screenplay → Storyboard → Shot List

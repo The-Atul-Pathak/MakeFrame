@@ -63,7 +63,8 @@ account, which isn't something that can be decided or provisioned automatically.
 3. Environment variables (Cloudflare Pages → Settings → Environment variables):
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-   - (optional, Phase E) `VITE_SENTRY_DSN`, `VITE_APP_ENV`
+   - (optional) `VITE_SENTRY_DSN`, `VITE_APP_ENV` — Sentry is already wired into
+     `ErrorBoundary` and background sync failures; it no-ops until `VITE_SENTRY_DSN` is set
 4. SPA routing: Cloudflare Pages needs a fallback so client-side routes
    (`/login`, `/project/:id`, etc.) don't 404 on direct load or refresh. Handled by
    `public/_redirects` (already in the repo).
