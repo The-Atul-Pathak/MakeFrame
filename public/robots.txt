@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /project/
+Disallow: /reset-password
+Disallow: /forgot-password
+
+Sitemap: https://makeframe-prod.pages.dev/sitemap.xml

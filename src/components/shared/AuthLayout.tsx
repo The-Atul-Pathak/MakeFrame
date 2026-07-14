@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { IconDeviceTv } from '@tabler/icons-react'
+import { Link } from 'react-router-dom'
+import { IconDeviceTv, IconLock } from '@tabler/icons-react'
 
 interface Props {
   title: string
@@ -22,10 +23,14 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
       }}
     >
       <div style={{ width: 380, display: 'flex', flexDirection: 'column', gap: 28 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
+        <Link
+          to="/"
+          aria-label="MakeFrame home"
+          style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}
+        >
           <span className="font-display text-lg text-text-primary tracking-tight">MakeFrame</span>
           <IconDeviceTv size={15} style={{ color: 'var(--color-text-tertiary)' }} />
-        </div>
+        </Link>
 
         <div
           style={{
@@ -52,7 +57,28 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
           {children}
         </div>
 
+        <p
+          className="font-mono"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 6,
+            fontSize: '0.6rem',
+            color: 'var(--color-text-tertiary)',
+          }}
+        >
+          <IconLock size={11} aria-hidden="true" />
+          Your scripts stay private — only your account can see your work.
+        </p>
+
         {footer && <div style={{ textAlign: 'center' }}>{footer}</div>}
+
+        <p className="font-mono" style={{ textAlign: 'center', fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+          <Link to="/privacy" style={{ color: 'var(--color-text-secondary)' }}>Privacy</Link>
+          {' · '}
+          <Link to="/terms" style={{ color: 'var(--color-text-secondary)' }}>Terms</Link>
+        </p>
       </div>
     </div>
   )

@@ -1,5 +1,8 @@
 # Dependencies
-node_modules/
+# No trailing slash: node_modules is a symlink on this machine (relocated
+# outside iCloud-synced Documents to avoid sync-eviction build hangs), and a
+# trailing-slash pattern only matches real directories, not symlinks.
+node_modules
 
 # Build output
 dist/

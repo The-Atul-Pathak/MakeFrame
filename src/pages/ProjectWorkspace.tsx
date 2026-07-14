@@ -5,6 +5,7 @@ import type { Project } from '@/types/project'
 import { fetchProjectById } from '@/services/projects'
 import Sidebar, { type WorkspaceModule } from '@/components/workspace/Sidebar'
 import RouteLoadingFallback from '@/components/shared/RouteLoadingFallback'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import { useCharacterStore } from '@/store/characterSlice'
 import { useSceneStore } from '@/store/sceneSlice'
 import { useShotStore } from '@/store/shotSlice'
@@ -228,6 +229,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
 // ── Main workspace ────────────────────────────────────────────────────────────
 
 export default function ProjectWorkspace() {
+  usePageMeta({ title: 'Workspace — MakeFrame', noIndex: true })
   const { projectId } = useParams<{ projectId: string }>()
   const navigate = useNavigate()
 

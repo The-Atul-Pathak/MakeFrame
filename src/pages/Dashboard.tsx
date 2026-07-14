@@ -11,6 +11,7 @@ import type { Project } from '@/types/project'
 import { fetchProjects, saveProject, updateProject } from '@/services/projects'
 import type { SaveProjectInput } from '@/services/projects'
 import { useAuth } from '@/hooks/useAuth'
+import { usePageMeta } from '@/hooks/usePageMeta'
 
 function initialsFromUser(email: string | undefined, fullName: unknown): string {
   const name = typeof fullName === 'string' && fullName.trim() ? fullName : email ?? ''
@@ -99,6 +100,7 @@ function DashboardHeader() {
 }
 
 export default function Dashboard() {
+  usePageMeta({ title: 'Projects — MakeFrame', noIndex: true })
   const navigate = useNavigate()
   // Pick a quote once per mount. A lazy useState initializer runs exactly once,
   // so it stays stable across re-renders (unlike Math.random() called in render).

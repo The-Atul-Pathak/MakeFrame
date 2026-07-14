@@ -4,10 +4,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import type { Location } from 'react-router-dom'
 import { IconBrandGoogle } from '@tabler/icons-react'
 import { useAuth } from '@/hooks/useAuth'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import AuthLayout, { Field, Divider } from '@/components/shared/AuthLayout'
 import { inputStyle, primaryBtnStyle, secondaryBtnStyle, linkStyle, errorTextStyle } from '@/components/shared/authFormStyles'
 
 export default function Login() {
+  usePageMeta({
+    title: 'Sign in — MakeFrame',
+    description: 'Sign in to MakeFrame to continue pre-producing your film.',
+    path: '/login',
+  })
   const { signInWithPassword, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()

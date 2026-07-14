@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* Tailwind v4 does not auto-load JS configs; without this line every custom
+   utility in tailwind.config.ts (font-display, text-text-primary, bg-surface,
+   h-topbar, …) silently compiles to nothing. */
+@config "../tailwind.config.ts";
 
 /* ── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
@@ -41,26 +45,31 @@
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Must live in @layer base: unlayered rules would override every Tailwind
+   margin/padding utility (utilities sit in @layer utilities, which loses to
+   unlayered CSS regardless of specificity). */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html, body, #root {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
 
-body {
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────────── */

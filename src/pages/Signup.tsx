@@ -3,12 +3,19 @@ import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IconBrandGoogle } from '@tabler/icons-react'
 import { useAuth } from '@/hooks/useAuth'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import AuthLayout, { Field, Divider } from '@/components/shared/AuthLayout'
 import { inputStyle, primaryBtnStyle, secondaryBtnStyle, linkStyle, errorTextStyle } from '@/components/shared/authFormStyles'
 
 const MIN_PASSWORD_LENGTH = 8
 
 export default function Signup() {
+  usePageMeta({
+    title: 'Create your free account — MakeFrame',
+    description:
+      'Create a free MakeFrame account and take your film from beat sheet to shot list. No credit card required.',
+    path: '/signup',
+  })
   const { signUpWithPassword, signInWithGoogle } = useAuth()
   const navigate = useNavigate()
 
@@ -67,7 +74,7 @@ export default function Signup() {
   return (
     <AuthLayout
       title="Create your account"
-      subtitle="Start pre-producing your next film."
+      subtitle="Start pre-producing your next film. Free — no credit card required."
       footer={
         <span className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--color-text-tertiary)' }}>
           Already have an account?{' '}

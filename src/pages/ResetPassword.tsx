@@ -2,12 +2,14 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import AuthLayout, { Field } from '@/components/shared/AuthLayout'
 import { inputStyle, primaryBtnStyle, linkStyle, errorTextStyle } from '@/components/shared/authFormStyles'
 
 const MIN_PASSWORD_LENGTH = 8
 
 export default function ResetPassword() {
+  usePageMeta({ title: 'Set a new password — MakeFrame', noIndex: true })
   const { user, loading, updatePassword } = useAuth()
   const navigate = useNavigate()
 

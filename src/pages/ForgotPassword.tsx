@@ -2,10 +2,12 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
+import { usePageMeta } from '@/hooks/usePageMeta'
 import AuthLayout, { Field } from '@/components/shared/AuthLayout'
 import { inputStyle, primaryBtnStyle, linkStyle, errorTextStyle } from '@/components/shared/authFormStyles'
 
 export default function ForgotPassword() {
+  usePageMeta({ title: 'Reset password — MakeFrame', noIndex: true })
   const { sendPasswordReset } = useAuth()
 
   const [email, setEmail] = useState('')
