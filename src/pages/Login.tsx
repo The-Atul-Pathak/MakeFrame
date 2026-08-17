@@ -53,7 +53,7 @@ export default function Login() {
       title="Welcome back"
       subtitle="Sign in to continue to your projects."
       footer={
-        <span className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
           Don&apos;t have an account?{' '}
           <Link to="/signup" style={linkStyle}>Create one</Link>
         </span>

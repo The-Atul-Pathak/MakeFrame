@@ -30,9 +30,9 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
   return (
     <aside
       style={{
-        width: 240,
+        width: 268,
         flexShrink: 0,
-        borderRight: '0.5px solid var(--color-border-subtle)',
+        borderRight: '1px solid var(--color-border-subtle)',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -44,7 +44,7 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
       <div
         style={{
           padding: '14px 16px 12px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -52,10 +52,10 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
         }}
       >
         <div>
-          <p className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 2 }}>
+          <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 2 }}>
             SCENES
           </p>
-          <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
             {scenes.length} scenes · ~{Math.ceil(pageTotal)}p
           </span>
         </div>
@@ -89,7 +89,7 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
               color: 'var(--color-text-tertiary)',
             }}
           >
-            <p className="font-mono" style={{ fontSize: '0.62rem', lineHeight: 1.6 }}>
+            <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', lineHeight: 1.6 }}>
               No scenes yet.
               <br />
               Add your first scene to begin.
@@ -126,7 +126,7 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
                   <span
                     className="font-mono"
                     style={{
-                      fontSize: '0.55rem',
+                      fontSize: 'var(--text-2xs)',
                       color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
                       background: isActive ? 'var(--color-accent-muted)' : 'var(--color-surface-raised)',
                       padding: '1px 4px',
@@ -138,14 +138,14 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
                   </span>
                   <span
                     className="font-mono"
-                    style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)' }}
+                    style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}
                   >
                     {scene.pageLength}p
                   </span>
                 </div>
                 <p
                   style={{
-                    fontSize: '0.72rem',
+                    fontSize: 'var(--text-xs)',
                     color: isActive ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
                     fontWeight: isActive ? 500 : 400,
                     lineHeight: 1.3,
@@ -160,7 +160,7 @@ export default function SceneListSidebar({ scenes, activeSceneId, onSelect, onAd
                 {scene.emotionalTone && (
                   <span
                     className="font-mono"
-                    style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', textTransform: 'capitalize' }}
+                    style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', textTransform: 'capitalize' }}
                   >
                     {scene.emotionalTone}
                   </span>

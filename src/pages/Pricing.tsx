@@ -67,13 +67,13 @@ export default function Pricing() {
     <MarketingLayout>
       <section className="mx-auto max-w-[1120px] px-5 py-12 md:px-10 md:py-[90px]">
         <div className="animate-fade-up mb-12 flex max-w-[60ch] flex-col gap-4">
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-text-tertiary">
+          <p className="font-mono text-2xs uppercase tracking-[0.09em] text-text-tertiary">
             Pricing
           </p>
           <h1 className="font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.1] text-text-primary">
             Free while in early access.
           </h1>
-          <p className="text-[0.95rem] leading-[1.7] text-text-secondary">
+          <p className="text-base leading-[1.7] text-text-secondary">
             MakeFrame is in early access: the whole pipeline is free, and honest pricing for indie
             filmmakers is the plan when it isn&apos;t. No credit card, no trial clock.
           </p>
@@ -90,14 +90,14 @@ export default function Pricing() {
               <div className="flex items-baseline justify-between">
                 <h2 className="font-display text-lg text-text-primary">{tier.name}</h2>
                 {!tier.highlight && (
-                  <span className="flex items-center gap-1 rounded-sm bg-surface-raised px-2 py-[3px] font-mono text-[0.55rem] uppercase tracking-[0.12em] text-text-tertiary">
+                  <span className="flex items-center gap-1 rounded-sm bg-surface-raised px-2 py-[3px] font-mono text-2xs uppercase tracking-[0.1em] text-text-tertiary">
                     <IconClock size={11} aria-hidden="true" /> Coming soon
                   </span>
                 )}
               </div>
               <div className="flex flex-col gap-1">
                 <span className="font-display text-2xl text-text-primary">{tier.price}</span>
-                <span className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-text-tertiary">
+                <span className="font-mono text-2xs uppercase tracking-[0.1em] text-text-tertiary">
                   {tier.cadence}
                 </span>
               </div>
@@ -124,12 +124,12 @@ export default function Pricing() {
         </div>
 
         <div className="mt-12 flex max-w-[64ch] flex-col gap-8 border-t border-border-subtle pt-10 md:mt-[80px]">
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-text-tertiary">
+          <p className="font-mono text-2xs uppercase tracking-[0.09em] text-text-tertiary">
             Questions
           </p>
           {FAQS.map(({ q, a }) => (
             <div key={q} className="flex flex-col gap-2">
-              <h3 className="text-md font-medium text-text-primary">{q}</h3>
+              <h3 className="text-lg font-semibold text-text-primary">{q}</h3>
               <p className="text-sm leading-[1.7] text-text-secondary">{a}</p>
             </div>
           ))}

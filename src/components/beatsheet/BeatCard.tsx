@@ -72,7 +72,7 @@ function AutoTextarea({
         resize: 'none',
         color: 'var(--color-text-primary)',
         fontFamily: 'Outfit, sans-serif',
-        fontSize: '0.85rem',
+        fontSize: 'var(--text-sm)',
         lineHeight: 1.6,
         overflowY: 'hidden',
         ...style,
@@ -98,7 +98,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
       onMouseLeave={() => { setHovered(false); setConfirmDelete(false) }}
       style={{
         background: 'var(--color-surface)',
-        border: `0.5px solid ${hovered ? 'var(--color-border)' : 'var(--color-border-subtle)'}`,
+        border: `1px solid ${hovered ? 'var(--color-border)' : 'var(--color-border-subtle)'}`,
         borderRadius: 10,
         overflow: 'hidden',
         transition: 'border-color 200ms',
@@ -113,7 +113,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
           alignItems: 'center',
           gap: 8,
           padding: '10px 14px 8px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
         {/* Drag handle */}
@@ -140,7 +140,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
         <span
           className="font-mono"
           style={{
-            fontSize: '0.6rem',
+            fontSize: 'var(--text-2xs)',
             letterSpacing: '0.08em',
             color: 'var(--color-background)',
             background: 'var(--color-accent)',
@@ -163,7 +163,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
             outline: 'none',
             color: 'var(--color-text-primary)',
             fontFamily: 'Outfit, sans-serif',
-            fontSize: '0.85rem',
+            fontSize: 'var(--text-sm)',
             fontWeight: 500,
             minWidth: 0,
           }}
@@ -181,7 +181,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
             cursor: 'pointer',
             color: 'var(--color-text-tertiary)',
             fontFamily: '"DM Mono", monospace',
-            fontSize: '0.55rem',
+            fontSize: 'var(--text-sm)',
             letterSpacing: '0.06em',
             padding: '2px 4px',
             borderRadius: 3,
@@ -224,10 +224,10 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
           alignItems: 'center',
           gap: 8,
           padding: '6px 14px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
-        <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
           p.
         </span>
         <input
@@ -243,11 +243,11 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
             outline: 'none',
             color: 'var(--color-text-secondary)',
             fontFamily: '"DM Mono", monospace',
-            fontSize: '0.65rem',
+            fontSize: 'var(--text-sm)',
             textAlign: 'center',
           }}
         />
-        <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
           –
         </span>
         <input
@@ -263,11 +263,11 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
             outline: 'none',
             color: 'var(--color-text-secondary)',
             fontFamily: '"DM Mono", monospace',
-            fontSize: '0.65rem',
+            fontSize: 'var(--text-sm)',
             textAlign: 'center',
           }}
         />
-        <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', opacity: 0.6 }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.6 }}>
           ({pct}%)
         </span>
 
@@ -287,7 +287,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
                 ? TONE_COLOR_VAR[beat.emotionalTone]
                 : 'var(--color-text-tertiary)',
               fontFamily: '"DM Mono", monospace',
-              fontSize: '0.6rem',
+              fontSize: 'var(--text-sm)',
               letterSpacing: '0.04em',
               appearance: 'none',
               paddingRight: 0,
@@ -324,7 +324,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
       </div>
 
       {/* Notes (collapsible) */}
-      <div style={{ borderTop: '0.5px solid var(--color-border-subtle)' }}>
+      <div style={{ borderTop: '1px solid var(--color-border-subtle)' }}>
         <button
           onClick={() => setNotesOpen(o => !o)}
           style={{
@@ -339,7 +339,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
             color: 'var(--color-text-tertiary)',
           }}
         >
-          <span className="font-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.06em' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>
             NOTES {beat.notes ? '·' : ''}
           </span>
           {notesOpen ? <IconChevronUp size={10} /> : <IconChevronDown size={10} />}
@@ -351,7 +351,7 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
               onChange={notes => onChange({ notes })}
               placeholder="Director notes, color palette, references…"
               minRows={2}
-              style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)' }}
+              style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}
             />
           </div>
         )}
@@ -365,34 +365,34 @@ export default function BeatCard({ beat, projectId, totalPages, framework, hint,
           justifyContent: 'flex-end',
           padding: '6px 14px',
           gap: 8,
-          borderTop: '0.5px solid var(--color-border-subtle)',
+          borderTop: '1px solid var(--color-border-subtle)',
           opacity: hovered ? 1 : 0,
           transition: 'opacity 150ms',
         }}
       >
         {beat.status === 'locked' && (
-          <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-accent)', display: 'flex', alignItems: 'center', gap: 3 }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-accent)', display: 'flex', alignItems: 'center', gap: 3 }}>
             <IconLock size={9} /> LOCKED
           </span>
         )}
         {beat.status === 'approved' && (
-          <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-success)', display: 'flex', alignItems: 'center', gap: 3 }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-success)', display: 'flex', alignItems: 'center', gap: 3 }}>
             <IconCheck size={9} /> APPROVED
           </span>
         )}
         <div style={{ flex: 1 }} />
         {confirmDelete ? (
           <>
-            <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-danger)' }}>Delete?</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-danger)' }}>Delete?</span>
             <button
               onClick={onDelete}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-danger)', fontFamily: '"DM Mono", monospace', fontSize: '0.6rem' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-danger)', fontFamily: '"DM Mono", monospace', fontSize: 'var(--text-2xs)' }}
             >
               yes
             </button>
             <button
               onClick={() => setConfirmDelete(false)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', fontFamily: '"DM Mono", monospace', fontSize: '0.6rem' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', fontFamily: '"DM Mono", monospace', fontSize: 'var(--text-2xs)' }}
             >
               no
             </button>

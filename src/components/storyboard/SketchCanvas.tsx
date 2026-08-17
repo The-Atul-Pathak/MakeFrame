@@ -155,7 +155,7 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
               opacity: 0.3,
             }}
           >
-            <span className="font-mono" style={{ fontSize: '0.6rem', color: '#6b6966', letterSpacing: '0.06em' }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: '#6b6966', letterSpacing: '0.06em' }}>
               SKETCH AREA
             </span>
           </div>
@@ -175,7 +175,7 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
               width: 26,
               height: 26,
               background: tool === 'pencil' ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-              border: `0.5px solid ${tool === 'pencil' ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+              border: `1px solid ${tool === 'pencil' ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
               borderRadius: 4,
               cursor: 'pointer',
               color: tool === 'pencil' ? 'var(--color-background)' : 'var(--color-text-secondary)',
@@ -194,7 +194,7 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
               width: 26,
               height: 26,
               background: tool === 'eraser' ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-              border: `0.5px solid ${tool === 'eraser' ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+              border: `1px solid ${tool === 'eraser' ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
               borderRadius: 4,
               cursor: 'pointer',
               color: tool === 'eraser' ? 'var(--color-background)' : 'var(--color-text-secondary)',
@@ -214,7 +214,7 @@ export default function SketchCanvas({ dataUrl, onChange, width = 480, height = 
               width: 26,
               height: 26,
               background: 'transparent',
-              border: '0.5px solid var(--color-border-subtle)',
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 4,
               cursor: 'pointer',
               color: 'var(--color-danger)',

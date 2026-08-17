@@ -43,7 +43,7 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
         width: 'var(--sidebar-width)',
         flexShrink: 0,
         background: 'var(--color-surface)',
-        borderRight: '0.5px solid var(--color-border-subtle)',
+        borderRight: '1px solid var(--color-border-subtle)',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -54,13 +54,13 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
       <div
         style={{
           padding: '16px 16px 12px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
         <p
           className="font-mono"
           style={{
-            fontSize: '0.55rem',
+            fontSize: 'var(--text-2xs)',
             letterSpacing: '0.1em',
             color: 'var(--color-text-tertiary)',
             marginBottom: 4,
@@ -71,7 +71,7 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
         <span
           style={{
             display: 'block',
-            fontSize: '0.85rem',
+            fontSize: 'var(--text-sm)',
             color: 'var(--color-text-primary)',
             fontWeight: 500,
             whiteSpace: 'nowrap',
@@ -84,7 +84,7 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
         {project.format && (
           <span
             className="font-mono"
-            style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em' }}
+            style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em' }}
           >
             {project.format}
           </span>
@@ -126,15 +126,23 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
             >
               <span style={{ lineHeight: 0, flexShrink: 0 }}>{item.icon}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ fontSize: '0.82rem', display: 'block', lineHeight: 1.2 }}>{item.label}</span>
-                {isHovered && !isActive && (
-                  <span
-                    className="font-mono"
-                    style={{ fontSize: '0.5rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em' }}
-                  >
-                    {item.description}
-                  </span>
-                )}
+                <span style={{ fontSize: 'var(--text-base)', display: 'block', lineHeight: 1.3 }}>{item.label}</span>
+                {/* Always rendered. This used to appear only on hover, which
+                    hid it from keyboard and touch users entirely and shifted
+                    the row's height as the pointer moved across the nav. */}
+                <span
+                  className="font-mono"
+                  style={{
+                    fontSize: 'var(--text-2xs)',
+                    display: 'block',
+                    color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
+                    letterSpacing: '0.04em',
+                    lineHeight: 1.4,
+                    opacity: isActive ? 0.85 : 1,
+                  }}
+                >
+                  {item.description}
+                </span>
               </div>
             </button>
           )
@@ -142,7 +150,7 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
       </nav>
 
       {/* Back to dashboard */}
-      <div style={{ borderTop: '0.5px solid var(--color-border-subtle)', padding: '8px 0' }}>
+      <div style={{ borderTop: '1px solid var(--color-border-subtle)', padding: '8px 0' }}>
         <button
           onClick={onBack}
           onMouseEnter={() => setBackHovered(true)}
@@ -161,7 +169,7 @@ export default function Sidebar({ project, activeModule, onModuleChange, onBack 
           }}
         >
           <IconArrowLeft size={13} />
-          <span style={{ fontSize: '0.8rem' }}>Dashboard</span>
+          <span style={{ fontSize: 'var(--text-sm)' }}>Dashboard</span>
         </button>
       </div>
     </aside>

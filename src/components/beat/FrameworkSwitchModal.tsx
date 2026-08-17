@@ -65,7 +65,7 @@ export default function FrameworkSwitchModal({
         onClick={e => e.stopPropagation()}
         style={{
           background: 'var(--color-surface)',
-          border: '0.5px solid var(--color-border)',
+          border: '1px solid var(--color-border)',
           borderRadius: 14,
           width: '100%',
           maxWidth: 780,
@@ -80,7 +80,7 @@ export default function FrameworkSwitchModal({
         <div
           style={{
             padding: '18px 24px 16px',
-            borderBottom: '0.5px solid var(--color-border-subtle)',
+            borderBottom: '1px solid var(--color-border-subtle)',
             display: 'flex',
             alignItems: 'flex-start',
             gap: 12,
@@ -88,10 +88,10 @@ export default function FrameworkSwitchModal({
           }}
         >
           <div style={{ flex: 1 }}>
-            <h2 style={{ fontSize: '0.95rem', fontWeight: 500, color: 'var(--color-text-primary)', marginBottom: 4 }}>
+            <h2 style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)', marginBottom: 4 }}>
               Switching to {toDef?.name}
             </h2>
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
               Here's how your beats will be reassigned. Adjust any amber entries before confirming.
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function FrameworkSwitchModal({
         <div
           style={{
             padding: '10px 24px',
-            borderBottom: '0.5px solid var(--color-border-subtle)',
+            borderBottom: '1px solid var(--color-border-subtle)',
             display: 'flex',
             alignItems: 'center',
             gap: 16,
@@ -116,7 +116,7 @@ export default function FrameworkSwitchModal({
         >
           <span
             className="font-mono"
-            style={{ fontSize: '0.6rem', color: 'var(--color-success)', display: 'flex', alignItems: 'center', gap: 5 }}
+            style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-success)', display: 'flex', alignItems: 'center', gap: 5 }}
           >
             <IconCheck size={10} />
             {autoMapped} mapped automatically
@@ -124,7 +124,7 @@ export default function FrameworkSwitchModal({
           {needsReview > 0 && (
             <span
               className="font-mono"
-              style={{ fontSize: '0.6rem', color: 'var(--color-warning)', display: 'flex', alignItems: 'center', gap: 5 }}
+              style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-warning)', display: 'flex', alignItems: 'center', gap: 5 }}
             >
               <IconAlertTriangle size={10} />
               {needsReview} need review
@@ -133,7 +133,7 @@ export default function FrameworkSwitchModal({
           {noSlot > 0 && (
             <span
               className="font-mono"
-              style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}
+              style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}
             >
               {noSlot} beat{noSlot !== 1 ? 's' : ''} without slot assignment — kept as-is
             </span>
@@ -154,12 +154,12 @@ export default function FrameworkSwitchModal({
             style={{
               overflowY: 'auto',
               padding: '16px 20px',
-              borderRight: '0.5px solid var(--color-border-subtle)',
+              borderRight: '1px solid var(--color-border-subtle)',
             }}
           >
             <p
               className="font-mono"
-              style={{ fontSize: '0.6rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}
+              style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}
             >
               CURRENT — {fromDef?.name.toUpperCase()}
             </p>
@@ -178,14 +178,14 @@ export default function FrameworkSwitchModal({
                   >
                     <span
                       className="font-mono"
-                      style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}
+                      style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}
                     >
                       {slot.label}
                     </span>
                     {slot.targetPageStart && (
                       <span
                         className="font-mono"
-                        style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', opacity: 0.6 }}
+                        style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.6 }}
                       >
                         p.{slot.targetPageStart}
                         {slot.targetPageEnd !== slot.targetPageStart ? `–${slot.targetPageEnd}` : ''}
@@ -201,9 +201,9 @@ export default function FrameworkSwitchModal({
                           style={{
                             padding: '5px 10px',
                             background: 'var(--color-surface-raised)',
-                            border: `0.5px solid ${r.isAmbiguous ? 'var(--color-warning)' : 'var(--color-border-subtle)'}`,
+                            border: `1px solid ${r.isAmbiguous ? 'var(--color-warning)' : 'var(--color-border-subtle)'}`,
                             borderRadius: 6,
-                            fontSize: '0.78rem',
+                            fontSize: 'var(--text-sm)',
                             color: 'var(--color-text-primary)',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
@@ -220,7 +220,7 @@ export default function FrameworkSwitchModal({
             })}
 
             {remappings.length === 0 && (
-              <p style={{ fontSize: '0.78rem', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
                 No beats have been assigned to specific slots yet. All beats will be kept as-is.
               </p>
             )}
@@ -243,7 +243,7 @@ export default function FrameworkSwitchModal({
           <div style={{ overflowY: 'auto', padding: '16px 20px' }}>
             <p
               className="font-mono"
-              style={{ fontSize: '0.6rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}
+              style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}
             >
               AFTER SWITCHING — {toDef?.name.toUpperCase()}
             </p>
@@ -255,14 +255,14 @@ export default function FrameworkSwitchModal({
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                     <span
                       className="font-mono"
-                      style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}
+                      style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}
                     >
                       {slot.label}
                     </span>
                     {slot.targetPageStart && (
                       <span
                         className="font-mono"
-                        style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', opacity: 0.6 }}
+                        style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.6 }}
                       >
                         p.{slot.targetPageStart}
                         {slot.targetPageEnd !== slot.targetPageStart ? `–${slot.targetPageEnd}` : ''}
@@ -278,9 +278,9 @@ export default function FrameworkSwitchModal({
                             style={{
                               padding: '5px 10px',
                               background: r.isAmbiguous ? 'var(--color-accent-muted)' : 'var(--color-surface-raised)',
-                              border: `0.5px solid ${r.isAmbiguous ? 'var(--color-warning)' : 'var(--color-border-subtle)'}`,
+                              border: `1px solid ${r.isAmbiguous ? 'var(--color-warning)' : 'var(--color-border-subtle)'}`,
                               borderRadius: r.isAmbiguous ? '6px 6px 0 0' : 6,
-                              fontSize: '0.78rem',
+                              fontSize: 'var(--text-sm)',
                               color: 'var(--color-text-primary)',
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
@@ -291,7 +291,7 @@ export default function FrameworkSwitchModal({
                             {r.isAmbiguous && (
                               <span
                                 className="font-mono"
-                                style={{ marginLeft: 8, fontSize: '0.55rem', color: 'var(--color-warning)' }}
+                                style={{ marginLeft: 8, fontSize: 'var(--text-2xs)', color: 'var(--color-warning)' }}
                               >
                                 REVIEW
                               </span>
@@ -304,13 +304,13 @@ export default function FrameworkSwitchModal({
                               style={{
                                 width: '100%',
                                 background: 'var(--color-surface-raised)',
-                                border: '0.5px solid var(--color-warning)',
+                                border: '1px solid var(--color-warning)',
                                 borderTop: 'none',
                                 borderRadius: '0 0 6px 6px',
                                 padding: '4px 8px',
                                 color: 'var(--color-text-secondary)',
                                 fontFamily: '"DM Mono", monospace',
-                                fontSize: '0.6rem',
+                                fontSize: 'var(--text-sm)',
                                 cursor: 'pointer',
                                 outline: 'none',
                               }}
@@ -335,7 +335,7 @@ export default function FrameworkSwitchModal({
             })}
 
             {remappings.length === 0 && (
-              <p style={{ fontSize: '0.78rem', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
                 Framework will be applied to new beats going forward.
               </p>
             )}
@@ -346,7 +346,7 @@ export default function FrameworkSwitchModal({
         <div
           style={{
             padding: '14px 24px',
-            borderTop: '0.5px solid var(--color-border-subtle)',
+            borderTop: '1px solid var(--color-border-subtle)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
@@ -359,11 +359,11 @@ export default function FrameworkSwitchModal({
             style={{
               padding: '7px 16px',
               background: 'transparent',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-control-border)',
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-text-secondary)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
             }}
           >
             Cancel
@@ -377,7 +377,7 @@ export default function FrameworkSwitchModal({
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-background)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
               fontWeight: 500,
               display: 'flex',
               alignItems: 'center',

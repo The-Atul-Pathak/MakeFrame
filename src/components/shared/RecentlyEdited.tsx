@@ -38,12 +38,12 @@ export default function RecentlyEdited() {
       <SectionLabel>Recently edited</SectionLabel>
       <div style={{ marginTop: 20 }}>
         {items === null && (
-          <p className="font-ui" style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
+          <p className="font-ui" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
             Loading…
           </p>
         )}
         {items?.length === 0 && (
-          <p className="font-ui" style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
+          <p className="font-ui" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', padding: '14px 0' }}>
             No activity yet. Open a project to get started.
           </p>
         )}
@@ -76,7 +76,7 @@ function RecentRow({
       className="w-full text-left flex flex-col gap-0.5 transition-colors duration-150"
       style={{
         padding: '14px 0',
-        borderBottom: isLast ? 'none' : '0.5px solid var(--color-border-subtle)',
+        borderBottom: isLast ? 'none' : '1px solid var(--color-border-subtle)',
         background: hovered ? 'var(--color-surface)' : 'transparent',
       }}
       onMouseEnter={() => setHovered(true)}
@@ -85,21 +85,21 @@ function RecentRow({
     >
       <span
         className="font-mono"
-        style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-tertiary)' }}
+        style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-tertiary)' }}
       >
         {item.type}
       </span>
       <span
         className="font-ui"
-        style={{ fontSize: '0.8rem', color: 'var(--color-text-primary)', lineHeight: 1.3 }}
+        style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', lineHeight: 1.3 }}
       >
         {item.label}
       </span>
       <div className="flex items-center justify-between" style={{ marginTop: 3 }}>
-        <span className="font-ui" style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)' }}>
+        <span className="font-ui" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)' }}>
           {item.projectTitle}
         </span>
-        <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
           {relativeTime(item.updatedAt)}
         </span>
       </div>

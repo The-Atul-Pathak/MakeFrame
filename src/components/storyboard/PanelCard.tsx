@@ -26,7 +26,7 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
       onMouseLeave={() => setHovered(false)}
       style={{
         background: 'var(--color-surface)',
-        border: `0.5px solid ${hovered ? 'var(--color-accent)' : 'var(--color-border)'}`,
+        border: `1px solid ${hovered ? 'var(--color-accent)' : 'var(--color-border)'}`,
         borderRadius: 10,
         overflow: 'hidden',
         transition: 'border-color 150ms, transform 150ms, box-shadow 150ms',
@@ -41,14 +41,14 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '8px 10px 6px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           <span
             className="font-mono"
             style={{
-              fontSize: '0.55rem',
+              fontSize: 'var(--text-2xs)',
               color: 'var(--color-background)',
               background: 'var(--color-accent)',
               padding: '1px 5px',
@@ -57,7 +57,7 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
           >
             {String(index + 1).padStart(2, '0')}
           </span>
-          <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
             {panel.shotType} · {panel.lens}mm
           </span>
         </div>
@@ -113,12 +113,12 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
             style={{
               flex: 1,
               background: 'var(--color-surface-raised)',
-              border: '0.5px solid var(--color-border-subtle)',
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 4,
               padding: '3px 5px',
               color: 'var(--color-text-secondary)',
               fontFamily: '"DM Mono", monospace',
-              fontSize: '0.6rem',
+              fontSize: 'var(--text-sm)',
               outline: 'none',
               cursor: 'pointer',
             }}
@@ -136,12 +136,12 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
             style={{
               flex: 1,
               background: 'var(--color-surface-raised)',
-              border: '0.5px solid var(--color-border-subtle)',
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 4,
               padding: '3px 5px',
               color: 'var(--color-text-secondary)',
               fontFamily: '"DM Mono", monospace',
-              fontSize: '0.6rem',
+              fontSize: 'var(--text-sm)',
               outline: 'none',
               cursor: 'pointer',
             }}
@@ -155,7 +155,7 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
         {/* Lens + duration */}
         <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 3, flex: 1 }}>
-            <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap' }}>LENS</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap' }}>LENS</span>
             <input
               type="number"
               value={panel.lens}
@@ -165,20 +165,20 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
               style={{
                 flex: 1,
                 background: 'var(--color-surface-raised)',
-                border: '0.5px solid var(--color-border-subtle)',
+                border: '1px solid var(--color-border-subtle)',
                 borderRadius: 4,
                 padding: '3px 5px',
                 color: 'var(--color-text-secondary)',
                 fontFamily: '"DM Mono", monospace',
-                fontSize: '0.6rem',
+                fontSize: 'var(--text-sm)',
                 outline: 'none',
                 textAlign: 'right',
               }}
             />
-            <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)' }}>mm</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>mm</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 3, flex: 1 }}>
-            <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap' }}>DUR</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', whiteSpace: 'nowrap' }}>DUR</span>
             <input
               type="number"
               value={panel.durationEstimate}
@@ -187,17 +187,17 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
               style={{
                 flex: 1,
                 background: 'var(--color-surface-raised)',
-                border: '0.5px solid var(--color-border-subtle)',
+                border: '1px solid var(--color-border-subtle)',
                 borderRadius: 4,
                 padding: '3px 5px',
                 color: 'var(--color-text-secondary)',
                 fontFamily: '"DM Mono", monospace',
-                fontSize: '0.6rem',
+                fontSize: 'var(--text-sm)',
                 outline: 'none',
                 textAlign: 'right',
               }}
             />
-            <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)' }}>s</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>s</span>
           </div>
         </div>
 
@@ -210,12 +210,12 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
           style={{
             width: '100%',
             background: 'var(--color-surface-raised)',
-            border: '0.5px solid var(--color-border-subtle)',
+            border: '1px solid var(--color-border-subtle)',
             borderRadius: 4,
             padding: '4px 6px',
             color: 'var(--color-text-primary)',
             fontFamily: 'Outfit, sans-serif',
-            fontSize: '0.72rem',
+            fontSize: 'var(--text-sm)',
             outline: 'none',
             resize: 'none',
             lineHeight: 1.4,
@@ -230,12 +230,12 @@ export default function PanelCard({ panel, index, onUpdate, onDelete, onExpand }
           style={{
             width: '100%',
             background: 'var(--color-surface-raised)',
-            border: '0.5px solid var(--color-border-subtle)',
+            border: '1px solid var(--color-border-subtle)',
             borderRadius: 4,
             padding: '4px 6px',
             color: 'var(--color-text-tertiary)',
             fontFamily: 'Outfit, sans-serif',
-            fontSize: '0.72rem',
+            fontSize: 'var(--text-sm)',
             outline: 'none',
             fontStyle: 'italic',
           }}

@@ -20,8 +20,8 @@ export default function TipsStrip() {
         className="flex"
         style={{
           marginTop: 20,
-          borderTop: '0.5px solid var(--color-border)',
-          borderBottom: '0.5px solid var(--color-border)',
+          borderTop: '1px solid var(--color-border)',
+          borderBottom: '1px solid var(--color-border)',
           padding: '32px 0',
         }}
       >
@@ -31,26 +31,26 @@ export default function TipsStrip() {
             className="flex flex-col gap-3 flex-1"
             style={{
               padding: '0 28px',
-              borderLeft: i > 0 ? '0.5px solid var(--color-border)' : 'none',
+              borderLeft: i > 0 ? '1px solid var(--color-border)' : 'none',
             }}
           >
             <kbd
               className="font-mono self-start"
               style={{
-                fontSize: '0.65rem',
+                fontSize: 'var(--text-xs)',
                 letterSpacing: '0.04em',
                 color: 'var(--color-accent)',
                 background: 'var(--color-accent-muted)',
                 padding: '3px 8px',
                 borderRadius: 4,
-                border: '0.5px solid var(--color-border-accent)',
+                border: '1px solid var(--color-border-accent)',
               }}
             >
               {tip.shortcut}
             </kbd>
             <p
               className="font-ui"
-              style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}
+              style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}
             >
               {tip.description}
             </p>

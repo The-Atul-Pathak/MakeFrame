@@ -7,7 +7,7 @@ interface Props {
 }
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '0.55rem',
+  fontSize: 'var(--text-2xs)',
   letterSpacing: '0.08em',
   color: 'var(--color-text-tertiary)',
   marginBottom: 4,
@@ -17,12 +17,12 @@ const labelStyle: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   background: 'var(--color-surface-raised)',
-  border: '0.5px solid var(--color-border-subtle)',
+  border: '1px solid var(--color-border-subtle)',
   borderRadius: 5,
   padding: '6px 8px',
   color: 'var(--color-text-primary)',
   fontFamily: 'Outfit, sans-serif',
-  fontSize: '0.78rem',
+  fontSize: 'var(--text-sm)',
   outline: 'none',
   lineHeight: 1.5,
 }
@@ -51,13 +51,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
           gap: 12,
           marginBottom: 16,
           paddingBottom: 8,
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
-        <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
           {title}
         </span>
-        <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border-subtle)' }} />
+        <div style={{ flex: 1, height: '1px', background: 'var(--color-border-subtle)' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
         {children}
@@ -79,7 +79,7 @@ export default function CharacterProfile({ character, allCharacters, onChange }:
             <input
               value={character.name}
               onChange={e => onChange({ name: e.target.value })}
-              style={{ ...inputStyle, fontWeight: 600, fontSize: '0.88rem' }}
+              style={{ ...inputStyle, fontWeight: 600, fontSize: 'var(--text-base)' }}
             />
           </Field>
           <Field label="AGE">
@@ -203,7 +203,7 @@ export default function CharacterProfile({ character, allCharacters, onChange }:
                   <span
                     className="font-mono"
                     style={{
-                      fontSize: '0.62rem',
+                      fontSize: 'var(--text-2xs)',
                       color: 'var(--color-text-secondary)',
                       fontWeight: 500,
                     }}
@@ -213,7 +213,7 @@ export default function CharacterProfile({ character, allCharacters, onChange }:
                   {other.occupation && (
                     <p
                       className="font-mono"
-                      style={{ fontSize: '0.5rem', color: 'var(--color-text-tertiary)', marginTop: 1 }}
+                      style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', marginTop: 1 }}
                     >
                       {other.occupation}
                     </p>
@@ -244,8 +244,8 @@ export default function CharacterProfile({ character, allCharacters, onChange }:
         <Section title="APPEARANCES">
           <div style={{ display: 'flex', gap: 20 }}>
             <div>
-              <p className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', marginBottom: 2 }}>TOTAL SCENES</p>
-              <span className="font-mono" style={{ fontSize: '1rem', color: 'var(--color-accent)', fontWeight: 600 }}>{character.totalScenes}</span>
+              <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', marginBottom: 2 }}>TOTAL SCENES</p>
+              <span className="font-mono" style={{ fontSize: 'var(--text-base)', color: 'var(--color-accent)', fontWeight: 600 }}>{character.totalScenes}</span>
             </div>
           </div>
         </Section>

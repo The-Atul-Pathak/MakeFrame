@@ -203,9 +203,9 @@ function ElementBlock({
           position: 'absolute',
           top: 0,
           right: 0,
-          fontSize: '0.45rem',
+          fontSize: 'var(--text-2xs)',
           letterSpacing: '0.08em',
-          color: '#bbb9b5',
+          color: 'var(--color-canvas-ink-muted)',
           pointerEvents: 'none',
           opacity: 0,
           transition: 'opacity 120ms',
@@ -306,7 +306,7 @@ export default function ScreenplayCanvas({
         overflow: 'auto',
         display: 'flex',
         justifyContent: 'center',
-        background: '#e8e5e0',
+        background: 'var(--color-canvas-desk)',
         padding: '48px 32px',
       }}
     >
@@ -357,8 +357,8 @@ export default function ScreenplayCanvas({
           <div
             className="font-mono"
             style={{
-              fontSize: '0.55rem',
-              color: '#9a9591',
+              fontSize: 'var(--text-2xs)',
+              color: 'var(--color-canvas-ink-muted)',
               display: 'flex',
               gap: 12,
               marginTop: 2,
@@ -411,22 +411,22 @@ export default function ScreenplayCanvas({
                   gap: 4,
                   padding: '3px 8px',
                   background: 'transparent',
-                  border: '0.5px dashed #c8c5bf',
+                  border: '1px dashed var(--color-canvas-rule)',
                   borderRadius: 4,
                   cursor: 'pointer',
-                  color: '#9a9591',
+                  color: 'var(--color-canvas-ink-muted)',
                   fontFamily: '"DM Mono", monospace',
-                  fontSize: '0.55rem',
+                  fontSize: 'var(--text-2xs)',
                   letterSpacing: '0.06em',
                   transition: 'all 120ms',
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#8a7555'
-                  ;(e.currentTarget as HTMLElement).style.color = '#8a7555'
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-canvas-ink-accent)'
+                  ;(e.currentTarget as HTMLElement).style.color = 'var(--color-canvas-ink-accent)'
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#c8c5bf'
-                  ;(e.currentTarget as HTMLElement).style.color = '#9a9591'
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-canvas-rule)'
+                  ;(e.currentTarget as HTMLElement).style.color = 'var(--color-canvas-ink-muted)'
                 }}
               >
                 <IconPlus size={9} />
@@ -440,12 +440,12 @@ export default function ScreenplayCanvas({
         <div
           style={{
             marginTop: 48,
-            borderTop: '0.5px dashed #d0cdc8',
+            borderTop: '1px dashed var(--color-canvas-rule)',
             paddingTop: 8,
             textAlign: 'center',
             fontFamily: '"DM Mono", monospace',
-            fontSize: '0.5rem',
-            color: '#b0ada8',
+            fontSize: 'var(--text-2xs)',
+            color: 'var(--color-canvas-ink-muted)',
             letterSpacing: '0.08em',
           }}
         >

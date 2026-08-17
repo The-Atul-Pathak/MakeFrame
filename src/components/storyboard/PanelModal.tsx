@@ -26,7 +26,7 @@ const LENS_GUIDE: Array<{ range: string; feel: string }> = [
 ]
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '0.55rem',
+  fontSize: 'var(--text-2xs)',
   letterSpacing: '0.08em',
   color: 'var(--color-text-tertiary)',
   marginBottom: 5,
@@ -35,12 +35,12 @@ const labelStyle: React.CSSProperties = {
 const selectStyle: React.CSSProperties = {
   width: '100%',
   background: 'var(--color-surface-raised)',
-  border: '0.5px solid var(--color-border-subtle)',
+  border: '1px solid var(--color-border-subtle)',
   borderRadius: 5,
   padding: '6px 8px',
   color: 'var(--color-text-secondary)',
   fontFamily: '"DM Mono", monospace',
-  fontSize: '0.65rem',
+  fontSize: 'var(--text-xs)',
   outline: 'none',
   cursor: 'pointer',
 }
@@ -64,7 +64,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
         onClick={e => e.stopPropagation()}
         style={{
           background: 'var(--color-surface)',
-          border: '0.5px solid var(--color-border)',
+          border: '1px solid var(--color-border)',
           borderRadius: 14,
           width: '100%',
           maxWidth: 920,
@@ -82,18 +82,18 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '14px 20px 12px',
-            borderBottom: '0.5px solid var(--color-border-subtle)',
+            borderBottom: '1px solid var(--color-border-subtle)',
             flexShrink: 0,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
               PANEL
             </span>
             <span
               className="font-mono"
               style={{
-                fontSize: '0.6rem',
+                fontSize: 'var(--text-2xs)',
                 background: 'var(--color-accent)',
                 color: 'var(--color-background)',
                 padding: '1px 6px',
@@ -102,7 +102,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
             >
               {String(panelIndex + 1).padStart(2, '0')} / {String(totalPanels).padStart(2, '0')}
             </span>
-            <span style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
+            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>
               {scene.intExt}. {scene.location} — {scene.timeOfDay}
             </span>
           </div>
@@ -113,7 +113,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
               disabled={panelIndex === 0}
               style={{
                 background: 'none',
-                border: '0.5px solid var(--color-border-subtle)',
+                border: '1px solid var(--color-border-subtle)',
                 borderRadius: 5,
                 cursor: panelIndex === 0 ? 'default' : 'pointer',
                 color: panelIndex === 0 ? 'var(--color-text-tertiary)' : 'var(--color-text-secondary)',
@@ -129,7 +129,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
               disabled={panelIndex === totalPanels - 1}
               style={{
                 background: 'none',
-                border: '0.5px solid var(--color-border-subtle)',
+                border: '1px solid var(--color-border-subtle)',
                 borderRadius: 5,
                 cursor: panelIndex === totalPanels - 1 ? 'default' : 'pointer',
                 color: panelIndex === totalPanels - 1 ? 'var(--color-text-tertiary)' : 'var(--color-text-secondary)',
@@ -166,7 +166,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
           }}
         >
           {/* Sketch area */}
-          <div style={{ padding: '20px 24px', borderRight: '0.5px solid var(--color-border-subtle)', overflowY: 'auto' }}>
+          <div style={{ padding: '20px 24px', borderRight: '1px solid var(--color-border-subtle)', overflowY: 'auto' }}>
             <SketchCanvas
               dataUrl={panel.sketchDataUrl}
               onChange={dataUrl => onUpdate({ sketchDataUrl: dataUrl })}
@@ -196,12 +196,12 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
                     style={{
                       padding: '3px 8px',
                       background: panel.shotType === s ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-                      border: `0.5px solid ${panel.shotType === s ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                      border: `1px solid ${panel.shotType === s ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                       borderRadius: 4,
                       cursor: 'pointer',
                       color: panel.shotType === s ? 'var(--color-background)' : 'var(--color-text-secondary)',
                       fontFamily: '"DM Mono", monospace',
-                      fontSize: '0.6rem',
+                      fontSize: 'var(--text-2xs)',
                       transition: 'all 120ms',
                     }}
                   >
@@ -242,7 +242,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
               />
               <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {LENS_GUIDE.map(g => (
-                  <span key={g.range} className="font-mono" style={{ fontSize: '0.5rem', color: 'var(--color-text-tertiary)', lineHeight: 1.4 }}>
+                  <span key={g.range} className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', lineHeight: 1.4 }}>
                     {g.range} — {g.feel}
                   </span>
                 ))}
@@ -272,12 +272,12 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
                 style={{
                   width: '100%',
                   background: 'var(--color-surface-raised)',
-                  border: '0.5px solid var(--color-border-subtle)',
+                  border: '1px solid var(--color-border-subtle)',
                   borderRadius: 5,
                   padding: '6px 8px',
                   color: 'var(--color-text-primary)',
                   fontFamily: 'Outfit, sans-serif',
-                  fontSize: '0.78rem',
+                  fontSize: 'var(--text-sm)',
                   outline: 'none',
                   resize: 'none',
                   lineHeight: 1.5,
@@ -296,12 +296,12 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
                 style={{
                   width: '100%',
                   background: 'var(--color-surface-raised)',
-                  border: '0.5px solid var(--color-border-subtle)',
+                  border: '1px solid var(--color-border-subtle)',
                   borderRadius: 5,
                   padding: '6px 8px',
                   color: 'var(--color-text-primary)',
                   fontFamily: 'Outfit, sans-serif',
-                  fontSize: '0.78rem',
+                  fontSize: 'var(--text-sm)',
                   outline: 'none',
                   resize: 'none',
                   lineHeight: 1.5,
@@ -325,7 +325,7 @@ export default function PanelModal({ panel, scene, panelIndex, totalPanels, onUp
                 onChange={e => onUpdate({ needsReview: e.target.checked })}
                 style={{ accentColor: 'var(--color-warning)' }}
               />
-              <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+              <span className="font-mono" style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)' }}>
                 FLAG FOR REVIEW
               </span>
             </label>

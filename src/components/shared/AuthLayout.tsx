@@ -22,7 +22,7 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
         background: 'var(--color-background)',
       }}
     >
-      <div style={{ width: 380, display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <div style={{ width: 408, display: 'flex', flexDirection: 'column', gap: 28 }}>
         <Link
           to="/"
           aria-label="MakeFrame home"
@@ -35,7 +35,7 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
         <div
           style={{
             background: 'var(--color-surface)',
-            border: '0.5px solid var(--color-border)',
+            border: '1px solid var(--color-border)',
             borderRadius: 14,
             boxShadow: '0 20px 60px rgba(0,0,0,0.55)',
             padding: '28px 28px 24px',
@@ -45,11 +45,11 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
           }}
         >
           <div>
-            <h1 className="font-display" style={{ fontSize: '1.15rem', color: 'var(--color-text-primary)', marginBottom: subtitle ? 6 : 0 }}>
+            <h1 className="font-display" style={{ fontSize: 'var(--text-xl)', color: 'var(--color-text-primary)', marginBottom: subtitle ? 6 : 0 }}>
               {title}
             </h1>
             {subtitle && (
-              <p className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
+              <p className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', lineHeight: 1.5 }}>
                 {subtitle}
               </p>
             )}
@@ -61,20 +61,23 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
           className="font-mono"
           style={{
             display: 'flex',
-            alignItems: 'center',
+            /* Not `center`: the copy wraps to two lines at this width, which
+               left the lock icon floating in the vertical middle beside it. */
+            alignItems: 'flex-start',
             justifyContent: 'center',
             gap: 6,
-            fontSize: '0.6rem',
+            fontSize: 'var(--text-2xs)',
             color: 'var(--color-text-tertiary)',
+            lineHeight: 1.5,
           }}
         >
-          <IconLock size={11} aria-hidden="true" />
-          Your scripts stay private — only your account can see your work.
+          <IconLock size={12} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+          <span>Your scripts stay private — only your account can see your work.</span>
         </p>
 
         {footer && <div style={{ textAlign: 'center' }}>{footer}</div>}
 
-        <p className="font-mono" style={{ textAlign: 'center', fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+        <p className="font-mono" style={{ textAlign: 'center', fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
           <Link to="/privacy" style={{ color: 'var(--color-text-secondary)' }}>Privacy</Link>
           {' · '}
           <Link to="/terms" style={{ color: 'var(--color-text-secondary)' }}>Terms</Link>
@@ -87,7 +90,7 @@ export default function AuthLayout({ title, subtitle, children, footer }: Props)
 export function Field({ label, children, style }: { label: string; children: ReactNode; style?: CSSProperties }) {
   return (
     <label style={{ display: 'flex', flexDirection: 'column', gap: 7, ...style }}>
-      <span className="font-mono uppercase" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.12em' }}>
+      <span className="font-mono uppercase" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.1em' }}>
         {label}
       </span>
       {children}
@@ -98,11 +101,11 @@ export function Field({ label, children, style }: { label: string; children: Rea
 export function Divider({ label }: { label: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border)' }} />
-      <span className="font-mono" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}>
+      <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
+      <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.08em' }}>
         {label}
       </span>
-      <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border)' }} />
+      <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
     </div>
   )
 }

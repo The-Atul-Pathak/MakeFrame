@@ -2,19 +2,25 @@
  * Stylized CSS miniatures of the four modules, used on the landing page.
  * Decorative stand-ins until real product screenshots are captured —
  * swap freely; each mockup is self-contained and aria-hidden.
+ *
+ * These are the ONE deliberate exception to the 12px type floor in
+ * docs/visuals.md. They are aria-hidden illustrations, not content: the
+ * reduced scale is what makes them read as scaled-down screenshots, and a
+ * 12px floor overflows the 5-column shot-list grid. Sized just large enough
+ * to avoid looking like mush. Do not "fix" these to the scale tokens.
  */
 
 const chipClass =
-  'rounded-sm border border-border bg-surface-raised px-2 py-1 font-mono text-[0.55rem] text-text-secondary'
+  'rounded-sm border border-border bg-surface-raised px-2 py-1 font-mono text-[0.65rem] text-text-secondary'
 
 export function BeatSheetMock() {
   return (
     <div aria-hidden="true" className="rounded-lg border border-border bg-surface p-4 shadow-card">
       <div className="mb-3 flex items-center justify-between">
-        <span className="font-mono text-[0.55rem] uppercase tracking-[0.14em] text-text-tertiary">
+        <span className="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-text-tertiary">
           Save the Cat &middot; 15 beats
         </span>
-        <span className="rounded-sm bg-accent-muted px-2 py-[2px] font-mono text-[0.52rem] uppercase tracking-[0.1em] text-accent">
+        <span className="rounded-sm bg-accent-muted px-2 py-[2px] font-mono text-[0.62rem] uppercase tracking-[0.1em] text-accent">
           On track
         </span>
       </div>
@@ -25,7 +31,7 @@ export function BeatSheetMock() {
           { act: 'Act III', beats: ['Finale', 'Final Image'] },
         ].map(({ act, beats }, i) => (
           <div key={act} className="flex flex-col gap-2">
-            <span className="font-mono text-[0.52rem] uppercase tracking-[0.14em] text-text-tertiary">
+            <span className="font-mono text-[0.62rem] uppercase tracking-[0.1em] text-text-tertiary">
               {act}
             </span>
             {beats.map((b, j) => (
@@ -51,7 +57,7 @@ export function ScreenplayMock() {
   return (
     <div
       aria-hidden="true"
-      className="rounded-sm bg-canvas-bg px-6 py-5 font-screenplay text-[0.62rem] leading-[1.9] text-canvas-text"
+      className="rounded-sm bg-canvas-bg px-6 py-5 font-screenplay text-[0.72rem] leading-[1.9] text-canvas-text"
       style={{ boxShadow: '0 24px 60px rgba(0,0,0,0.5)' }}
     >
       <p className="font-bold">12 INT. DARKROOM &mdash; NIGHT</p>
@@ -109,7 +115,7 @@ export function StoryboardMock() {
           <div className="aspect-video overflow-hidden rounded-sm border border-border bg-surface-raised p-2">
             <PanelArt variant={variant} />
           </div>
-          <span className="font-mono text-[0.52rem] uppercase tracking-[0.12em] text-text-tertiary">
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.1em] text-text-tertiary">
             {id} &middot; {label}
           </span>
         </div>
@@ -126,7 +132,7 @@ export function ShotListMock() {
   ]
   return (
     <div aria-hidden="true" className="overflow-hidden rounded-lg border border-border bg-surface shadow-card">
-      <div className="grid grid-cols-[1fr_1fr_1fr_1fr_1.4fr] gap-2 border-b border-border-subtle px-4 py-2 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-text-tertiary">
+      <div className="grid grid-cols-[1fr_1fr_1fr_1fr_1.4fr] gap-2 border-b border-border-subtle px-4 py-2 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-text-tertiary">
         <span>Shot</span>
         <span>Size</span>
         <span>Move</span>
@@ -136,7 +142,7 @@ export function ShotListMock() {
       {rows.map(({ shot, size, move, lens, review, active }) => (
         <div
           key={shot}
-          className={`grid grid-cols-[1fr_1fr_1fr_1fr_1.4fr] items-center gap-2 border-b border-border-subtle px-4 py-2 font-mono text-[0.58rem] text-text-secondary last:border-b-0 ${
+          className={`grid grid-cols-[1fr_1fr_1fr_1fr_1.4fr] items-center gap-2 border-b border-border-subtle px-4 py-2 font-mono text-[0.68rem] text-text-secondary last:border-b-0 ${
             active ? 'list-item-active bg-surface-raised' : ''
           }`}
         >
@@ -146,7 +152,7 @@ export function ShotListMock() {
           <span>{lens}</span>
           <span className="justify-self-end">
             {review && (
-              <span className="rounded-sm px-2 py-[2px] text-[0.5rem] uppercase tracking-[0.1em] text-warning" style={{ background: 'var(--color-accent-muted)' }}>
+              <span className="rounded-sm px-2 py-[2px] text-[0.6rem] uppercase tracking-[0.1em] text-warning" style={{ background: 'var(--color-accent-muted)' }}>
                 Needs review
               </span>
             )}

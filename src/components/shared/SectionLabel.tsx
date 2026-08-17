@@ -7,11 +7,11 @@ export default function SectionLabel({ children }: Props) {
     <div className="flex items-center gap-4">
       <span
         className="font-mono text-text-tertiary shrink-0"
-        style={{ fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}
+        style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.1em', textTransform: 'uppercase' }}
       >
         {children}
       </span>
-      <div className="flex-1" style={{ height: '0.5px', background: 'var(--color-border)' }} />
+      <div className="flex-1" style={{ height: '1px', background: 'var(--color-border)' }} />
     </div>
   )
 }

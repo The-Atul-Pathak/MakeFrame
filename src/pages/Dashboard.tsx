@@ -65,7 +65,7 @@ function DashboardHeader() {
               zIndex: 50,
               minWidth: 200,
               background: 'var(--color-surface)',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-border)',
               borderRadius: 10,
               boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
               padding: 8,
@@ -74,16 +74,16 @@ function DashboardHeader() {
               gap: 4,
             }}
           >
-            <div className="font-mono" style={{ fontSize: '0.62rem', color: 'var(--color-text-tertiary)', padding: '6px 10px', wordBreak: 'break-all' }}>
+            <div className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', padding: '6px 10px', wordBreak: 'break-all' }}>
               {user?.email}
             </div>
-            <div style={{ height: '0.5px', background: 'var(--color-border)' }} />
+            <div style={{ height: '1px', background: 'var(--color-border)' }} />
             <button
               onClick={() => signOut()}
               className="font-mono"
               style={{
                 textAlign: 'left',
-                fontSize: '0.68rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--color-text-secondary)',
                 padding: '8px 10px',
                 borderRadius: 6,
@@ -144,12 +144,12 @@ export default function Dashboard() {
 
         {/* Quote + stats */}
         <div className="animate-fade-up" style={{ marginBottom: 56 }}>
-          <p className="font-display italic text-text-secondary" style={{ fontSize: '1.6rem', lineHeight: 1.25 }}>
+          <p className="font-display italic text-text-secondary" style={{ fontSize: 'var(--text-2xl)', lineHeight: 1.25 }}>
             "{quote}"
           </p>
           <div className="flex items-center gap-5" style={{ marginTop: 20 }}>
-            <div className="flex-1" style={{ height: '0.5px', background: 'var(--color-border)' }} />
-            <span className="font-mono text-text-tertiary shrink-0" style={{ fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+            <div className="flex-1" style={{ height: '1px', background: 'var(--color-border)' }} />
+            <span className="font-mono text-text-tertiary shrink-0" style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.08em' }}>
               {projects.length} projects&nbsp;&nbsp;·&nbsp;&nbsp;{totalScenes} scenes&nbsp;&nbsp;·&nbsp;&nbsp;{totalPanels} panels&nbsp;&nbsp;·&nbsp;&nbsp;{totalShots} shots
             </span>
           </div>
@@ -163,7 +163,7 @@ export default function Dashboard() {
             <SectionLabel>Projects</SectionLabel>
 
             {loadError && (
-              <p className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-danger)', marginTop: 16 }}>
+              <p className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-danger)', marginTop: 16 }}>
                 {loadError}
               </p>
             )}

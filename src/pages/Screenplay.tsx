@@ -83,7 +83,7 @@ export default function Screenplay({ project }: Props) {
       {/* Header */}
       <div
         style={{
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           padding: '12px 24px',
           flexShrink: 0,
           display: 'flex',
@@ -91,11 +91,11 @@ export default function Screenplay({ project }: Props) {
           gap: 12,
         }}
       >
-        <h1 style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)' }}>
+        <h1 style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)' }}>
           Screenplay
         </h1>
         <div style={{ flex: 1 }} />
-        <span className="font-mono" style={{ fontSize: '0.62rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
           {projectScenes.length} scenes · ~{Math.ceil(totalPages)}p · ~{Math.ceil(totalPages)} min
         </span>
         <button
@@ -107,7 +107,7 @@ export default function Screenplay({ project }: Props) {
             gap: 5,
             padding: '5px 10px',
             background: showMeta ? 'var(--color-accent-muted)' : 'var(--color-surface-raised)',
-            border: `0.5px solid ${showMeta ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+            border: `1px solid ${showMeta ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
             borderRadius: 6,
             cursor: 'pointer',
             color: showMeta ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
@@ -115,7 +115,7 @@ export default function Screenplay({ project }: Props) {
           }}
         >
           {showMeta ? <IconLayoutSidebarRightCollapse size={13} /> : <IconLayoutSidebarRightExpand size={13} />}
-          <span className="font-mono" style={{ fontSize: '0.6rem' }}>METADATA</span>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)' }}>METADATA</span>
         </button>
       </div>
 
@@ -152,10 +152,10 @@ export default function Screenplay({ project }: Props) {
             }}
           >
             <IconFileText size={32} style={{ color: 'var(--color-text-tertiary)' }} />
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
+            <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
               No scene selected
             </span>
-            <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
               Add a scene from the sidebar to start writing your screenplay.
             </span>
           </div>

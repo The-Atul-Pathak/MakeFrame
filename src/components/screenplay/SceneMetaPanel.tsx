@@ -26,7 +26,7 @@ function FieldLabel({ label }: { label: string }) {
     <p
       className="font-mono"
       style={{
-        fontSize: '0.55rem',
+        fontSize: 'var(--text-2xs)',
         letterSpacing: '0.08em',
         color: 'var(--color-text-tertiary)',
         marginBottom: 4,
@@ -40,12 +40,12 @@ function FieldLabel({ label }: { label: string }) {
 const selectStyle: React.CSSProperties = {
   width: '100%',
   background: 'var(--color-surface-raised)',
-  border: '0.5px solid var(--color-border-subtle)',
+  border: '1px solid var(--color-border-subtle)',
   borderRadius: 5,
   padding: '5px 8px',
   color: 'var(--color-text-secondary)',
   fontFamily: '"DM Mono", monospace',
-  fontSize: '0.65rem',
+  fontSize: 'var(--text-xs)',
   outline: 'none',
   cursor: 'pointer',
 }
@@ -53,12 +53,12 @@ const selectStyle: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   background: 'var(--color-surface-raised)',
-  border: '0.5px solid var(--color-border-subtle)',
+  border: '1px solid var(--color-border-subtle)',
   borderRadius: 5,
   padding: '5px 8px',
   color: 'var(--color-text-primary)',
   fontFamily: 'Outfit, sans-serif',
-  fontSize: '0.78rem',
+  fontSize: 'var(--text-sm)',
   outline: 'none',
 }
 
@@ -96,7 +96,7 @@ function TagInput({
           gap: 4,
           padding: '5px 6px',
           background: 'var(--color-surface-raised)',
-          border: '0.5px solid var(--color-border-subtle)',
+          border: '1px solid var(--color-border-subtle)',
           borderRadius: 5,
           minHeight: 32,
         }}
@@ -110,9 +110,9 @@ function TagInput({
               gap: 3,
               padding: '1px 6px',
               background: 'var(--color-surface)',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-border)',
               borderRadius: 3,
-              fontSize: '0.65rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--color-text-secondary)',
               fontFamily: '"DM Mono", monospace',
             }}
@@ -120,7 +120,7 @@ function TagInput({
             {v}
             <button
               onClick={() => onChange(values.filter(x => x !== v))}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', padding: 0, lineHeight: 0, fontSize: '0.7rem' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', padding: 0, lineHeight: 0, fontSize: 'var(--text-xs)' }}
             >
               ×
             </button>
@@ -133,7 +133,7 @@ function TagInput({
             background: 'transparent',
             border: 'none',
             outline: 'none',
-            fontSize: '0.72rem',
+            fontSize: 'var(--text-sm)',
             color: 'var(--color-text-primary)',
             flex: 1,
             minWidth: 60,
@@ -149,9 +149,9 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
   return (
     <aside
       style={{
-        width: 260,
+        width: 288,
         flexShrink: 0,
-        borderLeft: '0.5px solid var(--color-border-subtle)',
+        borderLeft: '1px solid var(--color-border-subtle)',
         background: 'var(--color-surface)',
         overflowY: 'auto',
         display: 'flex',
@@ -162,14 +162,14 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
       <div
         style={{
           padding: '14px 16px 12px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexShrink: 0,
         }}
       >
-        <p className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
+        <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
           SCENE METADATA
         </p>
         <button
@@ -179,7 +179,7 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
             border: 'none',
             cursor: 'pointer',
             color: 'var(--color-text-tertiary)',
-            fontSize: '0.9rem',
+            fontSize: 'var(--text-base)',
             lineHeight: 1,
           }}
         >
@@ -200,12 +200,12 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
                   flex: 1,
                   padding: '4px 0',
                   background: scene.intExt === opt ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-                  border: `0.5px solid ${scene.intExt === opt ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                  border: `1px solid ${scene.intExt === opt ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                   borderRadius: 4,
                   cursor: 'pointer',
                   color: scene.intExt === opt ? 'var(--color-background)' : 'var(--color-text-secondary)',
                   fontFamily: '"DM Mono", monospace',
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-2xs)',
                   transition: 'all 120ms',
                 }}
               >
@@ -221,7 +221,7 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
           <input
             value={scene.location}
             onChange={e => onChange({ location: e.target.value.toUpperCase() })}
-            style={{ ...inputStyle, textTransform: 'uppercase', fontFamily: '"Courier Prime", monospace', fontSize: '0.72rem' }}
+            style={{ ...inputStyle, textTransform: 'uppercase', fontFamily: '"Courier Prime", monospace', fontSize: 'var(--text-sm)' }}
           />
         </div>
 
@@ -251,12 +251,12 @@ export default function SceneMetaPanel({ scene, onChange, onClose }: Props) {
                   flex: 1,
                   padding: '4px 0',
                   background: scene.act === act ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-                  border: `0.5px solid ${scene.act === act ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                  border: `1px solid ${scene.act === act ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                   borderRadius: 4,
                   cursor: 'pointer',
                   color: scene.act === act ? 'var(--color-background)' : 'var(--color-text-secondary)',
                   fontFamily: '"DM Mono", monospace',
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-2xs)',
                   transition: 'all 120ms',
                 }}
               >

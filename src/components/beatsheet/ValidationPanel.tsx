@@ -14,10 +14,10 @@ export default function ValidationPanel({ issues, onClose, onBeatFocus }: Props)
   return (
     <div
       style={{
-        width: 260,
+        width: 288,
         flexShrink: 0,
         background: 'var(--color-surface)',
-        border: '0.5px solid var(--color-border)',
+        border: '1px solid var(--color-border)',
         borderRadius: 10,
         display: 'flex',
         flexDirection: 'column',
@@ -32,12 +32,12 @@ export default function ValidationPanel({ issues, onClose, onBeatFocus }: Props)
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 14px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
         <span
           className="font-mono"
-          style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--color-text-secondary)' }}
+          style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.1em', color: 'var(--color-text-secondary)' }}
         >
           VALIDATION
         </span>
@@ -55,13 +55,13 @@ export default function ValidationPanel({ issues, onClose, onBeatFocus }: Props)
           display: 'flex',
           gap: 16,
           padding: '8px 14px',
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
-        <span className="font-mono" style={{ fontSize: '0.6rem', color: errors.length > 0 ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: errors.length > 0 ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }}>
           {errors.length} error{errors.length !== 1 ? 's' : ''}
         </span>
-        <span className="font-mono" style={{ fontSize: '0.6rem', color: warnings.length > 0 ? 'var(--color-warning)' : 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: warnings.length > 0 ? 'var(--color-warning)' : 'var(--color-text-tertiary)' }}>
           {warnings.length} warning{warnings.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -70,7 +70,7 @@ export default function ValidationPanel({ issues, onClose, onBeatFocus }: Props)
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
         {issues.length === 0 ? (
           <div style={{ padding: '24px 14px', textAlign: 'center' }}>
-            <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-success)' }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-success)' }}>
               No issues found
             </span>
           </div>
@@ -100,7 +100,7 @@ export default function ValidationPanel({ issues, onClose, onBeatFocus }: Props)
                   : <IconAlertTriangle size={12} />
                 }
               </span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                 {issue.message}
               </span>
             </button>

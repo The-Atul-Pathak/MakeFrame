@@ -12,7 +12,7 @@ import {
 import { usePageMeta } from '@/hooks/usePageMeta'
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/lib/siteMeta'
 
-const overlineClass = 'font-mono text-[0.62rem] uppercase tracking-[0.16em] text-text-tertiary'
+const overlineClass = 'font-mono text-2xs uppercase tracking-[0.09em] text-text-tertiary'
 
 interface Stage {
   number: string
@@ -74,7 +74,7 @@ export default function Landing() {
           <h1 className="font-display text-[clamp(2.3rem,5.5vw,3.7rem)] leading-[1.08] text-text-primary">
             Start at the beat sheet, not the blank page.
           </h1>
-          <p className="max-w-[52ch] text-[0.98rem] leading-[1.7] text-text-secondary">
+          <p className="max-w-[52ch] text-base leading-[1.7] text-text-secondary">
             MakeFrame carries one story from beats to screenplay to storyboard to shot list —
             without changing tools, re-typing scenes, or losing the thread between the draft and
             the shoot day.
@@ -83,12 +83,12 @@ export default function Landing() {
             <CtaLink to="/signup">Start free</CtaLink>
             <a
               href="#pipeline"
-              className="inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-text-secondary transition-colors duration-200 hover:text-text-primary"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-text-secondary transition-colors duration-200 hover:text-text-primary"
             >
               See the pipeline <IconArrowDown size={13} aria-hidden="true" />
             </a>
           </div>
-          <p className="font-mono text-[0.6rem] tracking-[0.06em] text-text-tertiary">
+          <p className="font-mono text-2xs tracking-[0.06em] text-text-tertiary">
             No credit card &middot; Free while in early access &middot; Your scripts stay private
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function Landing() {
             <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.3rem)] leading-[1.15] text-text-primary">
               Four stages. One story. One direction.
             </h2>
-            <p className="text-[0.95rem] leading-[1.7] text-text-secondary">
+            <p className="text-base leading-[1.7] text-text-secondary">
               Most tools cover one stage and hand you an export. MakeFrame keeps the whole chain in
               one place, flowing one way — so a change upstream flags everything it touches
               downstream.
@@ -129,11 +129,11 @@ export default function Landing() {
                   <p className={overlineClass}>
                     {number} &mdash; {name}
                   </p>
-                  <h3 className="font-display text-[1.45rem] leading-[1.2] text-text-primary">
+                  <h3 className="font-display text-2xl leading-[1.2] text-text-primary">
                     {heading}
                   </h3>
-                  <p className="text-[0.92rem] leading-[1.7] text-text-secondary">{body}</p>
-                  <p className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-text-tertiary">
+                  <p className="text-base leading-[1.7] text-text-secondary">{body}</p>
+                  <p className="font-mono text-2xs uppercase tracking-[0.1em] text-text-tertiary">
                     {detail}
                   </p>
                 </div>
@@ -154,7 +154,7 @@ export default function Landing() {
             <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.3rem)] leading-[1.15] text-text-primary">
               Pre-production only. On purpose.
             </h2>
-            <p className="text-[0.95rem] leading-[1.7] text-text-secondary">
+            <p className="text-base leading-[1.7] text-text-secondary">
               MakeFrame is built for writer-directors who want to carry an idea to a shootable
               plan — not adopt a production-management platform they don&apos;t need. If your crew
               fits in a group chat, you&apos;re who this is for.
@@ -164,7 +164,7 @@ export default function Landing() {
             <div className="flex flex-col gap-3">
               <p className={overlineClass}>In the box</p>
               {['Beat sheets', 'Screenplay', 'Storyboards', 'Shot lists', 'Characters'].map((f) => (
-                <p key={f} className="border-l-[1.5px] border-accent pl-3 font-mono text-[0.68rem] text-text-primary">
+                <p key={f} className="border-l-[1.5px] border-accent pl-3 font-mono text-xs text-text-primary">
                   {f}
                 </p>
               ))}
@@ -172,7 +172,7 @@ export default function Landing() {
             <div className="flex flex-col gap-3">
               <p className={overlineClass}>Deliberately out</p>
               {['Call sheets', 'Crew management', 'Budgets', 'Scheduling', 'Distribution'].map((f) => (
-                <p key={f} className="border-l border-border-subtle pl-3 font-mono text-[0.68rem] text-text-tertiary line-through decoration-[0.5px]">
+                <p key={f} className="border-l border-border-subtle pl-3 font-mono text-xs text-text-tertiary line-through decoration-[1px]">
                   {f}
                 </p>
               ))}
@@ -184,20 +184,20 @@ export default function Landing() {
       {/* ── Privacy / trust ──────────────────────────────────────────────── */}
       <section className="border-t border-border-subtle">
         <div className="mx-auto flex max-w-[1120px] flex-col items-start gap-4 px-5 py-12 md:px-10 md:py-[80px]">
-          <p className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-text-tertiary">
+          <p className="flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.09em] text-text-tertiary">
             <IconLock size={13} aria-hidden="true" /> Privacy
           </p>
           <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.3rem)] leading-[1.15] text-text-primary">
             Your scripts stay private.
           </h2>
-          <p className="max-w-[58ch] text-[0.95rem] leading-[1.7] text-text-secondary">
+          <p className="max-w-[58ch] text-base leading-[1.7] text-text-secondary">
             Unproduced work is sensitive. Everything you make in MakeFrame is private to your
             account by default — no public profiles, no sharing you didn&apos;t ask for, and your
             writing is never used to train AI models. You own every word.
           </p>
           <Link
             to="/privacy"
-            className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-text-secondary underline decoration-border underline-offset-4 transition-colors duration-200 hover:text-text-primary"
+            className="font-mono text-xs uppercase tracking-[0.1em] text-text-secondary underline decoration-border underline-offset-4 transition-colors duration-200 hover:text-text-primary"
           >
             Read the privacy policy
           </Link>
@@ -211,7 +211,7 @@ export default function Landing() {
             Your next film starts at the beat sheet.
           </h2>
           <CtaLink to="/signup">Start pre-producing — free</CtaLink>
-          <p className="font-mono text-[0.6rem] tracking-[0.06em] text-text-tertiary">
+          <p className="font-mono text-2xs tracking-[0.06em] text-text-tertiary">
             Takes under a minute &middot; No credit card
           </p>
         </div>

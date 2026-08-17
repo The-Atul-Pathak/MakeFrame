@@ -5,12 +5,13 @@ import { useAuth } from '@/hooks/useAuth'
 import { CtaLink } from '@/components/marketing/Cta'
 
 const navLinkClass =
-  'font-mono text-[0.65rem] uppercase tracking-[0.12em] text-text-secondary hover:text-text-primary transition-colors duration-200'
+  'font-mono text-xs uppercase tracking-[0.1em] text-text-secondary hover:text-text-primary transition-colors duration-200'
 
 function Wordmark() {
   return (
     <Link to="/" className="flex items-center gap-2" aria-label="MakeFrame home">
-      <span className="font-display text-md tracking-tight text-text-primary">MakeFrame</span>
+      {/* text-lg matches the wordmark in the app's DashboardHeader. */}
+      <span className="font-display text-lg tracking-tight text-text-primary">MakeFrame</span>
       <IconDeviceTv size={15} className="text-text-tertiary" aria-hidden="true" />
     </Link>
   )
@@ -57,7 +58,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
             <div className="flex flex-col gap-3">
               <Wordmark />
-              <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-text-tertiary">
+              <p className="font-mono text-2xs uppercase tracking-[0.1em] text-text-tertiary">
                 Beat sheet &rarr; Screenplay &rarr; Storyboard &rarr; Shot list
               </p>
             </div>
@@ -79,7 +80,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
               </Link>
             </nav>
           </div>
-          <p className="font-mono text-[0.62rem] text-text-tertiary">
+          <p className="font-mono text-2xs text-text-tertiary">
             &copy; 2026 MakeFrame. Pre-production for writer-directors.
           </p>
         </div>

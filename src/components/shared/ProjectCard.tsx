@@ -15,7 +15,7 @@ export default function ProjectCard({ project, onEdit, onOpen }: Props) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ position: 'relative', width: 220, height: 165 }}
+      style={{ position: 'relative', width: 248, height: 184 }}
     >
       <button
         onClick={onOpen}
@@ -25,7 +25,7 @@ export default function ProjectCard({ project, onEdit, onOpen }: Props) {
           height: '100%',
           borderRadius: 10,
           background: hovered ? 'var(--color-surface-raised)' : 'var(--color-surface)',
-          border: `0.5px solid ${hovered ? 'var(--color-border-accent)' : 'transparent'}`,
+          border: `1px solid ${hovered ? 'var(--color-border-accent)' : 'transparent'}`,
           boxShadow: 'var(--shadow-card)',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
           transition: 'transform 200ms ease, background 200ms ease, border-color 200ms ease',
@@ -35,7 +35,9 @@ export default function ProjectCard({ project, onEdit, onOpen }: Props) {
         <div
           className="shrink-0 w-full relative overflow-hidden"
           style={{
-            height: 100,
+            /* Scaled with the card (165->184) so the info strip below keeps
+               enough room for the now-larger title and metadata. */
+            height: 112,
             background: project.thumbnailUrl ? undefined : 'var(--color-surface-raised)',
             backgroundImage: project.thumbnailUrl ? `url(${project.thumbnailUrl})` : undefined,
             backgroundSize: 'cover',
@@ -67,11 +69,25 @@ export default function ProjectCard({ project, onEdit, onOpen }: Props) {
         </div>
 
         {/* Info strip */}
-        <div className="flex flex-col justify-center flex-1 gap-px" style={{ padding: '0 16px' }}>
-          <span className="font-ui leading-tight" style={{ fontSize: '0.8rem', color: 'var(--color-text-primary)' }}>
+        <div className="flex flex-col justify-center flex-1 gap-px overflow-hidden" style={{ padding: '0 16px' }}>
+          {/* The card's primary identifier, so it gets the body size rather
+              than a caption size. Truncated: a long title would otherwise wrap
+              to two lines and push the metadata out of the strip. */}
+          <span
+            className="font-ui leading-tight"
+            title={project.title}
+            style={{
+              fontSize: 'var(--text-base)',
+              fontWeight: 500,
+              color: 'var(--color-text-primary)',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
             {project.title}
           </span>
-          <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
             {project.format ?? 'Untitled'}&nbsp;&nbsp;·&nbsp;&nbsp;Draft {project.draftNumber}
           </span>
         </div>
@@ -89,7 +105,7 @@ export default function ProjectCard({ project, onEdit, onOpen }: Props) {
           height: 26,
           borderRadius: 6,
           background: 'rgba(0,0,0,0.55)',
-          border: '0.5px solid rgba(255,255,255,0.12)',
+          border: '1px solid rgba(255,255,255,0.12)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

@@ -76,7 +76,7 @@ export default function Signup() {
       title="Create your account"
       subtitle="Start pre-producing your next film. Free — no credit card required."
       footer={
-        <span className="font-mono" style={{ fontSize: '0.68rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
           Already have an account?{' '}
           <Link to="/login" style={linkStyle}>Sign in</Link>
         </span>

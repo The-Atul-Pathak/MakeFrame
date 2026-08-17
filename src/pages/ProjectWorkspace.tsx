@@ -44,7 +44,7 @@ function LeaveModal({ onConfirm, onCancel }: LeaveModalProps) {
         onClick={e => e.stopPropagation()}
         style={{
           background: 'var(--color-surface)',
-          border: '0.5px solid var(--color-border)',
+          border: '1px solid var(--color-border)',
           borderRadius: 12,
           padding: '28px 32px',
           width: 360,
@@ -54,7 +54,7 @@ function LeaveModal({ onConfirm, onCancel }: LeaveModalProps) {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
           <span
             className="font-mono"
-            style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
+            style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
           >
             LEAVE PROJECT
           </span>
@@ -66,10 +66,10 @@ function LeaveModal({ onConfirm, onCancel }: LeaveModalProps) {
           </button>
         </div>
 
-        <p style={{ fontSize: '0.9rem', color: 'var(--color-text-primary)', marginBottom: 8, lineHeight: 1.5 }}>
+        <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-primary)', marginBottom: 8, lineHeight: 1.5 }}>
           Go back to dashboard?
         </p>
-        <p style={{ fontSize: '0.78rem', color: 'var(--color-text-tertiary)', marginBottom: 24, lineHeight: 1.5 }}>
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)', marginBottom: 24, lineHeight: 1.5 }}>
           All your changes are saved automatically.
         </p>
 
@@ -79,11 +79,11 @@ function LeaveModal({ onConfirm, onCancel }: LeaveModalProps) {
             style={{
               padding: '7px 16px',
               background: 'transparent',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-control-border)',
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-text-secondary)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
             }}
           >
             Stay
@@ -97,7 +97,7 @@ function LeaveModal({ onConfirm, onCancel }: LeaveModalProps) {
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-background)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
               fontWeight: 500,
             }}
           >
@@ -132,7 +132,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
     <header
       style={{
         height: 'var(--topbar-height)',
-        borderBottom: '0.5px solid var(--color-border-subtle)',
+        borderBottom: '1px solid var(--color-border-subtle)',
         display: 'flex',
         alignItems: 'center',
         padding: '0 24px',
@@ -160,7 +160,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
         <span
           className="font-display tracking-tight"
           style={{
-            fontSize: '1rem',
+            fontSize: 'var(--text-base)',
             color: logoHovered ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
             transition: 'color 150ms',
           }}
@@ -180,7 +180,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
         style={{
           margin: '0 8px',
           color: 'var(--color-text-tertiary)',
-          fontSize: '0.75rem',
+          fontSize: 'var(--text-xs)',
           userSelect: 'none',
         }}
       >
@@ -189,7 +189,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
 
       <span
         style={{
-          fontSize: '0.85rem',
+          fontSize: 'var(--text-sm)',
           color: 'var(--color-text-primary)',
           fontWeight: 500,
           maxWidth: 240,
@@ -205,7 +205,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
         style={{
           margin: '0 8px',
           color: 'var(--color-text-tertiary)',
-          fontSize: '0.75rem',
+          fontSize: 'var(--text-xs)',
           userSelect: 'none',
         }}
       >
@@ -215,7 +215,7 @@ function WorkspaceTopbar({ projectTitle, activeModule, onLogoClick }: TopbarProp
       <span
         className="font-mono"
         style={{
-          fontSize: '0.65rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--color-text-tertiary)',
           letterSpacing: '0.04em',
         }}
@@ -267,12 +267,12 @@ export default function ProjectWorkspace() {
   if (error || !project) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-        <span className="font-mono" style={{ fontSize: '0.7rem', color: 'var(--color-danger)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-danger)' }}>
           {error ?? 'Project not found.'}
         </span>
         <button
           onClick={() => navigate('/')}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', fontSize: '0.8rem' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', fontSize: 'var(--text-sm)' }}
         >
           ← Back to dashboard
         </button>
@@ -297,7 +297,7 @@ export default function ProjectWorkspace() {
             display: 'flex',
             alignItems: 'center',
             gap: 12,
-            fontSize: '0.8rem',
+            fontSize: 'var(--text-sm)',
             flexShrink: 0,
           }}
         >

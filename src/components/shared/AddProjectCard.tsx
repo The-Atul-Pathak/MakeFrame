@@ -18,11 +18,12 @@ export default function AddProjectCard({ onClick }: Props) {
       onMouseLeave={() => setHovered(false)}
       className="flex flex-col items-center justify-center gap-2"
       style={{
-        width: 220,
-        height: 165,
+        /* Must stay in lockstep with ProjectCard — these sit side by side. */
+        width: 248,
+        height: 184,
         borderRadius: 10,
         background: 'transparent',
-        border: `1px dashed ${hovered ? accent : 'var(--color-border)'}`,
+        border: `1px dashed ${hovered ? accent : 'var(--color-control-border)'}`,
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         transition: 'transform 200ms ease, border-color 200ms ease',
       }}
@@ -33,7 +34,7 @@ export default function AddProjectCard({ onClick }: Props) {
       />
       <span
         className="font-mono"
-        style={{ fontSize: '0.65rem', color: hovered ? accent : muted, transition: 'color 200ms', letterSpacing: '0.06em' }}
+        style={{ fontSize: 'var(--text-xs)', color: hovered ? accent : muted, transition: 'color 200ms', letterSpacing: '0.06em' }}
       >
         New project
       </span>

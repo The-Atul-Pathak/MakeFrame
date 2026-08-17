@@ -135,12 +135,12 @@ function FrameworkSelectorBar({
             style={{
               padding: '5px 12px',
               background: isActive ? 'var(--color-accent)' : 'transparent',
-              border: `0.5px solid ${isActive ? 'var(--color-accent)' : 'var(--color-border)'}`,
+              border: `1px solid ${isActive ? 'var(--color-accent)' : 'var(--color-border)'}`,
               borderRadius: 6,
               cursor: 'pointer',
               color: isActive ? 'var(--color-background)' : 'var(--color-text-secondary)',
               fontFamily: 'Outfit, sans-serif',
-              fontSize: '0.75rem',
+              fontSize: 'var(--text-xs)',
               fontWeight: isActive ? 500 : 400,
               transition: 'all 150ms',
               whiteSpace: 'nowrap',
@@ -237,18 +237,18 @@ function BeatInfoPopup({ description, example }: { description: string; example:
               top: 'calc(100% + 6px)',
               left: 0,
               zIndex: 50,
-              width: 280,
+              width: 308,
               background: 'var(--color-surface-raised)',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-border)',
               borderRadius: 10,
               padding: '12px 14px',
               boxShadow: 'var(--shadow-card)',
             }}
           >
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: 8 }}>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: 8 }}>
               {description}
             </p>
-            <p style={{ fontSize: '0.72rem', color: 'var(--color-text-tertiary)', lineHeight: 1.5, fontStyle: 'italic' }}>
+            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', lineHeight: 1.5, fontStyle: 'italic' }}>
               {example}
             </p>
           </div>
@@ -277,12 +277,12 @@ function SlotSelect({
       title="Move to a different beat slot"
       style={{
         background: 'var(--color-surface-raised)',
-        border: '0.5px solid var(--color-border-subtle)',
+        border: '1px solid var(--color-border-subtle)',
         borderRadius: 4,
         padding: '2px 5px',
         color: 'var(--color-text-tertiary)',
         fontFamily: '"DM Mono", monospace',
-        fontSize: '0.55rem',
+        fontSize: 'var(--text-sm)',
         letterSpacing: '0.04em',
         cursor: 'pointer',
         outline: 'none',
@@ -352,7 +352,7 @@ function BeatSlotWrapper({
           }}
         >
           <IconAlertTriangle size={8} style={{ color: 'var(--color-background)' }} />
-          <span className="font-mono" style={{ fontSize: '0.5rem', color: 'var(--color-background)', letterSpacing: '0.06em' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-background)', letterSpacing: '0.06em' }}>
             REVIEW SLOT
           </span>
         </div>
@@ -384,12 +384,12 @@ function BeatSlotWrapper({
             padding: '4px 10px',
             marginTop: 4,
             background: 'var(--color-surface-raised)',
-            border: '0.5px solid var(--color-border-subtle)',
+            border: '1px solid var(--color-border-subtle)',
             borderRadius: 8,
             zIndex: 3,
           }}
         >
-          <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
             slot:
           </span>
           <SlotSelect
@@ -464,22 +464,22 @@ function TimelineView({
                 gap: 10,
                 marginBottom: 20,
                 paddingBottom: 10,
-                borderBottom: '0.5px solid var(--color-border-subtle)',
+                borderBottom: '1px solid var(--color-border-subtle)',
               }}
             >
               <span
                 className="font-mono"
-                style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
+                style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
               >
                 {ACT_LABELS[group].toUpperCase()}
               </span>
               <span
                 className="font-mono"
-                style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
+                style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
               >
                 {healthCount}/{groupBeats.length} slots filled
               </span>
-              <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border-subtle)' }} />
+              <div style={{ flex: 1, height: '1px', background: 'var(--color-border-subtle)' }} />
             </div>
 
             {/* Beat slots */}
@@ -505,7 +505,7 @@ function TimelineView({
                         <span
                           className="font-mono"
                           style={{
-                            fontSize: '0.55rem',
+                            fontSize: 'var(--text-2xs)',
                             color: 'var(--color-background)',
                             background: 'var(--color-accent)',
                             padding: '1px 5px',
@@ -523,7 +523,7 @@ function TimelineView({
 
                       <p
                         style={{
-                          fontSize: '0.82rem',
+                          fontSize: 'var(--text-sm)',
                           fontWeight: 500,
                           color: slotBeats.length > 0 ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
                           marginBottom: 3,
@@ -536,7 +536,7 @@ function TimelineView({
                       {slot.targetPageStart !== undefined && (
                         <span
                           className="font-mono"
-                          style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}
+                          style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}
                         >
                           p.{slot.targetPageStart}
                           {slot.targetPageEnd !== slot.targetPageStart
@@ -570,14 +570,14 @@ function TimelineView({
                                     gap: 4,
                                     padding: '2px 7px',
                                     background: 'var(--color-surface-raised)',
-                                    border: '0.5px solid var(--color-warning)',
+                                    border: '1px solid var(--color-warning)',
                                     borderRadius: 3,
                                   }}
                                 >
                                   <IconAlertTriangle size={8} style={{ color: 'var(--color-warning)' }} />
                                   <span
                                     className="font-mono"
-                                    style={{ fontSize: '0.5rem', color: 'var(--color-warning)', letterSpacing: '0.04em' }}
+                                    style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-warning)', letterSpacing: '0.04em' }}
                                   >
                                     p.{beat.pageStart} (target p.{slot.targetPageStart}
                                     {slot.targetPageEnd !== slot.targetPageStart ? `–${slot.targetPageEnd}` : ''})
@@ -610,7 +610,7 @@ function TimelineView({
                           gap: 5,
                           padding: '8px',
                           background: 'transparent',
-                          border: '0.5px dashed var(--color-border)',
+                          border: '1px dashed var(--color-border)',
                           borderRadius: 8,
                           cursor: 'pointer',
                           color: 'var(--color-text-tertiary)',
@@ -626,7 +626,7 @@ function TimelineView({
                         }}
                       >
                         <IconPlus size={11} />
-                        <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.06em' }}>
+                        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>
                           ADD BEAT
                         </span>
                       </button>
@@ -689,7 +689,7 @@ function ColumnsView({
             key={slot.id}
             style={{
               background: 'var(--color-surface)',
-              border: '0.5px solid var(--color-border-subtle)',
+              border: '1px solid var(--color-border-subtle)',
               borderRadius: 12,
               overflow: 'hidden',
             }}
@@ -698,7 +698,7 @@ function ColumnsView({
             <div
               style={{
                 padding: '14px 16px 12px',
-                borderBottom: '0.5px solid var(--color-border-subtle)',
+                borderBottom: '1px solid var(--color-border-subtle)',
                 borderTop: `2px solid ${ACT_COLORS[slot.actGroup]}`,
               }}
             >
@@ -708,7 +708,7 @@ function ColumnsView({
                   title={health === 'red' ? 'No beats in this act' : 'Beats assigned'}
                 />
                 <span
-                  style={{ fontSize: '0.88rem', fontWeight: 500, color: 'var(--color-text-primary)' }}
+                  style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)' }}
                 >
                   {slot.label}
                 </span>
@@ -716,12 +716,12 @@ function ColumnsView({
                 <BeatInfoPopup description={slot.description} example={slot.example} />
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>
+                <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
                   {slotBeats.length} beat{slotBeats.length !== 1 ? 's' : ''}
                 </span>
                 <span
                   className="font-mono"
-                  style={{ fontSize: '0.55rem', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
+                  style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
                 >
                   ~{Math.round((slot.actGroup === 'I' ? 25 : slot.actGroup === 'II' ? 57 : 18))}% of runtime
                 </span>
@@ -758,7 +758,7 @@ function ColumnsView({
                   gap: 5,
                   padding: '10px',
                   background: 'transparent',
-                  border: '0.5px dashed var(--color-border)',
+                  border: '1px dashed var(--color-border)',
                   borderRadius: 8,
                   cursor: 'pointer',
                   color: 'var(--color-text-tertiary)',
@@ -774,7 +774,7 @@ function ColumnsView({
                 }}
               >
                 <IconPlus size={11} />
-                <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.06em' }}>
+                <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>
                   ADD BEAT
                 </span>
               </button>
@@ -803,12 +803,12 @@ function ComingSoonView({ frameworkName }: { frameworkName: string }) {
       }}
     >
       <IconLayoutList size={32} style={{ color: 'var(--color-text-tertiary)' }} />
-      <span style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
+      <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
         {frameworkName} view coming soon
       </span>
       <span
         className="font-mono"
-        style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
+        style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
       >
         The circular / diamond visual for this framework is in progress.
         <br />
@@ -851,22 +851,22 @@ function UnassignedSection({
           gap: 12,
           marginBottom: 16,
           paddingBottom: 10,
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
         }}
       >
         <span
           className="font-mono"
-          style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
+          style={{ fontSize: 'var(--text-xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}
         >
           UNASSIGNED BEATS
         </span>
         <span
           className="font-mono"
-          style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
+          style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', opacity: 0.5 }}
         >
           {beats.length} beat{beats.length !== 1 ? 's' : ''} not yet placed in a framework slot
         </span>
-        <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border-subtle)' }} />
+        <div style={{ flex: 1, height: '1px', background: 'var(--color-border-subtle)' }} />
         <button
           onClick={onAutoAssignAll}
           style={{
@@ -875,7 +875,7 @@ function UnassignedSection({
             gap: 5,
             padding: '4px 10px',
             background: 'transparent',
-            border: '0.5px solid var(--color-border)',
+            border: '1px solid var(--color-border)',
             borderRadius: 5,
             cursor: 'pointer',
             color: 'var(--color-text-secondary)',
@@ -892,7 +892,7 @@ function UnassignedSection({
           title="Auto-assign all unassigned beats to slots based on page number"
         >
           <IconWand size={11} />
-          <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.06em' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>
             AUTO-ASSIGN
           </span>
         </button>
@@ -1015,7 +1015,7 @@ export default function BeatSheet({ project }: Props) {
   if (!sheet) {
     return (
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span className="font-mono" style={{ fontSize: '0.7rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
           Initialising beat sheet…
         </span>
       </div>
@@ -1041,7 +1041,7 @@ export default function BeatSheet({ project }: Props) {
       {/* Header */}
       <div
         style={{
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           padding: '14px 28px',
           flexShrink: 0,
           display: 'flex',
@@ -1051,7 +1051,7 @@ export default function BeatSheet({ project }: Props) {
       >
         {/* Top row: title + actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <h1 style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)', flexShrink: 0 }}>
+          <h1 style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)', flexShrink: 0 }}>
             Beat Sheet
           </h1>
 
@@ -1060,7 +1060,7 @@ export default function BeatSheet({ project }: Props) {
           {/* Stats */}
           <span
             className="font-mono"
-            style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}
+            style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}
           >
             {filledSlots}/{totalSlots} slots&nbsp;&nbsp;·&nbsp;&nbsp;
             <input
@@ -1077,7 +1077,7 @@ export default function BeatSheet({ project }: Props) {
                 outline: 'none',
                 color: 'var(--color-text-tertiary)',
                 fontFamily: '"DM Mono", monospace',
-                fontSize: '0.65rem',
+                fontSize: 'var(--text-sm)',
                 textAlign: 'center',
                 cursor: 'text',
               }}
@@ -1097,7 +1097,7 @@ export default function BeatSheet({ project }: Props) {
               gap: 5,
               padding: '5px 10px',
               background: showValidation ? 'var(--color-accent-muted)' : 'var(--color-surface-raised)',
-              border: `0.5px solid ${showValidation ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+              border: `1px solid ${showValidation ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
               borderRadius: 6,
               cursor: 'pointer',
               color: issues.length > 0
@@ -1107,7 +1107,7 @@ export default function BeatSheet({ project }: Props) {
             }}
           >
             <IconAlertTriangle size={11} />
-            <span className="font-mono" style={{ fontSize: '0.6rem' }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)' }}>
               {issues.length} issue{issues.length !== 1 ? 's' : ''}
             </span>
           </button>
@@ -1128,7 +1128,7 @@ export default function BeatSheet({ project }: Props) {
             }}
           >
             <IconPlus size={12} />
-            <span className="font-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.06em' }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>
               ADD BEAT
             </span>
           </button>
@@ -1159,11 +1159,11 @@ export default function BeatSheet({ project }: Props) {
                 opacity: 0.5,
               }}
             >
-              <span style={{ fontSize: '1.8rem' }}>◻</span>
-              <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>No beats yet</span>
+              <span style={{ fontSize: 'var(--text-3xl)' }}>◻</span>
+              <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)' }}>No beats yet</span>
               <span
                 className="font-mono"
-                style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
+                style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
               >
                 Hit{' '}
                 <strong style={{ color: 'var(--color-accent)' }}>+ ADD BEAT</strong>

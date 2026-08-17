@@ -39,7 +39,7 @@ export default function Characters({ project }: Props) {
       {/* Header */}
       <div
         style={{
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           padding: '12px 24px',
           flexShrink: 0,
           display: 'flex',
@@ -47,11 +47,11 @@ export default function Characters({ project }: Props) {
           gap: 12,
         }}
       >
-        <h1 style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)' }}>
+        <h1 style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)' }}>
           Characters
         </h1>
         <div style={{ flex: 1 }} />
-        <span className="font-mono" style={{ fontSize: '0.62rem', color: 'var(--color-text-tertiary)' }}>
+        <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
           {projectCharacters.length} character{projectCharacters.length !== 1 ? 's' : ''}
         </span>
         <button
@@ -69,7 +69,7 @@ export default function Characters({ project }: Props) {
           }}
         >
           <IconPlus size={12} />
-          <span className="font-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.06em' }}>NEW CHARACTER</span>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>NEW CHARACTER</span>
         </button>
       </div>
 
@@ -80,7 +80,7 @@ export default function Characters({ project }: Props) {
           style={{
             width: 220,
             flexShrink: 0,
-            borderRight: '0.5px solid var(--color-border-subtle)',
+            borderRight: '1px solid var(--color-border-subtle)',
             background: 'var(--color-surface)',
             display: 'flex',
             flexDirection: 'column',
@@ -90,7 +90,7 @@ export default function Characters({ project }: Props) {
           <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
             {projectCharacters.length === 0 ? (
               <div style={{ padding: '32px 16px', textAlign: 'center' }}>
-                <p className="font-mono" style={{ fontSize: '0.62rem', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
+                <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
                   No characters yet.
                   <br />
                   Add your first character.
@@ -125,7 +125,7 @@ export default function Characters({ project }: Props) {
                         height: 28,
                         borderRadius: '50%',
                         background: isActive ? 'var(--color-accent-muted)' : 'var(--color-surface-raised)',
-                        border: `0.5px solid ${isActive ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                        border: `1px solid ${isActive ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -135,7 +135,7 @@ export default function Characters({ project }: Props) {
                     >
                       <span
                         style={{
-                          fontSize: '0.72rem',
+                          fontSize: 'var(--text-xs)',
                           fontWeight: 600,
                           color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                         }}
@@ -147,7 +147,7 @@ export default function Characters({ project }: Props) {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p
                         style={{
-                          fontSize: '0.78rem',
+                          fontSize: 'var(--text-sm)',
                           fontWeight: isActive ? 600 : 400,
                           color: isActive ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
                           overflow: 'hidden',
@@ -162,7 +162,7 @@ export default function Characters({ project }: Props) {
                         <p
                           className="font-mono"
                           style={{
-                            fontSize: '0.55rem',
+                            fontSize: 'var(--text-2xs)',
                             color: 'var(--color-text-tertiary)',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
@@ -200,7 +200,7 @@ export default function Characters({ project }: Props) {
           </div>
 
           {/* Add character button (bottom) */}
-          <div style={{ borderTop: '0.5px solid var(--color-border-subtle)', padding: '8px 0' }}>
+          <div style={{ borderTop: '1px solid var(--color-border-subtle)', padding: '8px 0' }}>
             <button
               onClick={handleAdd}
               style={{
@@ -220,7 +220,7 @@ export default function Characters({ project }: Props) {
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--color-text-tertiary)'}
             >
               <IconPlus size={12} />
-              <span style={{ fontSize: '0.78rem' }}>Add Character</span>
+              <span style={{ fontSize: 'var(--text-sm)' }}>Add Character</span>
             </button>
           </div>
         </aside>
@@ -247,12 +247,12 @@ export default function Characters({ project }: Props) {
             }}
           >
             <IconUser size={32} style={{ color: 'var(--color-text-tertiary)' }} />
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
+            <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
               No character selected
             </span>
             <span
               className="font-mono"
-              style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
+              style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
             >
               Add a character to build your character bible.
             </span>
@@ -274,20 +274,20 @@ export default function Characters({ project }: Props) {
             onClick={e => e.stopPropagation()}
             style={{
               background: 'var(--color-surface)',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-border)',
               borderRadius: 12,
               padding: '24px 28px',
               width: 320,
               boxShadow: 'var(--shadow-card)',
             }}
           >
-            <p className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}>
+            <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', marginBottom: 12 }}>
               DELETE CHARACTER
             </p>
-            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-primary)', marginBottom: 6 }}>
+            <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-primary)', marginBottom: 6 }}>
               Delete {projectCharacters.find(c => c.id === confirmDeleteId)?.name}?
             </p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--color-text-tertiary)', marginBottom: 20 }}>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)', marginBottom: 20 }}>
               This cannot be undone.
             </p>
             <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
@@ -296,11 +296,11 @@ export default function Characters({ project }: Props) {
                 style={{
                   padding: '6px 14px',
                   background: 'transparent',
-                  border: '0.5px solid var(--color-border)',
+                  border: '1px solid var(--color-control-border)',
                   borderRadius: 6,
                   cursor: 'pointer',
                   color: 'var(--color-text-secondary)',
-                  fontSize: '0.82rem',
+                  fontSize: 'var(--text-sm)',
                 }}
               >
                 Cancel
@@ -314,7 +314,7 @@ export default function Characters({ project }: Props) {
                   borderRadius: 6,
                   cursor: 'pointer',
                   color: '#fff',
-                  fontSize: '0.82rem',
+                  fontSize: 'var(--text-sm)',
                   fontWeight: 500,
                 }}
               >

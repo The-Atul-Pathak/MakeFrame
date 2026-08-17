@@ -19,6 +19,11 @@ dist-ssr/
 .DS_Store
 Thumbs.db
 
+# iCloud sync duplicates — Documents is iCloud-synced, so conflicted copies land
+# as "<name> 2.<ext>" / "<name> 2" next to the original. Never commit these.
+* 2
+* 2.*
+
 # Editor
 .vscode/
 .idea/

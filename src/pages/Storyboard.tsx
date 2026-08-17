@@ -47,7 +47,7 @@ export default function Storyboard({ project }: Props) {
       {/* Header */}
       <div
         style={{
-          borderBottom: '0.5px solid var(--color-border-subtle)',
+          borderBottom: '1px solid var(--color-border-subtle)',
           padding: '12px 24px',
           flexShrink: 0,
           display: 'flex',
@@ -55,12 +55,12 @@ export default function Storyboard({ project }: Props) {
           gap: 12,
         }}
       >
-        <h1 style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)' }}>
+        <h1 style={{ fontSize: 'var(--text-base)', fontWeight: 500, color: 'var(--color-text-primary)' }}>
           Storyboard
         </h1>
         <div style={{ flex: 1 }} />
         {activeScene && (
-          <span className="font-mono" style={{ fontSize: '0.62rem', color: 'var(--color-text-tertiary)' }}>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
             {sortedPanels.length} panels · ~{totalDuration}s
           </span>
         )}
@@ -81,7 +81,7 @@ export default function Storyboard({ project }: Props) {
           }}
         >
           <IconPlus size={12} />
-          <span className="font-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.06em' }}>ADD PANEL</span>
+          <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>ADD PANEL</span>
         </button>
       </div>
 
@@ -89,7 +89,7 @@ export default function Storyboard({ project }: Props) {
       {projectScenes.length > 0 && (
         <div
           style={{
-            borderBottom: '0.5px solid var(--color-border-subtle)',
+            borderBottom: '1px solid var(--color-border-subtle)',
             padding: '0 20px',
             display: 'flex',
             gap: 0,
@@ -113,7 +113,7 @@ export default function Storyboard({ project }: Props) {
                   cursor: 'pointer',
                   color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                   fontFamily: '"DM Mono", monospace',
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-2xs)',
                   letterSpacing: '0.04em',
                   whiteSpace: 'nowrap',
                   display: 'flex',
@@ -131,7 +131,7 @@ export default function Storyboard({ project }: Props) {
                     color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
                     padding: '0px 4px',
                     borderRadius: 3,
-                    fontSize: '0.5rem',
+                    fontSize: 'var(--text-2xs)',
                   }}>
                     {panelCount}
                   </span>
@@ -147,10 +147,10 @@ export default function Storyboard({ project }: Props) {
         {projectScenes.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '80px 0', opacity: 0.5 }}>
             <IconMovie size={32} style={{ color: 'var(--color-text-tertiary)' }} />
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
+            <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
               No scenes yet
             </span>
-            <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
               Create scenes in the Screenplay module first, then come here to storyboard them.
             </span>
           </div>
@@ -167,10 +167,10 @@ export default function Storyboard({ project }: Props) {
             }}
           >
             <IconMovie size={32} style={{ color: 'var(--color-text-tertiary)' }} />
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
+            <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
               No panels yet
             </span>
-            <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
               Hit <strong style={{ color: 'var(--color-accent)' }}>+ ADD PANEL</strong> to start storyboarding this scene.
             </span>
           </div>
@@ -199,7 +199,7 @@ export default function Storyboard({ project }: Props) {
               onClick={handleAddPanel}
               style={{
                 background: 'transparent',
-                border: '0.5px dashed var(--color-border)',
+                border: '1px dashed var(--color-border)',
                 borderRadius: 10,
                 padding: '40px 20px',
                 cursor: 'pointer',
@@ -221,7 +221,7 @@ export default function Storyboard({ project }: Props) {
               }}
             >
               <IconPlus size={18} />
-              <span className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.06em' }}>ADD PANEL</span>
+              <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.06em' }}>ADD PANEL</span>
             </button>
           </div>
         )}

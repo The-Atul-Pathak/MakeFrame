@@ -32,7 +32,7 @@ export default function CharacterSelect({ projectId, values, onChange, placehold
         gap: 4,
         padding: '5px 6px',
         background: 'var(--color-surface-raised)',
-        border: '0.5px solid var(--color-border-subtle)',
+        border: '1px solid var(--color-border-subtle)',
         borderRadius: 5,
         minHeight: 32,
         alignItems: 'center',
@@ -47,9 +47,9 @@ export default function CharacterSelect({ projectId, values, onChange, placehold
             gap: 3,
             padding: '1px 6px',
             background: 'var(--color-surface)',
-            border: '0.5px solid var(--color-border)',
+            border: '1px solid var(--color-border)',
             borderRadius: 3,
-            fontSize: '0.65rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--color-text-secondary)',
             fontFamily: '"DM Mono", monospace',
           }}
@@ -57,7 +57,7 @@ export default function CharacterSelect({ projectId, values, onChange, placehold
           {v}
           <button
             onClick={() => removeCharacter(v)}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', padding: 0, lineHeight: 0, fontSize: '0.7rem' }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', padding: 0, lineHeight: 0, fontSize: 'var(--text-xs)' }}
           >
             ×
           </button>
@@ -67,14 +67,14 @@ export default function CharacterSelect({ projectId, values, onChange, placehold
       {projectCharacters.length === 0 ? (
         <span
           className="font-mono"
-          style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', fontStyle: 'italic', padding: '2px 0' }}
+          style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', fontStyle: 'italic', padding: '2px 0' }}
         >
           No characters yet — add one in the Characters tab
         </span>
       ) : available.length === 0 ? (
         <span
           className="font-mono"
-          style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)', fontStyle: 'italic', padding: '2px 0' }}
+          style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', fontStyle: 'italic', padding: '2px 0' }}
         >
           All characters added
         </span>
@@ -89,7 +89,7 @@ export default function CharacterSelect({ projectId, values, onChange, placehold
               background: 'transparent',
               border: 'none',
               outline: 'none',
-              fontSize: '0.7rem',
+              fontSize: 'var(--text-sm)',
               color: 'var(--color-text-tertiary)',
               fontFamily: '"DM Mono", monospace',
               cursor: 'pointer',

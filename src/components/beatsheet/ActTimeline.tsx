@@ -72,7 +72,7 @@ export default function ActTimeline({ sheet, onActClick, activeActKey }: Props) 
               <span
                 className="font-mono"
                 style={{
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-2xs)',
                   letterSpacing: '0.08em',
                   color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
                   whiteSpace: 'nowrap',
@@ -86,7 +86,7 @@ export default function ActTimeline({ sheet, onActClick, activeActKey }: Props) 
               <span
                 className="font-mono"
                 style={{
-                  fontSize: '0.55rem',
+                  fontSize: 'var(--text-2xs)',
                   color: 'var(--color-text-tertiary)',
                   opacity: 0.6,
                 }}

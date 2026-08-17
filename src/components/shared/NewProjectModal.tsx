@@ -133,10 +133,10 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
         onClick={(e) => e.stopPropagation()}
         style={{
           background: 'var(--color-surface)',
-          border: '0.5px solid var(--color-border)',
+          border: '1px solid var(--color-border)',
           borderRadius: 14,
           boxShadow: '0 20px 60px rgba(0,0,0,0.55)',
-          width: 460,
+          width: 488,
           maxHeight: '85vh',
           display: 'flex',
           flexDirection: 'column',
@@ -159,16 +159,16 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '18px 24px',
-              borderBottom: '0.5px solid var(--color-border)',
+              borderBottom: '1px solid var(--color-border)',
               flexShrink: 0,
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <IconCrop size={14} style={{ color: 'var(--color-accent)' }} />
-                <span className="font-mono uppercase" style={{ fontSize: '0.62rem', letterSpacing: '0.12em', color: 'var(--color-text-tertiary)' }}>
+                <span className="font-mono uppercase" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
                   Crop Thumbnail
                 </span>
               </div>
-              <span className="font-mono" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)' }}>
+              <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)' }}>
                 440 × 200 px
               </span>
             </div>
@@ -196,11 +196,11 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
             {/* Zoom slider */}
             <div style={{
               padding: '14px 24px',
-              borderTop: '0.5px solid var(--color-border)',
+              borderTop: '1px solid var(--color-border)',
               display: 'flex', alignItems: 'center', gap: 12,
               flexShrink: 0,
             }}>
-              <span className="font-mono" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)', minWidth: 32 }}>
+              <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', minWidth: 32 }}>
                 Zoom
               </span>
               <input
@@ -215,7 +215,7 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
             {/* Crop footer */}
             <div style={{
               padding: '14px 24px 18px',
-              borderTop: '0.5px solid var(--color-border)',
+              borderTop: '1px solid var(--color-border)',
               display: 'flex', gap: 10, justifyContent: 'flex-end',
               flexShrink: 0,
             }}>
@@ -233,10 +233,10 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '20px 24px 16px',
-          borderBottom: '0.5px solid var(--color-border)',
+          borderBottom: '1px solid var(--color-border)',
           flexShrink: 0,
         }}>
-          <span className="font-mono uppercase" style={{ fontSize: '1rem', letterSpacing: '0.12em', color: 'var(--color-text-tertiary)', fontWeight: 600 }}>
+          <span className="font-mono uppercase" style={{ fontSize: 'var(--text-base)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)', fontWeight: 600 }}>
             {isEditing ? 'Edit Project' : 'New Project'}
           </span>
           <button onClick={onClose} style={{ color: 'var(--color-text-tertiary)', lineHeight: 0 }}>
@@ -284,8 +284,8 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
               width: '100%',
             }}
           >
-            <div style={{ flex: 1, height: '0.5px', background: 'var(--color-border)' }} />
-            <span className="font-mono" style={{ fontSize: '0.6rem', letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>
+            <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
+            <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', whiteSpace: 'nowrap' }}>
               Optional Info
             </span>
             {showOptional
@@ -326,7 +326,7 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
                   {!thumbnailPreview && (
                     <>
                       <IconPhoto size={20} style={{ color: 'var(--color-text-tertiary)' }} />
-                      <span className="font-mono" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.06em' }}>
+                      <span className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.06em' }}>
                         Click or drag image
                       </span>
                     </>
@@ -368,14 +368,14 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
                     <button
                       onClick={() => { if (rawSrc) { setCrop({ x: 0, y: 0 }); setZoom(1); setShowCropper(true) } else fileRef.current?.click() }}
                       className="font-mono"
-                      style={{ ...secondaryBtnStyle, fontSize: '0.58rem', padding: '5px 12px' }}
+                      style={{ ...secondaryBtnStyle, fontSize: 'var(--text-2xs)', padding: '5px 12px' }}
                     >
                       Re-crop
                     </button>
                     <button
                       onClick={() => fileRef.current?.click()}
                       className="font-mono"
-                      style={{ ...secondaryBtnStyle, fontSize: '0.58rem', padding: '5px 12px' }}
+                      style={{ ...secondaryBtnStyle, fontSize: 'var(--text-2xs)', padding: '5px 12px' }}
                     >
                       Change image
                     </button>
@@ -407,8 +407,8 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
                         className="font-mono"
                         style={{
                           padding: '5px 12px', borderRadius: 20,
-                          fontSize: '0.6rem', letterSpacing: '0.06em',
-                          border: `0.5px solid ${active ? 'var(--color-accent)' : 'var(--color-border)'}`,
+                          fontSize: 'var(--text-sm)', letterSpacing: '0.06em',
+                          border: `1px solid ${active ? 'var(--color-accent)' : 'var(--color-border)'}`,
                           background: active ? 'var(--color-accent-muted)' : 'transparent',
                           color: active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
                           cursor: 'pointer',
@@ -426,9 +426,9 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
               <Field label="Collaborators">
                 <div className="font-mono" style={{
                   padding: '10px 14px', borderRadius: 8,
-                  border: '0.5px solid var(--color-border)',
+                  border: '1px solid var(--color-border)',
                   background: 'var(--color-surface-raised)',
-                  fontSize: '0.62rem', color: 'var(--color-text-tertiary)',
+                  fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)',
                   letterSpacing: '0.04em', opacity: 0.6, cursor: 'not-allowed',
                 }}>
                   Invite collaborators — coming soon
@@ -445,11 +445,11 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
         <div style={{
           flexShrink: 0,
           padding: '16px 24px 20px',
-          borderTop: '0.5px solid var(--color-border)',
+          borderTop: '1px solid var(--color-border)',
           display: 'flex', flexDirection: 'column', gap: 10,
         }}>
           {error && (
-            <p className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-danger)' }}>
+            <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-danger)' }}>
               {error}
             </p>
           )}
@@ -480,27 +480,29 @@ export default function NewProjectModal({ initialData, onSave, onClose }: Props)
 // ── shared styles ──────────────────────────────────────────────────────────────
 
 const inputStyle: React.CSSProperties = {
-  width: '100%', height: 40, borderRadius: 8,
-  border: '0.5px solid var(--color-border)',
+  width: '100%', height: 44, borderRadius: 8,
+  border: '1px solid var(--color-control-border)',
   background: 'var(--color-surface-raised)',
   color: 'var(--color-text-primary)',
-  padding: '0 12px', fontSize: '0.82rem', outline: 'none',
+  /* No `outline: none` — the global :focus-visible ring is this field's only
+     focus indicator. */
+  padding: '0 12px', fontSize: 'var(--text-base)',
 }
 
 const secondaryBtnStyle: React.CSSProperties = {
-  padding: '9px 20px', borderRadius: 8,
-  border: '0.5px solid var(--color-border)',
+  padding: '10px 20px', borderRadius: 8,
+  border: '1px solid var(--color-control-border)',
   background: 'transparent',
   color: 'var(--color-text-secondary)',
-  fontSize: '0.65rem', cursor: 'pointer',
+  fontSize: 'var(--text-sm)', cursor: 'pointer',
 }
 
 const primaryBtnStyle: React.CSSProperties = {
-  padding: '9px 24px', borderRadius: 8,
+  padding: '10px 24px', borderRadius: 8,
   border: 'none',
   background: 'var(--color-accent)',
   color: 'var(--color-background)',
-  fontSize: '0.65rem', fontWeight: 600,
+  fontSize: 'var(--text-sm)', fontWeight: 600,
   cursor: 'pointer',
   transition: 'background 150ms, color 150ms',
 }
@@ -518,7 +520,7 @@ const iconBtnStyle: React.CSSProperties = {
 function Field({ label, children, style }: { label: string; children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <label style={{ display: 'flex', flexDirection: 'column', gap: 7, ...style }}>
-      <span className="font-mono uppercase" style={{ fontSize: '0.58rem', color: 'var(--color-text-tertiary)', letterSpacing: '0.12em' }}>
+      <span className="font-mono uppercase" style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-tertiary)', letterSpacing: '0.1em' }}>
         {label}
       </span>
       {children}

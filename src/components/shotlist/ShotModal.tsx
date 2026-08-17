@@ -18,7 +18,7 @@ const INT_EXT = ['INT','EXT','INT/EXT'] as const
 const LENS_PRESETS = [14, 24, 28, 35, 50, 85, 100, 135, 200]
 
 const labelStyle: React.CSSProperties = {
-  fontSize: '0.55rem',
+  fontSize: 'var(--text-2xs)',
   letterSpacing: '0.08em',
   color: 'var(--color-text-tertiary)',
   marginBottom: 4,
@@ -27,19 +27,19 @@ const labelStyle: React.CSSProperties = {
 const inputStyle: React.CSSProperties = {
   width: '100%',
   background: 'var(--color-surface-raised)',
-  border: '0.5px solid var(--color-border-subtle)',
+  border: '1px solid var(--color-border-subtle)',
   borderRadius: 5,
   padding: '6px 8px',
   color: 'var(--color-text-primary)',
   fontFamily: 'Outfit, sans-serif',
-  fontSize: '0.78rem',
+  fontSize: 'var(--text-sm)',
   outline: 'none',
 }
 
 const selectStyle: React.CSSProperties = {
   ...inputStyle,
   fontFamily: '"DM Mono", monospace',
-  fontSize: '0.65rem',
+  fontSize: 'var(--text-xs)',
   cursor: 'pointer',
   color: 'var(--color-text-secondary)',
 }
@@ -80,7 +80,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
         onClick={e => e.stopPropagation()}
         style={{
           background: 'var(--color-surface)',
-          border: '0.5px solid var(--color-border)',
+          border: '1px solid var(--color-border)',
           borderRadius: 14,
           width: '100%',
           maxWidth: 600,
@@ -92,8 +92,8 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
         }}
       >
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px 12px', borderBottom: '0.5px solid var(--color-border-subtle)', flexShrink: 0 }}>
-          <p className="font-mono" style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px 12px', borderBottom: '1px solid var(--color-border-subtle)', flexShrink: 0 }}>
+          <p className="font-mono" style={{ fontSize: 'var(--text-2xs)', letterSpacing: '0.1em', color: 'var(--color-text-tertiary)' }}>
             {mode === 'add' ? 'ADD SHOT' : 'EDIT SHOT'}
           </p>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-tertiary)', lineHeight: 0 }}>
@@ -129,10 +129,10 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
                   style={{
                     flex: 1, padding: '5px 0',
                     background: draft.intExt === opt ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-                    border: `0.5px solid ${draft.intExt === opt ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                    border: `1px solid ${draft.intExt === opt ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                     borderRadius: 4, cursor: 'pointer',
                     color: draft.intExt === opt ? 'var(--color-background)' : 'var(--color-text-secondary)',
-                    fontFamily: '"DM Mono", monospace', fontSize: '0.6rem', transition: 'all 120ms',
+                    fontFamily: '"DM Mono", monospace', fontSize: 'var(--text-2xs)', transition: 'all 120ms',
                   }}
                 >
                   {opt}
@@ -147,7 +147,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
               <input
                 value={draft.location ?? ''}
                 onChange={e => patch('location', e.target.value.toUpperCase())}
-                style={{ ...inputStyle, textTransform: 'uppercase', fontFamily: '"Courier Prime", monospace', fontSize: '0.72rem' }}
+                style={{ ...inputStyle, textTransform: 'uppercase', fontFamily: '"Courier Prime", monospace', fontSize: 'var(--text-sm)' }}
               />
             </Field>
           </div>
@@ -176,10 +176,10 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
                   style={{
                     padding: '3px 8px',
                     background: draft.lens === l ? 'var(--color-accent)' : 'var(--color-surface-raised)',
-                    border: `0.5px solid ${draft.lens === l ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
+                    border: `1px solid ${draft.lens === l ? 'var(--color-accent)' : 'var(--color-border-subtle)'}`,
                     borderRadius: 4, cursor: 'pointer',
                     color: draft.lens === l ? 'var(--color-background)' : 'var(--color-text-secondary)',
-                    fontFamily: '"DM Mono", monospace', fontSize: '0.58rem', transition: 'all 120ms',
+                    fontFamily: '"DM Mono", monospace', fontSize: 'var(--text-sm)', transition: 'all 120ms',
                   }}
                 >
                   {l}
@@ -190,7 +190,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
                 value={draft.lens ?? 50}
                 onChange={e => patch('lens', Number(e.target.value))}
                 min={14}
-                style={{ ...inputStyle, width: 56, fontFamily: '"DM Mono", monospace', fontSize: '0.65rem', textAlign: 'center', padding: '3px 5px' }}
+                style={{ ...inputStyle, width: 56, fontFamily: '"DM Mono", monospace', fontSize: 'var(--text-sm)', textAlign: 'center', padding: '3px 5px' }}
               />
             </div>
           </Field>
@@ -259,7 +259,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
               onChange={e => patch('needsReview', e.target.checked)}
               style={{ accentColor: 'var(--color-warning)' }}
             />
-            <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--color-text-tertiary)' }}>FLAG FOR REVIEW</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-tertiary)' }}>FLAG FOR REVIEW</span>
           </label>
         </div>
 
@@ -270,7 +270,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
             justifyContent: 'flex-end',
             gap: 10,
             padding: '14px 20px',
-            borderTop: '0.5px solid var(--color-border-subtle)',
+            borderTop: '1px solid var(--color-border-subtle)',
             flexShrink: 0,
           }}
         >
@@ -279,11 +279,11 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
             style={{
               padding: '7px 16px',
               background: 'transparent',
-              border: '0.5px solid var(--color-border)',
+              border: '1px solid var(--color-control-border)',
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-text-secondary)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
             }}
           >
             Cancel
@@ -297,7 +297,7 @@ export default function ShotModal({ shot, scenes, projectId, onSave, onClose, mo
               borderRadius: 6,
               cursor: 'pointer',
               color: 'var(--color-background)',
-              fontSize: '0.82rem',
+              fontSize: 'var(--text-sm)',
               fontWeight: 500,
             }}
           >

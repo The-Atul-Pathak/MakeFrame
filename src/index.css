@@ -5,35 +5,73 @@
 @config "../tailwind.config.ts";
 
 /* ── Design Tokens ─────────────────────────────────────────────────────────── */
+/* Every text colour below is verified >= 4.5:1 (WCAG AA) against all three
+   surface levels — background, surface, AND surface-raised. Before changing a
+   colour, re-check it against surface-raised (#2a2a2a), which is the tightest
+   of the three. See docs/visuals.md for the full contrast table. */
 :root {
-  /* Colours */
-  --color-background:    #1a1a1a;
-  --color-surface:       #242424;
-  --color-surface-raised:#2e2e2e;
-  --color-border:        #383838;
-  --color-border-subtle: #2a2a2a;
+  /* Colours — neutral ramp. The background/surface step is deliberately wide
+     enough that cards read as objects rather than dissolving into the page. */
+  --color-background:    #141414;
+  --color-surface:       #1e1e1e;
+  --color-surface-raised:#2a2a2a;
+  --color-border:        #3a3a3a;  /* decorative dividers */
+  --color-border-subtle: #2e2e2e;  /* faintest hairlines */
+  --color-border-strong: #585858;  /* emphasis dividers, hover borders */
+  /* Interactive controls (inputs, buttons, selects) need a 3:1 boundary per
+     WCAG 1.4.11 — --color-border is far too faint to qualify. Use this instead
+     on anything the user can click or type into. 3.12:1 on surface-raised. */
+  --color-control-border:#757575;
 
-  --color-text-primary:  #f5f2ee;
-  --color-text-secondary:#a09e9a;
-  --color-text-tertiary: #6b6966;
+  --color-text-primary:  #f5f2ee;  /* 12.86:1 on surface-raised */
+  --color-text-secondary:#b8b5b0;  /*  7.02:1 */
+  --color-text-tertiary: #9a9792;  /*  4.93:1 — the AA floor; do not darken */
 
-  --color-accent:        #d48c3a;
-  --color-accent-hover:  #e09d4a;
-  --color-accent-muted:  #d48c3a22;
-  --color-border-accent: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  /* Amber. Only ever used as dark-on-amber (7.79:1); light text on this fill
+     is 2.47:1 and must never be introduced. */
+  --color-accent:        #e09a45;
+  --color-accent-hover:  #eaa855;
+  --color-accent-muted:  #e09a4522;
+  --color-border-accent: color-mix(in srgb, var(--color-accent) 55%, transparent);
 
-  /* Shadows */
-  --shadow-card: 0 0 0 0.5px var(--color-border), 0 2px 12px rgba(0,0,0,0.30);
+  --color-success:       #8fb894;  /* 6.46:1 on surface-raised */
+  --color-warning:       #dba94f;  /* 6.70:1 */
+  --color-danger:        #e08585;  /* 5.37:1 — error text must stay readable */
 
-  --color-success:       #7a9e7e;
-  --color-warning:       #c4903a;
-  --color-danger:        #a85252;
+  /* Screenplay canvas — the one light surface. Its chrome (element labels,
+     scene meta, page-end marks) previously used raw pale hexes measuring
+     1.49-2.80:1 against the paper, so it had the same readability problem as
+     the dark UI, inverted. Contrast ratios below are against --color-canvas-bg. */
+  --color-canvas-bg:         #faf8f4;
+  --color-canvas-text:       #1a1a1a;
+  --color-canvas-ink-muted:  #6b6660;  /* 5.36:1 — labels, meta, page marks */
+  --color-canvas-ink-accent: #7a5520;  /* 6.29:1 — hover / active chrome */
+  --color-canvas-rule:       #a8a49d;  /* decorative dashed rules only */
+  --color-canvas-desk:       #e8e5e0;  /* surround the paper sits on */
 
-  --color-canvas-bg:     #faf8f4;
-  --color-canvas-text:   #1a1a1a;
+  /* ── Type scale ──────────────────────────────────────────────────────────
+     Base is 16px, the browser default and the floor for comfortable body
+     copy. --text-2xs (12px) is a HARD FLOOR: nothing in the UI goes below it.
+     Consumed by tailwind.config.ts, so `text-sm` and `fontSize:
+     var(--text-sm)` always agree. */
+  --text-2xs:  0.75rem;   /* 12px — mono uppercase micro-labels. FLOOR. */
+  --text-xs:   0.8125rem; /* 13px — tags, badges, dense metadata */
+  --text-sm:   0.875rem;  /* 14px — secondary text, captions, dense rows */
+  --text-base: 1rem;      /* 16px — body, inputs, buttons, nav */
+  --text-lg:   1.125rem;  /* 18px — card titles, prominent labels */
+  --text-xl:   1.375rem;  /* 22px — section headings */
+  --text-2xl:  1.75rem;   /* 28px — page titles */
+  --text-3xl:  2.25rem;   /* 36px — display / wordmark */
+
+  /* Shadows — a real elevation ladder. Tailwind's shadow-* utilities were all
+     hard-coded to `none`, which is why nothing in the UI had depth. */
+  --shadow-sm:   0 1px 2px rgba(0,0,0,0.40);
+  --shadow-md:   0 4px 12px rgba(0,0,0,0.45);
+  --shadow-lg:   0 12px 32px rgba(0,0,0,0.55);
+  --shadow-card: 0 0 0 1px var(--color-border), 0 2px 8px rgba(0,0,0,0.35);
 
   /* Layout */
-  --sidebar-width:   220px;
+  --sidebar-width:   248px;
   --topbar-height:   56px;
   --canvas-width:    680px;
 
@@ -65,24 +103,46 @@
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: 'Outfit', sans-serif;
-    font-size: 0.9rem;
+    font-size: var(--text-base);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Focus ring. Components across the app set `outline: none` inline on inputs
+     and buttons; without this rule keyboard users got no focus indication at
+     all (WCAG 2.4.7). Scoped to :focus-visible so mouse clicks stay clean.
+     Amber is 6.07-7.79:1 against every surface.
+
+     !important is deliberate: a React `style={{ outline: 'none' }}` is an
+     inline declaration and would otherwise beat any stylesheet rule. Focus
+     visibility is an accessibility floor, so a call site must not be able to
+     switch it off by accident. Note that `outline` already follows the
+     element's own border-radius — do NOT set border-radius here, or every
+     rounded button would square off while focused. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent) !important;
+    outline-offset: 2px;
+  }
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+/* 6px was hard to grab and the thumb was nearly invisible against the surface. */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
+  background: var(--color-border-strong);
+  border-radius: 5px;
+  /* Inset the thumb from the track without shrinking the 10px hit area. */
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-border-subtle); }
+/* Hover previously went to --color-border-subtle, which is *darker* than the
+   resting colour — the thumb faded out on hover instead of standing out. */
+::-webkit-scrollbar-thumb:hover { background: var(--color-control-border); background-clip: content-box; }
 
 /* ── Screenplay canvas typography ─────────────────────────────────────────── */
 .screenplay-canvas {
@@ -96,8 +156,9 @@
 }
 
 /* ── Active list item accent border ───────────────────────────────────────── */
+/* 2px per visuals.md; 1.5px renders sub-pixel and vanishes on non-retina. */
 .list-item-active {
-  border-left: 1.5px solid var(--color-accent);
+  border-left: 2px solid var(--color-accent);
 }
 
 /* ── Entrance animations ──────────────────────────────────────────────────── */
