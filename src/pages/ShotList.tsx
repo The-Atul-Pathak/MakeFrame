@@ -200,11 +200,22 @@ export default function ShotList({ project }: Props) {
 
       {/* Table */}
       <div style={{ flex: 1, overflowX: 'auto', overflowY: 'auto' }}>
-        {projectShots.length === 0 ? (
+        {projectScenes.length === 0 ? (
+          /* Every shot hangs off a scene, so there is nothing to list until the
+             screenplay has one. Mirrors the Storyboard module's upstream nudge. */
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '80px 0', opacity: 0.5 }}>
+            <IconList size={32} style={{ color: 'var(--color-text-tertiary)' }} />
+            <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>No scenes yet</span>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 300, lineHeight: 1.6 }}>
+              Shots hang off scenes. Write scenes in the Screenplay module, storyboard
+              them, then come back here to build the shooting order.
+            </span>
+          </div>
+        ) : projectShots.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, padding: '80px 0', opacity: 0.5 }}>
             <IconList size={32} style={{ color: 'var(--color-text-tertiary)' }} />
             <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>No shots yet</span>
-            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}>
+            <span className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 300, lineHeight: 1.6 }}>
               Hit <strong style={{ color: 'var(--color-accent)' }}>+ ADD SHOT</strong> to build your shot list.
               Rows are in shoot order — optimise by location.
             </span>
