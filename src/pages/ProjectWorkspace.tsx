@@ -236,7 +236,10 @@ export default function ProjectWorkspace() {
   const [project, setProject]           = useState<Project | null>(null)
   const [loading, setLoading]           = useState(true)
   const [error, setError]               = useState<string | null>(null)
-  const [activeModule, setActiveModule] = useState<WorkspaceModule>('beatsheet')
+  // Opens on the first module in the sidebar's recommended order. This used to
+  // default to 'beatsheet', which contradicted the nav order and left the app
+  // with no consistent answer to "where do I start?".
+  const [activeModule, setActiveModule] = useState<WorkspaceModule>('characters')
   const [showLeaveModal, setShowLeaveModal] = useState(false)
 
   useEffect(() => {

@@ -248,13 +248,18 @@ export default function Characters({ project }: Props) {
           >
             <IconUser size={32} style={{ color: 'var(--color-text-tertiary)' }} />
             <span style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
-              No character selected
+              {projectCharacters.length === 0 ? 'Start with who' : 'No character selected'}
             </span>
+            {/* This is the first screen of a new project, so the empty version
+                orients rather than labels: what this module is for, and what it
+                feeds downstream. */}
             <span
               className="font-mono"
-              style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 280, lineHeight: 1.6 }}
+              style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)', textAlign: 'center', maxWidth: 300, lineHeight: 1.6 }}
             >
-              Add a character to build your character bible.
+              {projectCharacters.length === 0
+                ? 'Build a bible for each character — want, need, wound, arc. Names you set here become castable in your scenes and shot list.'
+                : 'Add a character to build your character bible.'}
             </span>
           </div>
         )}

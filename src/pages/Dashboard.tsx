@@ -6,10 +6,12 @@ import AddProjectCard from '@/components/shared/AddProjectCard'
 import NewProjectModal from '@/components/shared/NewProjectModal'
 import RecentlyEdited from '@/components/shared/RecentlyEdited'
 import TipsStrip from '@/components/shared/TipsStrip'
+import FirstRunPanel from '@/components/shared/FirstRunPanel'
 import SectionLabel from '@/components/shared/SectionLabel'
 import type { Project } from '@/types/project'
 import { fetchProjects, saveProject, updateProject } from '@/services/projects'
 import type { SaveProjectInput } from '@/services/projects'
+import { createSampleProject, SAMPLE_PROJECT_TITLE } from '@/services/sampleProject'
 import { useAuth } from '@/hooks/useAuth'
 import { usePageMeta } from '@/hooks/usePageMeta'
 
@@ -114,6 +116,7 @@ export default function Dashboard() {
   const totalScenes = projects.reduce((a, p) => a + p.sceneCount, 0)
   const totalPanels = projects.reduce((a, p) => a + p.panelCount, 0)
   const totalShots = projects.reduce((a, p) => a + p.shotCount, 0)
+  const hasSample = projects.some((p) => p.title === SAMPLE_PROJECT_TITLE)
 
   useEffect(() => {
     let mounted = true
@@ -127,6 +130,12 @@ export default function Dashboard() {
     const project = await saveProject(input)
     setProjects((prev) => [project, ...prev])
     setShowCreateModal(false)
+  }
+
+  const handleOpenSample = async () => {
+    const project = await createSampleProject()
+    setProjects((prev) => [project, ...prev])
+    navigate(`/project/${project.id}`)
   }
 
   const handleEdit = async (input: SaveProjectInput) => {
@@ -162,23 +171,55 @@ export default function Dashboard() {
           <div className="flex-1 min-w-0">
             <SectionLabel>Projects</SectionLabel>
 
+            {/* The sample stays available as a reference after first run — it is
+                the only place the module relationships are shown fully worked. */}
+            {!isLoading && projects.length > 0 && !hasSample && (
+              <button
+                onClick={() => { void handleOpenSample() }}
+                className="font-mono"
+                style={{
+                  marginTop: 12,
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  fontSize: 'var(--text-2xs)',
+                  letterSpacing: '0.06em',
+                  color: 'var(--color-text-tertiary)',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: 3,
+                }}
+              >
+                LOAD THE SAMPLE PROJECT
+              </button>
+            )}
+
             {loadError && (
               <p className="font-mono" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-danger)', marginTop: 16 }}>
                 {loadError}
               </p>
             )}
 
-            <div className="flex flex-row flex-wrap" style={{ gap: 20, marginTop: 20 }}>
-              {!isLoading && projects.map((p) => (
-                <ProjectCard
-                  key={p.id}
-                  project={p}
-                  onEdit={() => setEditingProject(p)}
-                  onOpen={() => navigate(`/project/${p.id}`)}
-                />
-              ))}
-              <AddProjectCard onClick={() => setShowCreateModal(true)} />
-            </div>
+            {/* A first-time account gets the two ways in rather than a lone
+                dashed card, which said nothing about where to start. */}
+            {!isLoading && projects.length === 0 && !loadError ? (
+              <FirstRunPanel
+                onStartBlank={() => setShowCreateModal(true)}
+                onOpenSample={handleOpenSample}
+              />
+            ) : (
+              <div className="flex flex-row flex-wrap" style={{ gap: 20, marginTop: 20 }}>
+                {!isLoading && projects.map((p) => (
+                  <ProjectCard
+                    key={p.id}
+                    project={p}
+                    onEdit={() => setEditingProject(p)}
+                    onOpen={() => navigate(`/project/${p.id}`)}
+                  />
+                ))}
+                <AddProjectCard onClick={() => setShowCreateModal(true)} />
+              </div>
+            )}
           </div>
 
           {/* Recently edited */}
@@ -189,7 +230,7 @@ export default function Dashboard() {
 
         {/* Tips */}
         <div className="animate-fade-up" style={{ animationDelay: '140ms' }}>
-          <TipsStrip />
+          <TipsStrip projects={projects} />
         </div>
 
       </main>
